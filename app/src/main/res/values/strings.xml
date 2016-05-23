@@ -1,0 +1,98 @@
+<resources>
+    <string name="app_name">ant</string>
+    <string name="Settings">Settings</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="Setup">Setup</string>
+
+    <string name="BoatLog">ant</string>
+    <string name="About">About</string>
+    <string name="Test">Test</string>
+    <string name="More">More</string>
+    <string name="Tutorial">Tutorial</string>
+    <string name="Home">Close</string>
+    <string name="surname">Surname</string>
+    <string name="developedby">Developed by</string>
+    <string name="usefullinks">Useful links</string>
+    <string name="stevelovejoy">Steve Lovejoy</string>
+    <string name="General">General</string>
+    <string name="version">Version</string>
+
+    <string name="Add_New_base">Add New Base</string>
+    <string name="Add_New_node">Add New Node</string>
+    <string name="edit">Edit</string>
+    <string name="editBase">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="saveBase">Save</string>
+
+    <string name="name">Name</string>
+
+
+    <string name="deleteNode">Delete</string>
+    <string name="deleteBase">Delete</string>
+    <string name="yes">Confirm</string>
+    <string name="no">Cancel</string>
+    <string name="title_edit_Base">Edit Base</string>
+    <string name="title_edit_Node">Edit Node</string>
+
+    <string name="aboutversion">Version #</string>
+    <string name="btnnameTV1">Edit Button Names</string>
+    <string name="menubtnnameTV">Menu buttons</string>
+
+
+
+    <string name="tutTV1">
+        How to Setup Base Stations
+    </string>
+    <string name="tutTV2">
+        1st setup port forwarding for all your base stations, see Links in the About screen.\n
+        Next Press the + button on the Bases main screen.\n
+        Enter your base stations name (maybe a room name).\n
+        Enter your IPaddress (just google "my ip address").\n
+        And finally Enter the port number printed on the base station.\n
+        Press the Saved Button.\n
+        Note: long press a base stations button allows you to edit and delete base stations.
+    </string>
+    <string name="tutTV3">
+        How to Setup Nodes
+    </string>
+    <string name="tutTV4">
+        Press a bases button on the main page (you need to create a base to attache a node to 1st).\n
+        Press the + button. Fill in the data fields.\n
+        Address is printed on the node.\n
+        Node type is \"sw\" = a switch, \"rs\" = a room stat and \"dim\" = a dimmer switch.\n
+        Sw Amount is the amount of switches you want to be shown for each node (max 4).\n
+        The 4 Switch fields are for Naming each switch your using.\n
+        Press the save button.
+    </string>
+    <string name="tutTV5">
+        More info and instructions are linked in the About Section.
+    </string>
+    <string name="tutTV6">
+
+    </string>
+    <string name="tutTV7">
+
+    </string>
+    <string name="tutTV8">
+
+    </string>
+
+    <string-array name="sw_type_array">
+        <item>Switch</item>
+        <item>Dimmer</item>
+        <item>RoomStat</item>
+    </string-array>
+
+    <string-array name="sw_num_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+
+
+</resources>

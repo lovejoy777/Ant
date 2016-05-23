@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main">#0277BD</color>
+    <color name="colorPrimary">#0277BD</color>
+    <color name="colorPrimaryDark">#0277BD</color>
+    <color name="colorPrimaryBackground">#263238</color>
+    <color name="colorPrimaryText">#FFFFFF</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="btngray">#E0E0E0</color>
+
+
+    <!-- Primary & Accent colors -->
+    <color name="primary">#ff3F51B5</color>
+    <color name="primary_dark">#ff303F9F</color>
+    <color name="accent">#FF4081</color>
+    <color name="black">#ff000000</color>
+
+    <!-- Text colors -->
+    <color name="about_text">@color/textColorPrimary</color>
+    <color name="textColorPrimary">#ff212121</color>
+    <color name="text_color_inverse">#ffffffff</color>
+    <color name="text_color_secondary">#ff727272</color>
+    <color name="chooser_text_color">@color/textColorPrimary</color>
+    <color name="app_text_secondary">#727272</color>
+    <color name="actionbar_text_color">#ffffffff</color>
+    <color name="actionbar_text_secondary_color">#ffffffff</color>
+    <color name="tutorial_text_primary_color">#ffffffff</color>
+    <color name="tutorial_text_secondary_color">#ffffffff</color>
+    <color name="card_text_color">#ff000000</color>
+
+
+    <!-- Backgrounds -->
+    <color name="transparent">#00000000</color>
+    <color name="background">#263238</color>
+    <color name="red">#ffff0000</color>
+    <color name="card_background">#263238</color>
+    <color name="button_background">@color/card_background</color>
+
+    <!-- other colors -->
+    <color name="white">#ffffff</color>
+    <color name="divider">#B6B6B6</color>
+
+    <!-- log colors -->
+    <color name="list_item_bg">#ffffff</color>
+    <color name="view_divider_color">#BABABA</color>
+</resources>

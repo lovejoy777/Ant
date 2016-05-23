@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivityNodes"
+        android:orientation="vertical"
+        android:id="@+id/MRL1">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/Base.Theme.Test" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="3dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add/Edit"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:id="@+id/titleTextView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="12dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin" />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="20sp" >
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/editTextAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editTextName"
+            android:layout_below="@+id/editTextName"
+            android:ems="10"
+            android:inputType="time"
+            android:textSize="@dimen/text_size" />
+
+        <EditText
+            android:id="@+id/editTextRSAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editTextName"
+            android:layout_below="@+id/editTextAddress"
+            android:ems="10"
+            android:inputType="time"
+            android:textSize="@dimen/text_size" />
+
+        <Spinner android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/editTextRSAddress"
+            android:textSize="@dimen/text_size"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/swType"
+            android:singleLine="true"
+            android:entries="@array/sw_type_array"
+            android:layout_toEndOf="@+id/editTextType"
+            android:layout_alignParentEnd="true"
+            android:spinnerMode="dialog"
+            android:layout_alignBottom="@+id/editTextType">
+
+       </Spinner>
+
+         <EditText
+             android:id="@+id/editTextType"
+             android:layout_width="190dp"
+             android:layout_height="wrap_content"
+             android:layout_alignStart="@+id/editTextName"
+             android:layout_below="@+id/editTextRSAddress"
+             android:ems="10"
+             android:inputType="text"
+             android:textSize="20sp"
+              />
+
+        <Spinner android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/editTextType"
+            android:textSize="@dimen/text_size"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/swNum"
+            android:singleLine="true"
+            android:entries="@array/sw_num_array"
+            android:layout_toEndOf="@+id/editTextSwnum"
+            android:layout_alignParentEnd="true"
+            android:spinnerMode="dialog"
+            android:layout_alignBottom="@+id/editTextSwnum">
+
+        </Spinner>
+
+          <EditText
+              android:id="@+id/editTextSwnum"
+              android:layout_width="190dp"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:inputType="time"
+              android:textSize="20sp"
+              android:layout_alignStart="@+id/editTextType"
+              android:layout_below="@+id/editTextType" />
+
+          <EditText
+              android:id="@+id/editTextSw1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:inputType="text"
+              android:textSize="20sp"
+              android:layout_below="@+id/editTextSwnum"
+              android:layout_alignParentEnd="true" />
+
+          <EditText
+              android:id="@+id/editTextSw2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:inputType="text"
+              android:textSize="20sp"
+              android:layout_below="@+id/editTextSw1"
+              android:layout_alignParentEnd="true" />
+
+          <EditText
+              android:id="@+id/editTextSw3"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:inputType="text"
+              android:textSize="20sp"
+              android:layout_below="@+id/editTextSw2"
+              android:layout_alignParentEnd="true" />
+
+          <EditText
+              android:id="@+id/editTextSw4"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:ems="10"
+              android:inputType="text"
+              android:textSize="20sp"
+              android:layout_below="@+id/editTextSw3"
+              android:layout_alignParentEnd="true" />
+
+          <TextView
+              android:id="@+id/TextViewBase_ID"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="0sp"
+              android:layout_below="@+id/editTextSwnum"
+              android:layout_alignParentEnd="true" />
+
+          <TextView
+              android:id="@+id/textViewName"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/editTextName"
+              android:layout_toEndOf="@+id/editTextName"
+              android:layout_alignParentStart="true"
+              android:text="@string/name"
+              android:textSize="25sp"
+              android:textColor="@color/white"/>
+
+          <TextView
+              android:id="@+id/textViewAddress"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/editTextAddress"
+              android:layout_toEndOf="@+id/editTextAddress"
+              android:layout_alignParentStart="true"
+              android:text="Address"
+              android:textSize="25sp"
+              android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewRSAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/editTextRSAddress"
+            android:layout_toEndOf="@+id/editTextRSAddress"
+            android:layout_alignParentStart="true"
+            android:text="RS Address"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+          <TextView
+              android:id="@+id/textViewType"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/editTextType"
+              android:layout_toEndOf="@+id/editTextType"
+              android:layout_alignParentStart="true"
+              android:text="Node Type"
+              android:textSize="25sp"
+              android:textColor="@color/white"/>
+
+          <TextView
+              android:id="@+id/textViewSwnum"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/editTextSwnum"
+              android:layout_toEndOf="@+id/editTextSwnum"
+              android:layout_alignParentStart="true"
+              android:text="Sw Amount"
+              android:textSize="25sp"
+              android:textColor="@color/white"/>
+
+          <TextView
+              android:id="@+id/textViewSw1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/editTextSw1"
+              android:layout_toEndOf="@+id/editTextSw1"
+              android:layout_alignParentStart="true"
+              android:text="Switch 1"
+              android:textSize="25sp"
+              android:textColor="@color/white"/>
+
+          <TextView
+              android:id="@+id/textViewSw2"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/editTextSw2"
+              android:layout_toEndOf="@+id/editTextSw2"
+              android:layout_alignParentStart="true"
+              android:text="Switch 2"
+              android:textSize="25sp"
+              android:textColor="@color/white"/>
+
+          <TextView
+              android:id="@+id/textViewSw3"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/editTextSw3"
+              android:layout_toEndOf="@+id/editTextSw3"
+              android:layout_alignParentStart="true"
+              android:text="Switch 3"
+              android:textSize="25sp"
+              android:textColor="@color/white"/>
+
+          <TextView
+              android:id="@+id/textViewSw4"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/editTextSw4"
+              android:layout_toEndOf="@+id/editTextSw4"
+              android:layout_alignParentStart="true"
+              android:text="Switch 4"
+              android:textSize="25sp"
+              android:textColor="@color/white"/>
+
+          <Button
+              android:id="@+id/saveButton"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/custom_btn"
+              android:layout_centerHorizontal="true"
+              android:layout_below="@+id/textViewSw4"
+              android:padding="@dimen/activity_vertical_margin"
+              android:layout_margin="@dimen/activity_vertical_margin"
+              android:onClick="run"
+              android:text="@string/save"
+              android:textSize="16sp" />
+
+          <LinearLayout
+              android:id="@+id/buttonLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_below="@+id/textViewSw4"
+              android:layout_marginBottom="28dp"
+              android:visibility="gone">
+
+              <Button
+                  android:id="@+id/deleteButton"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:background="@drawable/custom_btn"
+                  android:padding="@dimen/activity_vertical_margin"
+                  android:layout_margin="@dimen/activity_vertical_margin"
+                  android:text="@string/delete"
+                  android:textSize="16sp"/>
+
+              <Button
+                  android:id="@+id/editButton"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:background="@drawable/custom_btn"
+                  android:padding="@dimen/activity_vertical_margin"
+                  android:layout_margin="@dimen/activity_vertical_margin"
+                  android:text="@string/edit"
+                  android:textSize="16sp"/>
+          </LinearLayout>
+      </RelativeLayout>
+  </ScrollView>

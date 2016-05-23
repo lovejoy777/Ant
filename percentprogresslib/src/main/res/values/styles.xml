@@ -1,0 +1,94 @@
+<resources>
+
+    <!-- Toolbars -->
+    <style name="Base.Theme.Test" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <!-- Theme for menu Activity (transparent Statusbar)-->
+    <style name="Base.Theme.Toolbar.TransparentStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/background</item>
+
+    </style>
+
+    <style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:bottomBright">@color/background</item>
+        <item name="android:bottomDark">@color/background</item>
+        <item name="android:bottomMedium">@color/background</item>
+        <item name="android:centerBright">@color/background</item>
+        <item name="android:centerDark">@color/background</item>
+        <item name="android:centerMedium">@color/background</item>
+        <item name="android:fullBright">@color/background</item>
+        <item name="android:fullDark">@color/background</item>
+        <item name="android:topBright">@color/background</item>
+        <item name="android:topDark">@color/background</item>
+    </style>
+
+    <!-- Main theme -->
+    <style name="Base.Theme.Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <!-- Navigation Drawer Text Sytle -->
+    <style name="NavigationViewTheme" parent="AppTheme">
+        <item name="textAppearanceListItem">@style/TextAppearance.AppCompat.Body2</item>
+        <item name="android:colorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorAccent">@color/accent</item>
+    </style>
+
+    <!-- Normal app Theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <!-- About -->
+    <style name="Toolbar2" parent="Theme.AppCompat.Light.NoActionBar">                                  <!-- MaterialLight: Theme.Material.Light.DarkActionBar | MaterialDark: Theme.Material -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimary</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:divider">@null</item>
+        <item name="android:listDivider">@null</item>
+        <item name="android:windowBackground">@color/background</item>
+
+    </style>
+
+    <style name="Toolbar_Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorAccent">@color/accent</item>
+    </style>
+
+    <!-- Main Activity - Overflow Menu -->
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+
+    <style name="popupNew" parent="Platform.ThemeOverlay.AppCompat.Dark"/>
+
+
+</resources>
