@@ -176,10 +176,17 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.nav_tutorial:
-                                Intent test = new Intent(MainActivity.this, Tutorial.class);
-                                startActivity(test, bndlanimation);
+                                Intent tutorial = new Intent(MainActivity.this, Tutorial.class);
+                                startActivity(tutorial, bndlanimation);
+                                break;
+
+                            case R.id.nav_timers:
+                                Intent timers = new Intent(MainActivity.this, ReminderListActivity.class);
+                                startActivity(timers, bndlanimation);
                                 break;
                         }
+
+
                         return false;
                     }
                 });

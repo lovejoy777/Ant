@@ -1,7 +1,9 @@
 package com.ai.lovejoy777.ant;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -18,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -38,15 +41,27 @@ import com.natasa.progresspercent.OnProgressTrackListener;
  */
 public class Node extends AppCompatActivity {
 
+    private static final int ACTIVITY_CREATE=0;
+    private static final int ACTIVITY_EDIT=1;
+
+    public final static String KEY_EXTRA_NODE_ADDRESS = "KEY_EXTRA_NODE_ADDRESS";
+    public final static String KEY_EXTRA_NODE_SWCODE = "KEY_EXTRA_NODE_SWCODE";
+    public final static String KEY_EXTRA_BASE_LOCALIP = "KEY_EXTRA_NODE_LOCALIP";
+    public final static String KEY_EXTRA_BASE_PORT = "KEY_EXTRA_NODE_PORT";
+
     private CircularProgress circularProgress;
     private DrawerLayout mDrawerLayout;
     Toolbar toolBar;
 
     // for switches & heating layouts
     ToggleButton sw1;
+    ImageButton clockBtnsw1;
     ToggleButton sw2;
+    ImageButton clockBtnsw2;
     ToggleButton sw3;
+    ImageButton clockBtnsw3;
     ToggleButton sw4;
+    ImageButton clockBtnsw4;
     Button getTempBtn;
     TextView titleTV;
     TextView textView1;
@@ -105,6 +120,12 @@ public class Node extends AppCompatActivity {
     String code7 = ".473";
     String code8 = ".483";
 
+    String serverHostname1;
+    String port;
+    String addressn1;
+    String rsaddressn1;
+
+
     public void onCreate(Bundle savedInstanceState) {
 
         StrictMode.ThreadPolicy policy = new StrictMode.
@@ -120,13 +141,15 @@ public class Node extends AppCompatActivity {
         String sw2namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW2);
         String sw3namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW3);
         String sw4namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW4);
-        String serverHostname1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_LOCALIP);
-        String port = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_PORT);
-        final String addressn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_ADDRESS);
-        final String rsaddressn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_RSADDRESS);
+
+        serverHostname1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_LOCALIP);
+        port = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_PORT);
+        addressn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_ADDRESS);
+        rsaddressn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_RSADDRESS);
 
         savePrefs1("LOCALIP", serverHostname1);
         savePrefs1("PORT", port);
+        savePrefs1("ADDRESS", addressn1);
 
 
                                               // NODE SWITCHES
@@ -138,9 +161,13 @@ public class Node extends AppCompatActivity {
             toolBar = (Toolbar) findViewById(R.id.toolbar);
 
             sw1 = (ToggleButton) findViewById(R.id.sw1);
+            clockBtnsw1 = (ImageButton) findViewById(R.id.clockBtnsw1);
             sw2 = (ToggleButton) findViewById(R.id.sw2);
+            clockBtnsw2 = (ImageButton) findViewById(R.id.clockBtnsw2);
             sw3 = (ToggleButton) findViewById(R.id.sw3);
+            clockBtnsw3 = (ImageButton) findViewById(R.id.clockBtnsw3);
             sw4 = (ToggleButton) findViewById(R.id.sw4);
+            clockBtnsw4 = (ImageButton) findViewById(R.id.clockBtnsw4);
             TVin = (TextView) findViewById(R.id.TVin);
 
             titleTV = (TextView) findViewById(R.id.titleTV);
@@ -151,9 +178,13 @@ public class Node extends AppCompatActivity {
             titleTV.setText("" + nodenamen1);
 
             sw1.setVisibility(View.GONE);
+            clockBtnsw1.setVisibility(View.GONE);
             sw2.setVisibility(View.GONE);
+            clockBtnsw2.setVisibility(View.GONE);
             sw3.setVisibility(View.GONE);
+            clockBtnsw3.setVisibility(View.GONE);
             sw4.setVisibility(View.GONE);
+            clockBtnsw4.setVisibility(View.GONE);
             textView1.setVisibility(View.GONE);
             textView2.setVisibility(View.GONE);
             textView3.setVisibility(View.GONE);
@@ -162,27 +193,37 @@ public class Node extends AppCompatActivity {
             // sets the number of switches shown
             if (swnumn1.equals("1")) {
                 sw1.setVisibility(View.VISIBLE);
+                clockBtnsw1.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
             }
             if (swnumn1.equals("2")) {
                 sw1.setVisibility(View.VISIBLE);
+                clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
+                clockBtnsw2.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.VISIBLE);
             }
             if (swnumn1.equals("3")) {
                 sw1.setVisibility(View.VISIBLE);
+                clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
+                clockBtnsw2.setVisibility(View.VISIBLE);
                 sw3.setVisibility(View.VISIBLE);
+                clockBtnsw3.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.VISIBLE);
                 textView3.setVisibility(View.VISIBLE);
             }
             if (swnumn1.equals("4")) {
                 sw1.setVisibility(View.VISIBLE);
+                clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
+                clockBtnsw2.setVisibility(View.VISIBLE);
                 sw3.setVisibility(View.VISIBLE);
+                clockBtnsw3.setVisibility(View.VISIBLE);
                 sw4.setVisibility(View.VISIBLE);
+                clockBtnsw4.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.VISIBLE);
                 textView3.setVisibility(View.VISIBLE);
@@ -201,6 +242,31 @@ public class Node extends AppCompatActivity {
             sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
 
                                                 // NODE SWITCH 1
+
+            // SetClock
+            clockBtnsw1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Node.this, R.style.MyAlertDialogStyle);
+                    builder.setInverseBackgroundForced(true)
+                            .setPositiveButton("ON", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code1);
+                                    createReminderOn();
+                                }
+                            })
+                            .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code2);
+                                    createReminderOn();
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Set On or Off");
+                    d.show();
+                }
+            });
+
             sw1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -230,6 +296,30 @@ public class Node extends AppCompatActivity {
             });
 
                                                           // NODE SWITCH 2
+            // SetClock
+            clockBtnsw2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Node.this, R.style.MyAlertDialogStyle);
+                    builder.setInverseBackgroundForced(true)
+                            .setPositiveButton("ON", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code3);
+                                    createReminderOn();
+                                }
+                            })
+                            .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code4);
+                                    createReminderOn();
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Set On or Off");
+                    d.show();
+                }
+            });
+
             sw2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -259,6 +349,30 @@ public class Node extends AppCompatActivity {
             });
 
                                                         // NODE SWITCH 3
+            // SetClock
+            clockBtnsw3.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Node.this, R.style.MyAlertDialogStyle);
+                    builder.setInverseBackgroundForced(true)
+                            .setPositiveButton("ON", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code5);
+                                    createReminderOn();
+                                }
+                            })
+                            .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code6);
+                                    createReminderOn();
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Set On or Off");
+                    d.show();
+                }
+            });
+
             sw3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -288,6 +402,30 @@ public class Node extends AppCompatActivity {
             });
 
                                                    // NODE SWITCH 4
+            // SetClock
+            clockBtnsw4.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Node.this, R.style.MyAlertDialogStyle);
+                    builder.setInverseBackgroundForced(true)
+                            .setPositiveButton("ON", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code7);
+                                    createReminderOn();
+                                }
+                            })
+                            .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code8);
+                                    createReminderOn();
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Set On or Off");
+                    d.show();
+                }
+            });
+
             sw4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -326,9 +464,13 @@ public class Node extends AppCompatActivity {
             toolBar = (Toolbar) findViewById(R.id.toolbar);
 
             sw1 = (ToggleButton) findViewById(R.id.sw1);
+            clockBtnsw1 = (ImageButton) findViewById(R.id.clockBtnsw1);
             sw2 = (ToggleButton) findViewById(R.id.sw2);
+            clockBtnsw2 = (ImageButton) findViewById(R.id.clockBtnsw2);
             sw3 = (ToggleButton) findViewById(R.id.sw3);
+            clockBtnsw3 = (ImageButton) findViewById(R.id.clockBtnsw3);
             sw4 = (ToggleButton) findViewById(R.id.sw4);
+            clockBtnsw4 = (ImageButton) findViewById(R.id.clockBtnsw4);
             TVin = (TextView) findViewById(R.id.TVin);
 
             titleTV = (TextView) findViewById(R.id.titleTV);
@@ -350,9 +492,13 @@ public class Node extends AppCompatActivity {
 
 
             sw1.setVisibility(View.GONE);
+            clockBtnsw1.setVisibility(View.GONE);
             sw2.setVisibility(View.GONE);
+            clockBtnsw2.setVisibility(View.GONE);
             sw3.setVisibility(View.GONE);
+            clockBtnsw3.setVisibility(View.GONE);
             sw4.setVisibility(View.GONE);
+            clockBtnsw4.setVisibility(View.GONE);
             textView1.setVisibility(View.GONE);
             textView2.setVisibility(View.GONE);
             textView3.setVisibility(View.GONE);
@@ -361,27 +507,37 @@ public class Node extends AppCompatActivity {
             // sets the number of switches shown
             if (swnumn1.equals("1")) {
                 sw1.setVisibility(View.VISIBLE);
+                clockBtnsw1.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
             }
             if (swnumn1.equals("2")) {
                 sw1.setVisibility(View.VISIBLE);
+                clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
+                clockBtnsw2.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.VISIBLE);
             }
             if (swnumn1.equals("3")) {
                 sw1.setVisibility(View.VISIBLE);
+                clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
+                clockBtnsw2.setVisibility(View.VISIBLE);
                 sw3.setVisibility(View.VISIBLE);
+                clockBtnsw3.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.VISIBLE);
                 textView3.setVisibility(View.VISIBLE);
             }
             if (swnumn1.equals("4")) {
                 sw1.setVisibility(View.VISIBLE);
+                clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
+                clockBtnsw2.setVisibility(View.VISIBLE);
                 sw3.setVisibility(View.VISIBLE);
+                clockBtnsw3.setVisibility(View.VISIBLE);
                 sw4.setVisibility(View.VISIBLE);
+                clockBtnsw4.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.VISIBLE);
                 textView3.setVisibility(View.VISIBLE);
@@ -400,6 +556,30 @@ public class Node extends AppCompatActivity {
             sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
 
             // RS SWITCH 1
+
+            // SetClock
+            clockBtnsw1.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Node.this, R.style.MyAlertDialogStyle);
+                    builder.setInverseBackgroundForced(true)
+                            .setPositiveButton("ON", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code1);
+                                    createReminderOn();
+                                }
+                            })
+                            .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code2);
+                                    createReminderOn();
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Set On or Off");
+                    d.show();
+                }
+            });
             sw1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -429,6 +609,29 @@ public class Node extends AppCompatActivity {
             });
 
             // RS SWITCH 2
+            // SetClock
+            clockBtnsw2.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Node.this, R.style.MyAlertDialogStyle);
+                    builder.setInverseBackgroundForced(true)
+                            .setPositiveButton("ON", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code3);
+                                    createReminderOn();
+                                }
+                            })
+                            .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code4);
+                                    createReminderOn();
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Set On or Off");
+                    d.show();
+                }
+            });
             sw2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -458,6 +661,29 @@ public class Node extends AppCompatActivity {
             });
 
             // RS SWITCH 3
+            // SetClock
+            clockBtnsw3.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Node.this, R.style.MyAlertDialogStyle);
+                    builder.setInverseBackgroundForced(true)
+                            .setPositiveButton("ON", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code5);
+                                    createReminderOn();
+                                }
+                            })
+                            .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code6);
+                                    createReminderOn();
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Set On or Off");
+                    d.show();
+                }
+            });
             sw3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -487,6 +713,29 @@ public class Node extends AppCompatActivity {
             });
 
             // RS SWITCH 4
+            // SetClock
+            clockBtnsw4.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Node.this, R.style.MyAlertDialogStyle);
+                    builder.setInverseBackgroundForced(true)
+                            .setPositiveButton("ON", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code7);
+                                    createReminderOn();
+                                }
+                            })
+                            .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWCODE", code8);
+                                    createReminderOn();
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Set On or Off");
+                    d.show();
+                }
+            });
             sw4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -918,10 +1167,16 @@ public class Node extends AppCompatActivity {
         });
     }
 
+    private void createReminderOn() {
+        Intent i = new Intent(this, ReminderEditActivity.class);
+
+        startActivityForResult(i, ACTIVITY_CREATE);
+    }
+
     private void savePrefs1(String key, String value) {
 
-        SharedPreferences spb = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor edit = spb.edit();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor edit = sp.edit();
         edit.putString(key, value);
         edit.commit();
     }

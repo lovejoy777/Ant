@@ -235,6 +235,11 @@ public class MainActivityNodes extends AppCompatActivity {
                                 Intent test = new Intent(MainActivityNodes.this, Tutorial.class);
                                 startActivity(test, bndlanimation);
                                 break;
+
+                            case R.id.nav_timers:
+                                Intent timers = new Intent(MainActivityNodes.this, ReminderListActivity.class);
+                                startActivity(timers, bndlanimation);
+                                break;
                         }
                         return false;
                     }
