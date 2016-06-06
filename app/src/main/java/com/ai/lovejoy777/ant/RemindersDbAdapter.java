@@ -139,6 +139,15 @@ public class RemindersDbAdapter {
     }
 
     /**
+     * Delete all timers from rows
+     *
+     */
+    public void deleteAll() {
+
+        mDb.delete(DATABASE_TABLE, null, null);
+    }
+
+    /**
      * Return a Cursor over the list of all timers in the database
      * 
      * @return Cursor over all timers

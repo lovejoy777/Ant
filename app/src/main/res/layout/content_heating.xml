@@ -7,11 +7,15 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
+
+
+
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/MRL1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimaryBackground"
         android:orientation="vertical">
 
@@ -57,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="86dp"
             android:layout_centerHorizontal="true"
             android:text="No data"
             android:textColor="@color/colorPrimaryText"
@@ -69,7 +73,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/circular"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
             android:background="@drawable/custom_btn"
             android:text="Refresh"
             android:textColor="@color/colorPrimaryText" />
@@ -79,34 +82,35 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zone 1"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="30sp"
-            android:layout_alignBottom="@+id/sw1"
-            android:layout_alignStart="@+id/textView2" />
-
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/getTempBtn"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="45dp"
+            android:text="Switch 1"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
 
         <ToggleButton
             android:id="@+id/sw1"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:layout_toStartOf="@+id/clockBtnsw1"
-            android:layout_below="@+id/getTempBtn"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="30dp"
-            android:text="On/off"
+
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="14dp"
+            android:layout_alignParentEnd="true"
+            android:text="On/Off"
             android:textColor="@color/colorPrimaryText" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:id="@+id/clockBtnsw1"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_toStartOf="@+id/sw1"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryBackground"
-            android:src="@drawable/clock"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:layout_alignTop="@+id/sw1"
-            android:layout_alignEnd="@+id/sw2" />
+            android:src="@drawable/clock" />
 
         <TextView
             android:id="@+id/textView2"
@@ -114,8 +118,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/sw2"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:text="Zone 2"
+            android:layout_marginStart="16dp"
+            android:text="Switch 2"
             android:textColor="@color/white"
             android:textSize="30sp" />
 
@@ -123,10 +127,10 @@
             android:id="@+id/sw2"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:layout_toStartOf="@+id/clockBtnsw2"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/sw1"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="14dp"
             android:text="On/off"
             android:textColor="@color/colorPrimaryText" />
 
@@ -134,44 +138,43 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:id="@+id/clockBtnsw2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_toStartOf="@+id/sw2"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryBackground"
-            android:src="@drawable/clock"
-            android:layout_alignTop="@+id/sw2"
-            android:layout_marginEnd="10dp"
-            android:layout_alignParentEnd="true" />
+            android:src="@drawable/clock" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zone 3"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="30sp"
             android:layout_alignBottom="@+id/sw3"
-            android:layout_alignStart="@+id/textView4" />
-
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Switch 3"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
 
         <ToggleButton
             android:id="@+id/sw3"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:layout_toStartOf="@+id/clockBtnsw3"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/sw2"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
-            android:text="On/off"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="14dp"
+            android:text="On/Off"
             android:textColor="@color/colorPrimaryText" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:id="@+id/clockBtnsw3"
+            android:layout_alignBottom="@+id/textView3"
+            android:layout_toStartOf="@+id/sw3"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryBackground"
-            android:src="@drawable/clock"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:layout_alignTop="@+id/sw3"
-            android:layout_alignEnd="@+id/sw4" />
+            android:src="@drawable/clock" />
 
         <TextView
             android:id="@+id/textView4"
@@ -179,8 +182,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/sw4"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:text="Zone 4"
+            android:layout_marginStart="16dp"
+            android:text="Switch 4"
             android:textColor="@color/white"
             android:textSize="30sp" />
 
@@ -188,34 +191,53 @@
             android:id="@+id/sw4"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:layout_toStartOf="@+id/clockBtnsw4"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/sw3"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
-            android:text="On/off"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="14dp"
+            android:text="On/Off"
             android:textColor="@color/colorPrimaryText" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:id="@+id/clockBtnsw4"
+            android:layout_alignBottom="@+id/textView4"
+            android:layout_toStartOf="@+id/sw4"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryBackground"
-            android:src="@drawable/clock"
-            android:layout_alignTop="@+id/sw4"
-            android:layout_marginEnd="10dp"
-            android:layout_alignParentEnd="true" />
+            android:src="@drawable/clock" />
 
-        <TextView
-            android:id="@+id/TVin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="..."
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/TVin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/clockBtnsw4"
+                android:layout_marginTop="8dp"
+                android:text="..."
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+
+
+
 
     </RelativeLayout>
+
+
+
+
+
+
+
+
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

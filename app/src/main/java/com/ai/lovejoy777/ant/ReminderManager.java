@@ -18,12 +18,27 @@ public class ReminderManager {
 	}
 	
 	public void setTimer(Long taskId, Calendar when) {
-		
-        Intent i = new Intent(mContext, OnAlarmReceiver.class);
-        i.putExtra(RemindersDbAdapter.KEY_ROWID, (long)taskId); 
 
-        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, i, PendingIntent.FLAG_ONE_SHOT); 
-        
+
+        Intent i = new Intent(mContext, OnAlarmReceiver.class);
+        i.putExtra(RemindersDbAdapter.KEY_ROWID, (long)taskId);
+        long tid = taskId;
+        int taskid = (int)tid;
+
+        PendingIntent pi = PendingIntent.getBroadcast(mContext, taskid, i,0);
+
         mAlarmManager.set(AlarmManager.RTC_WAKEUP, when.getTimeInMillis(), pi);
 	}
+
+    public void deleteTimer(Long taskId) {
+
+        Intent i = new Intent(mContext, OnAlarmReceiver.class);
+        i.putExtra(RemindersDbAdapter.KEY_ROWID, (long)taskId);
+        long tid = taskId;
+        int taskid = (int)tid;
+
+        PendingIntent pi = PendingIntent.getBroadcast(mContext, taskid, i,0);
+
+        mAlarmManager.cancel(pi);
+    }
 }

@@ -4,7 +4,7 @@
     <style name="Base.Theme.Test1" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_action_menu</item>
         <item name="android:windowBackground">@color/background</item>
@@ -14,7 +14,7 @@
     <style name="Base.Theme.Test" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_action_menu</item>
         <item name="android:windowBackground">@color/background</item>
@@ -24,7 +24,7 @@
     <style name="Base.Theme.Toolbar.TransparentStatusBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
@@ -69,7 +69,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="windowNoTitle">true</item>
         <item name="mcab_contentinset_start">60dp</item>
         <item name="android:windowBackground">@color/background</item>
@@ -80,14 +80,14 @@
         <item name="textAppearanceListItem">@style/TextAppearance.AppCompat.Body2</item>
         <item name="colorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/background</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <!-- Normal app Theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/background</item>
     </style>
@@ -98,7 +98,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:textColor">@color/textColorPrimary</item>
@@ -111,7 +111,7 @@
     <style name="Toolbar_Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/background</item>
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <!-- Main Activity - Overflow Menu -->
@@ -122,11 +122,17 @@
 
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccent">@color/colorPrimary</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Used for the background -->
         <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/colorPrimary</item>
+
+
     </style>
 
 

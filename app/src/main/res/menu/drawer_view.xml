@@ -30,18 +30,18 @@
         <menu>
             <item
                 android:id="@+id/nav_tutorial"
-                android:icon="@drawable/ic_drawer_help"
+                android:icon="@drawable/ic_drawer_about"
                 android:title="@string/Tutorial"
 
                 />
             <item
                 android:id="@+id/nav_about"
-                android:icon="@drawable/ic_drawer_about"
+                android:icon="@drawable/ic_drawer_help"
                 android:title="@string/About" />
 
             <item
                 android:id="@+id/nav_timers"
-                android:icon="@drawable/ic_drawer_about"
+                android:icon="@android:drawable/ic_lock_idle_alarm"
                 android:title="@string/Timers" />
 
 

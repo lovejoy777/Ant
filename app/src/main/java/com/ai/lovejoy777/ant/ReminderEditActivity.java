@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -15,21 +13,28 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class ReminderEditActivity extends Activity {
+
+public class ReminderEditActivity extends AppCompatActivity {
 
 	// 
 	// Dialog Constants
 	//
 	private static final int DATE_PICKER_DIALOG = 0;
 	private static final int TIME_PICKER_DIALOG = 1;
+
+	Toolbar toolBar;
 	
 	// 
 	// Date Format 
@@ -42,10 +47,14 @@ public class ReminderEditActivity extends Activity {
     private EditText mETCode;
     private EditText mETLocalIP;
     private EditText mETPort;
+	private EditText mETDate;
+	private EditText mETTime;
     private Button mDateButton;
     private Button mTimeButton;
+	private Switch mDailySwitch;
     private Button mConfirmButton;
     private Long mRowId;
+	private Boolean mDailySW;
     private RemindersDbAdapter mDbHelper;
     private Calendar mCalendar;  
 
@@ -55,17 +64,20 @@ public class ReminderEditActivity extends Activity {
         
         mDbHelper = new RemindersDbAdapter(this);
         
-        setContentView(R.layout.reminder_edit);
+        setContentView(R.layout.main_timer_edit);
+
+		toolBar = (Toolbar) findViewById(R.id.toolbar);
         
         mCalendar = Calendar.getInstance(); 
         mETAddress = (EditText) findViewById(R.id.etaddress);
         mETCode = (EditText) findViewById(R.id.etcode);
         mETLocalIP = (EditText) findViewById(R.id.etlocalip);
         mETPort = (EditText) findViewById(R.id.etport);
+		mETDate = (EditText) findViewById(R.id.etdate);
+		mETTime = (EditText) findViewById(R.id.ettime);
         mDateButton = (Button) findViewById(R.id.reminder_date);
         mTimeButton = (Button) findViewById(R.id.reminder_time);
-
-
+		mDailySwitch = (Switch) findViewById(R.id.dailyswitch);
 
         mConfirmButton = (Button) findViewById(R.id.confirm);
        
@@ -84,19 +96,7 @@ public class ReminderEditActivity extends Activity {
 		}
 	}
     
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mDbHelper.close(); 
-    }
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mDbHelper.open(); 
-    	setRowIdFromIntent();
-		populateFields();
-    }
+
     
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -112,32 +112,32 @@ public class ReminderEditActivity extends Activity {
  	private DatePickerDialog showDatePicker() {
 		
 		
-		DatePickerDialog datePicker = new DatePickerDialog(ReminderEditActivity.this, new DatePickerDialog.OnDateSetListener() {
-			
+		DatePickerDialog datePicker = new DatePickerDialog(ReminderEditActivity.this,R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 				mCalendar.set(Calendar.YEAR, year);
 				mCalendar.set(Calendar.MONTH, monthOfYear);
 				mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-				updateDateButtonText(); 
+				updateDateETText();
 			}
-		}, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH)); 
-		return datePicker; 
+		}, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
+		return datePicker;
 	}
 
    private TimePickerDialog showTimePicker() {
 		
-    	TimePickerDialog timePicker = new TimePickerDialog(this,  new TimePickerDialog.OnTimeSetListener() {
-			
+    	TimePickerDialog timePicker = new TimePickerDialog(this, R.style.DialogTheme,  new TimePickerDialog.OnTimeSetListener() {
+
 			@Override
 			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 				mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
 				mCalendar.set(Calendar.MINUTE, minute); 
-				updateTimeButtonText(); 
+				updateTimeETText();
 			}
-		}, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true); 
+		}, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), true);
 		
-    	return timePicker; 
+    	return timePicker;
 	}
  	
 	private void registerButtonListenersAndSetDefaultText() {
@@ -146,7 +146,8 @@ public class ReminderEditActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				showDialog(DATE_PICKER_DIALOG);  
+				showDialog(DATE_PICKER_DIALOG);
+
 			}
 		}); 
 		
@@ -157,9 +158,34 @@ public class ReminderEditActivity extends Activity {
 			public void onClick(View v) {
 				showDialog(TIME_PICKER_DIALOG); 
 			}
-		}); 
-		
-		mConfirmButton.setOnClickListener(new View.OnClickListener() {
+		});
+
+		//set the switch to ON
+		mDailySwitch.setChecked(true);
+		//attach a listener to check for changes in state
+		mDailySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+										 boolean isChecked) {
+
+				if(isChecked){
+
+					mDailySW = true;
+
+				}else{
+					mDailySW = false;
+
+				}
+
+			}
+		});
+
+
+
+
+
+	mConfirmButton.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View view) {
         		saveState(); 
         		setResult(RESULT_OK);
@@ -169,8 +195,8 @@ public class ReminderEditActivity extends Activity {
           
         });
 		
-		  updateDateButtonText(); 
-	      updateTimeButtonText();
+		  updateDateETText();
+	      updateTimeETText();
 	}
    
     private void populateFields()  {
@@ -226,24 +252,25 @@ public class ReminderEditActivity extends Activity {
         	
         }
         
-        updateDateButtonText(); 
-        updateTimeButtonText(); 
+        updateDateETText();
+        updateTimeETText();
         	
     }
 
-	private void updateTimeButtonText() {
-		// Set the time button text based upon the value from the database
-        SimpleDateFormat timeFormat = new SimpleDateFormat(TIME_FORMAT); 
-        String timeForButton = timeFormat.format(mCalendar.getTime()); 
-        mTimeButton.setText(timeForButton);
+	private void updateTimeETText() {
+		// Set the time edit text based upon the value from the database
+		SimpleDateFormat timeFormat = new SimpleDateFormat(TIME_FORMAT);
+		String timeForETTime = timeFormat.format(mCalendar.getTime());
+		mETTime.setText(timeForETTime);
 	}
 
-	private void updateDateButtonText() {
-		// Set the date button text based upon the value from the database 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT); 
-        String dateForButton = dateFormat.format(mCalendar.getTime()); 
-        mDateButton.setText(dateForButton);
+	private void updateDateETText() {
+		// Set the date edit text based upon the value from the database
+		SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+		String dateForETDate = dateFormat.format(mCalendar.getTime());
+		mETDate.setText(dateForETDate);
 	}
+
     
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -260,19 +287,60 @@ public class ReminderEditActivity extends Activity {
         String port = mETPort.getText().toString();
 
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DATE_TIME_FORMAT); 
-    	String reminderDateTime = dateTimeFormat.format(mCalendar.getTime());
+    	String timerDateTime = dateTimeFormat.format(mCalendar.getTime());
 
         if (mRowId == null) {
         	
-        	long id = mDbHelper.createTimer(address, code, localip, port, reminderDateTime);
+        	long id = mDbHelper.createTimer(address, code, localip, port, timerDateTime);
             if (id > 0) {
                 mRowId = id;
             }
         } else {
-            mDbHelper.updateTimer(mRowId, address, code, localip, port, reminderDateTime);
+            mDbHelper.updateTimer(mRowId, address, code, localip, port, timerDateTime);
         }
        
         new ReminderManager(this).setTimer(mRowId, mCalendar);
     }
+
+
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mDbHelper.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDbHelper.open();
+        setRowIdFromIntent();
+        populateFields();
+    }
+
+
+    @Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		overridePendingTransition(R.anim.back2, R.anim.back1);
+	}
+
+	private void savePrefs(String key, String value) {
+
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences.Editor edit = sp.edit();
+		edit.putString(key, value);
+		edit.commit();
+	}
+
+	private void savePrefsBool(String key, Boolean value) {
+
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		SharedPreferences.Editor edit = sp.edit();
+		edit.putBoolean(key, value);
+		edit.commit();
+	}
     
 }

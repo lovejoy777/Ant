@@ -764,7 +764,20 @@ public class Node extends AppCompatActivity {
                 }
             });
 
-            // GET TEMP
+           // tempTV.setClickable(true);
+           // tempTV.setOnClickListener(new View.OnClickListener() {
+
+           //     @Override
+            //    public void onClick(View v) {
+            //        try {
+            //            dataIn(rsaddressn1 + getTemp); // "9999"
+            //        } catch (Exception e) {
+             //           System.out.println("No connection");
+             //       }
+             //   }
+          //  });
+
+             // GET TEMP
             getTempBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     try {
@@ -1130,6 +1143,11 @@ public class Node extends AppCompatActivity {
                             case R.id.nav_tutorial:
                                 Intent test = new Intent(Node.this, Tutorial.class);
                                 startActivity(test, bndlanimation);
+                                break;
+
+                            case R.id.nav_timers:
+                                Intent timers = new Intent(Node.this, ReminderListActivity.class);
+                                startActivity(timers, bndlanimation);
                                 break;
                         }
                         return false;

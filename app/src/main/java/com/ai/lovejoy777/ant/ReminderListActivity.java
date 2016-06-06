@@ -4,7 +4,6 @@ package com.ai.lovejoy777.ant;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,21 +14,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ai.lovejoy777.ant.activities.AboutActivity;
 
 public class ReminderListActivity extends AppCompatActivity {
 
@@ -42,6 +35,7 @@ public class ReminderListActivity extends AppCompatActivity {
 
 
     private ListView listView;
+
 
     RelativeLayout MRL1;
     Toolbar toolBar;
@@ -60,6 +54,34 @@ public class ReminderListActivity extends AppCompatActivity {
         titleTextView = (TextView) findViewById(R.id.titleTextView);
         list = (ListView) findViewById(R.id.list);
         titleTextView.setText("Timers");
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimary));
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ReminderListActivity.this, R.style.MyAlertDialogStyle);
+                builder.setMessage(R.string.warning);
+                builder.setInverseBackgroundForced(true)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                mDbHelper.deleteAll();
+                                populateListView();
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+                AlertDialog d = builder.create();
+                d.setTitle("Delete All Timers");
+                d.show();
+                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //       .setAction("Action", null).show();
+            }
+        });
 
         mDbHelper = new RemindersDbAdapter(this);
         mDbHelper.open();
@@ -96,7 +118,9 @@ public class ReminderListActivity extends AppCompatActivity {
                 builder.setInverseBackgroundForced(true)
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                mDbHelper.deleteTimer(rowID);
+
+                                mDbHelper.deleteTimer(rowID); // deletes from the database
+                                amDeleteTimer(rowID); // deletes from alarm manager
                                 populateListView();
                             }
                         })
@@ -106,13 +130,24 @@ public class ReminderListActivity extends AppCompatActivity {
                             }
                         });
                 AlertDialog d = builder.create();
-                d.setTitle("Are You Sure?");
+                d.setTitle("Delete Timer");
                 d.show();
 
                 return true;
             }
         });
     }
+
+
+
+    private void amDeleteTimer(long rowID) {
+
+        new ReminderManager(this).deleteTimer(rowID);
+
+    }
+
+
+
 
     private void populateListView() {
         final Cursor cursor = mDbHelper.fetchAllTimers();
@@ -123,10 +158,6 @@ public class ReminderListActivity extends AppCompatActivity {
         listView.setAdapter(cursorAdapter);
     }
 
-    private void createReminder() {
-        Intent i = new Intent(this, ReminderEditActivity.class);
-        startActivityForResult(i, ACTIVITY_CREATE);
-    }
 
     private void loadToolbarNavDrawer() {
         //set Toolbar
@@ -174,6 +205,27 @@ public class ReminderListActivity extends AppCompatActivity {
                                 getSupportActionBar().setElevation(2);
                                 break;
 
+                            case R.id.nav_clearall:
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ReminderListActivity.this, R.style.MyAlertDialogStyle);
+                                builder.setMessage(R.string.warning);
+                                builder.setInverseBackgroundForced(true)
+                                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                mDbHelper.deleteAll();
+                                                populateListView();
+                                            }
+                                        })
+                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+
+                                            }
+                                        });
+                                AlertDialog d = builder.create();
+                                d.setTitle("Delete All Timers");
+                                d.show();
+
+                                break;
+
                             case R.id.nav_settings:
                                 Intent settings = new Intent(ReminderListActivity.this, TaskPreferences.class);
                                 startActivity(settings, bndlanimation);
@@ -200,26 +252,3 @@ public class ReminderListActivity extends AppCompatActivity {
         populateListView();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

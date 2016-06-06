@@ -3,7 +3,7 @@ package com.ai.lovejoy777.ant;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.net.Uri;
+import android.provider.Settings;
 import android.util.Log;
 
 public class ReminderService extends WakeReminderIntentService {
@@ -39,20 +39,15 @@ public class ReminderService extends WakeReminderIntentService {
 
 
 		builder.setAutoCancel(true);
-		builder.setTicker("Ticker");
-		builder.setContentTitle("Timer Activated");
-		builder.setContentText("Timer " + mRowId);
-	//	try {
-	//		Uri uri = Uri.parse("android.resource://" + getPackageName() + "/"
-	//				+ R.raw.ceres);
-	//		builder.setSound(uri);
-	//	} catch (Exception e) {
-	//		e.printStackTrace();
-	//	}
+		builder.setTicker("Ant Timer Activated !!");
+		builder.setContentTitle("Timer Activated!!");
+		builder.setContentText("Timer id:" + mRowId);
 		builder.setSmallIcon(R.mipmap.ic_launcher);
 		//builder.setContentIntent(pi);
 		builder.setOngoing(false);
 		builder.setNumber(100);
+		builder.setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+		builder.setVibrate(new long[] { 1000, 1000});
 		builder.build();
 
 		myNotication = builder.getNotification();

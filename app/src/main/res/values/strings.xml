@@ -34,7 +34,8 @@
 
     <string name="deleteNode">Delete</string>
     <string name="deleteBase">Delete</string>
-    <string name="deleteTimer">Delete Timer</string>
+    <string name="deleteTimer">Are you Sure?</string>
+    <string name="warning">Warning!!!</string>
     <string name="yes">Confirm</string>
     <string name="no">Cancel</string>
     <string name="title_edit_Base">Edit Base</string>
@@ -117,21 +118,21 @@
     <string name="notify_new_task_title">Timer Activated!</string>
 
     <!-- Preferences -->
-    <string name="pref_category_task_defaults_key">task_default_category</string>
-    <string name="pref_category_task_defaults_title">Task Title Default</string>
-    <string name="pref_task_title_key">default_reminder_title</string>
-    <string name="pref_task_title_dialog_title">Default Reminder Title</string>
-    <string name="pref_task_title_message">The default title for a reminder.</string>
-    <string name="pref_task_title_summary">Default title for reminders.</string>
-    <string name="pref_task_title_title">Default Reminder Title</string>
+    <string name="pref_category_task_defaults_key">timer_default_category</string>
+    <string name="pref_category_task_defaults_title">Timer Title Default</string>
+    <string name="pref_task_title_key">default_Timer_title</string>
+    <string name="pref_task_title_dialog_title">Default Timer Title</string>
+    <string name="pref_task_title_message">The default title for a Timer.</string>
+    <string name="pref_task_title_summary">Default title for Timers.</string>
+    <string name="pref_task_title_title">Default Timer Title</string>
 
     <string name="pref_category_datetime_key">date_time_default_category</string>
     <string name="pref_category_datetime_title">Date Time Defaults</string>
     <string name="pref_default_time_from_now_key">time_from_now_default</string>
     <string name="pref_default_time_from_now_dialog_title">Time From Now</string>
-    <string name="pref_default_time_from_now_message">The default time from now that a new reminder should be set to.</string>
-    <string name="pref_default_time_from_now_summary">Sets the default time for a reminder.</string>
-    <string name="pref_default_time_from_now_title">Default Reminder Time</string>
+    <string name="pref_default_time_from_now_message">The default time from now that a new timer should be set to.</string>
+    <string name="pref_default_time_from_now_summary">Sets the default time for a timer.</string>
+    <string name="pref_default_time_from_now_title">Default Timer Time</string>
 
 
 

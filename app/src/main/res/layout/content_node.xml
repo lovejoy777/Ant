@@ -44,8 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/toolbar"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="50dp"
             android:text="Switch 1"
             android:textColor="@color/white"
             android:textSize="30sp" />
@@ -54,9 +54,10 @@
             android:id="@+id/sw1"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:layout_toStartOf="@+id/clockBtnsw1"
+
             android:layout_alignBottom="@+id/textView1"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_alignParentEnd="true"
             android:text="On/Off"
             android:textColor="@color/colorPrimaryText" />
 
@@ -65,8 +66,8 @@
             android:layout_height="60dp"
             android:id="@+id/clockBtnsw1"
             android:layout_alignBottom="@+id/textView1"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/sw1"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryBackground"
             android:src="@drawable/clock" />
 
@@ -76,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/sw2"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:text="Switch 2"
             android:textColor="@color/white"
             android:textSize="30sp" />
@@ -85,10 +86,10 @@
             android:id="@+id/sw2"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:layout_toStartOf="@+id/clockBtnsw2"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/sw1"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
             android:text="On/off"
             android:textColor="@color/colorPrimaryText" />
 
@@ -97,8 +98,8 @@
             android:layout_height="60dp"
             android:id="@+id/clockBtnsw2"
             android:layout_alignBottom="@+id/textView2"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/sw2"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryBackground"
             android:src="@drawable/clock" />
 
@@ -108,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/sw3"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:text="Switch 3"
             android:textColor="@color/white"
             android:textSize="30sp" />
@@ -117,10 +118,10 @@
             android:id="@+id/sw3"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:layout_toStartOf="@+id/clockBtnsw3"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/sw2"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
             android:text="On/Off"
             android:textColor="@color/colorPrimaryText" />
 
@@ -129,8 +130,8 @@
             android:layout_height="60dp"
             android:id="@+id/clockBtnsw3"
             android:layout_alignBottom="@+id/textView3"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/sw3"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryBackground"
             android:src="@drawable/clock" />
 
@@ -140,7 +141,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/sw4"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:text="Switch 4"
             android:textColor="@color/white"
             android:textSize="30sp" />
@@ -149,10 +150,10 @@
             android:id="@+id/sw4"
             android:layout_width="80dp"
             android:layout_height="60dp"
-            android:layout_toStartOf="@+id/clockBtnsw4"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/sw3"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
             android:text="On/Off"
             android:textColor="@color/colorPrimaryText" />
 
@@ -161,8 +162,8 @@
             android:layout_height="60dp"
             android:id="@+id/clockBtnsw4"
             android:layout_alignBottom="@+id/textView4"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/sw4"
+            android:layout_marginEnd="16dp"
             android:background="@color/colorPrimaryBackground"
             android:src="@drawable/clock" />
 
