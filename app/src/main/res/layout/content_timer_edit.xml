@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".TimerEditActivity"
+        android:orientation="vertical"
+        android:id="@+id/MRL1">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:theme="@style/Base.Theme.Test"
+            />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="3dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add/Edit"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:id="@+id/titleTextView"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="12dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            />
+
+        <EditText
+            android:id="@+id/etaddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/toolbar"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="20sp"
+            />
+
+        <EditText
+            android:id="@+id/etcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/etaddress"
+            android:layout_below="@+id/etaddress"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="time"
+            android:textSize="@dimen/text_size"
+            />
+
+        <EditText
+            android:id="@+id/etlocalip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/etcode"
+            android:layout_below="@+id/etcode"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="time"
+            android:textSize="@dimen/text_size"
+            />
+
+        <EditText
+            android:id="@+id/etport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/etlocalip"
+            android:layout_below="@+id/etlocalip"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="20sp"
+            />
+
+        <EditText
+            android:id="@+id/etdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/etport"
+            android:layout_below="@+id/etport"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="20sp"
+            />
+
+        <EditText
+            android:id="@+id/ettime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/etdate"
+            android:layout_below="@+id/etdate"
+            android:layout_marginEnd="16dp"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="20sp"
+            />
+
+        <EditText
+            android:id="@+id/etrepeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/ettime"
+            android:layout_below="@+id/ettime"
+            android:layout_marginEnd="16dp"
+            android:text="Not Set"
+            android:textColor="@color/white"
+            android:ems="10"
+            android:inputType="text"
+            android:textSize="20sp"
+            />
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etaddress"
+            android:layout_toEndOf="@+id/etaddress"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Address"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etcode"
+            android:layout_toEndOf="@+id/etcode"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Sw Code"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewLocalIp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etlocalip"
+            android:layout_toEndOf="@+id/etlocalip"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Local IP"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewPort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etport"
+            android:layout_toEndOf="@+id/etport"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Port"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etdate"
+            android:layout_toEndOf="@+id/etdate"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Date"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ettime"
+            android:layout_toEndOf="@+id/ettime"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Time"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:id="@+id/textViewRepeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etrepeat"
+            android:layout_toEndOf="@+id/etrepeat"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Repeat"
+            android:textSize="25sp"
+            android:textColor="@color/white"/>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etrepeat"
+        android:layout_marginTop="16dp"
+        tools:context=".TimerEditActivity"
+        android:orientation="horizontal"
+        android:id="@+id/LL1">
+
+        <Button
+            android:id="@+id/reminder_date"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Set Date"
+            android:background="@drawable/custom_btn"
+            android:textColor="@color/white"
+            />
+
+        <Button
+            android:id="@+id/reminder_time"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Set Time"
+            android:background="@drawable/custom_btn"
+            android:textColor="@color/white"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/LL1"
+            tools:context=".TimerEditActivity"
+            android:orientation="horizontal"
+            android:id="@+id/LL2">
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/dayswitch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="16dp"
+                android:text="Repeat Daily"
+                android:textColor="@color/white"
+                />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/weekswitch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="16dp"
+                android:text="Repeat Weekly"
+                android:textColor="@color/white"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/custom_btn"
+            android:text="@string/confirm"
+            android:textSize="16sp"
+            android:layout_below="@+id/LL2"
+            android:layout_centerHorizontal="true"
+            />
+</RelativeLayout>
+</ScrollView>

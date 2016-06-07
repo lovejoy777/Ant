@@ -24,8 +24,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:theme="@style/Base.Theme.Test" />
 
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -2,9 +2,7 @@ package com.ai.lovejoy777.ant;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
@@ -46,7 +43,7 @@ public class MainActivityNodes extends AppCompatActivity {
     public final static String KEY_EXTRA_BASE_PORT = "KEY_EXTRA_BASE_PORT";
 
     private ListView listView;
-    ExampleDBHelper dbHelper;
+    BaseNodeDBHelper dbHelper;
 
     RelativeLayout MRL1;
     Toolbar toolBar;
@@ -101,7 +98,7 @@ public class MainActivityNodes extends AppCompatActivity {
             }
         });
 
-        dbHelper = new ExampleDBHelper(this);
+        dbHelper = new BaseNodeDBHelper(this);
 
         populateListView();
 
@@ -110,16 +107,16 @@ public class MainActivityNodes extends AppCompatActivity {
             public void onItemClick(AdapterView<?> listView, View view,
                                     int position, long id) {
                 Cursor itemCursor = (Cursor) MainActivityNodes.this.listView.getItemAtPosition(position);
-                int nodeID = itemCursor.getInt(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_ID));
-                String nodeType = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_TYPE));
-                String nodeAddress = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_ADDRESS));
-                String nodeRSAddress = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_RSADDRESS));
-                String nodeName = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_NAME));
-                String nodeSwnum = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SWNUM));
-                String nodeSw1 = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SW1));
-                String nodeSw2 = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SW2));
-                String nodeSw3 = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SW3));
-                String nodeSw4 = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SW4));
+                int nodeID = itemCursor.getInt(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ID));
+                String nodeType = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_TYPE));
+                String nodeAddress = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ADDRESS));
+                String nodeRSAddress = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_RSADDRESS));
+                String nodeName = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_NAME));
+                String nodeSwnum = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SWNUM));
+                String nodeSw1 = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW1));
+                String nodeSw2 = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW2));
+                String nodeSw3 = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW3));
+                String nodeSw4 = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW4));
 
 
                 Intent intent = new Intent(getApplicationContext(), Node.class);
@@ -148,7 +145,7 @@ public class MainActivityNodes extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> listView, View view,
                                            int position, long id) {
                 Cursor itemCursor = (Cursor) MainActivityNodes.this.listView.getItemAtPosition(position);
-                int nodeID = itemCursor.getInt(itemCursor.getColumnIndex(ExampleDBHelper.NODE_COLUMN_ID));
+                int nodeID = itemCursor.getInt(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ID));
                 Intent intent = new Intent(getApplicationContext(), CreateOrEditNodesActivity.class);
                 intent.putExtra(KEY_EXTRA_NODE_ID, nodeID);
                 Bundle bndlanim =
@@ -161,22 +158,22 @@ public class MainActivityNodes extends AppCompatActivity {
 
     private void populateListView() {
         final Cursor cursor = dbHelper.getBaseNode(baseID);
-        String[] columns = new String[] {
-                ExampleDBHelper.NODE_COLUMN_ID,
-                ExampleDBHelper.NODE_COLUMN_NAME,
-                ExampleDBHelper.NODE_COLUMN_ADDRESS,
-                ExampleDBHelper.NODE_COLUMN_RSADDRESS,
-                ExampleDBHelper.NODE_COLUMN_BASE_ID
+        String[] columns = new String[]{
+                BaseNodeDBHelper.NODE_COLUMN_ID,
+                BaseNodeDBHelper.NODE_COLUMN_NAME,
+                BaseNodeDBHelper.NODE_COLUMN_ADDRESS,
+                BaseNodeDBHelper.NODE_COLUMN_RSADDRESS,
+                BaseNodeDBHelper.NODE_COLUMN_BASE_ID
 
         };
-        int [] widgets = new int[] {
+        int[] widgets = new int[]{
                 R.id.nodeID,
                 R.id.nodeName
         };
 
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.node_info,
                 cursor, columns, widgets, 0);
-        listView = (ListView)findViewById(R.id.listViewNode);
+        listView = (ListView) findViewById(R.id.listViewNode);
         listView.setAdapter(cursorAdapter);
     }
 
@@ -237,7 +234,7 @@ public class MainActivityNodes extends AppCompatActivity {
                                 break;
 
                             case R.id.nav_timers:
-                                Intent timers = new Intent(MainActivityNodes.this, ReminderListActivity.class);
+                                Intent timers = new Intent(MainActivityNodes.this, TimerListActivity.class);
                                 startActivity(timers, bndlanimation);
                                 break;
                         }

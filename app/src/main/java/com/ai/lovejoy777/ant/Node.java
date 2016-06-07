@@ -41,13 +41,9 @@ import com.natasa.progresspercent.OnProgressTrackListener;
  */
 public class Node extends AppCompatActivity {
 
-    private static final int ACTIVITY_CREATE=0;
-    private static final int ACTIVITY_EDIT=1;
+    private static final int ACTIVITY_CREATE = 0;
+    private static final int ACTIVITY_EDIT = 1;
 
-    public final static String KEY_EXTRA_NODE_ADDRESS = "KEY_EXTRA_NODE_ADDRESS";
-    public final static String KEY_EXTRA_NODE_SWCODE = "KEY_EXTRA_NODE_SWCODE";
-    public final static String KEY_EXTRA_BASE_LOCALIP = "KEY_EXTRA_NODE_LOCALIP";
-    public final static String KEY_EXTRA_BASE_PORT = "KEY_EXTRA_NODE_PORT";
 
     private CircularProgress circularProgress;
     private DrawerLayout mDrawerLayout;
@@ -151,12 +147,10 @@ public class Node extends AppCompatActivity {
         savePrefs1("PORT", port);
         savePrefs1("ADDRESS", addressn1);
 
-
-                                              // NODE SWITCHES
+        // NODE SWITCHES
         if (nodetypen1.equals("Switch")) {
             setContentView(R.layout.node);
             loadToolbarNavDrawer();
-
 
             toolBar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -241,7 +235,7 @@ public class Node extends AppCompatActivity {
             sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
             sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
 
-                                                // NODE SWITCH 1
+            // NODE SWITCH 1
 
             // SetClock
             clockBtnsw1.setOnClickListener(new View.OnClickListener() {
@@ -295,7 +289,7 @@ public class Node extends AppCompatActivity {
                 }
             });
 
-                                                          // NODE SWITCH 2
+            // NODE SWITCH 2
             // SetClock
             clockBtnsw2.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -348,7 +342,7 @@ public class Node extends AppCompatActivity {
                 }
             });
 
-                                                        // NODE SWITCH 3
+            // NODE SWITCH 3
             // SetClock
             clockBtnsw3.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -401,7 +395,7 @@ public class Node extends AppCompatActivity {
                 }
             });
 
-                                                   // NODE SWITCH 4
+            // NODE SWITCH 4
             // SetClock
             clockBtnsw4.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -454,7 +448,7 @@ public class Node extends AppCompatActivity {
                 }
             });
         }
-                                               // ROOM STAT
+        // ROOM STAT
         if (nodetypen1.equals("RoomStat")) {
             setContentView(R.layout.heating);
 
@@ -489,7 +483,6 @@ public class Node extends AppCompatActivity {
             } catch (Exception e) {
                 System.out.println("No connection");
             }
-
 
             sw1.setVisibility(View.GONE);
             clockBtnsw1.setVisibility(View.GONE);
@@ -764,20 +757,7 @@ public class Node extends AppCompatActivity {
                 }
             });
 
-           // tempTV.setClickable(true);
-           // tempTV.setOnClickListener(new View.OnClickListener() {
-
-           //     @Override
-            //    public void onClick(View v) {
-            //        try {
-            //            dataIn(rsaddressn1 + getTemp); // "9999"
-            //        } catch (Exception e) {
-             //           System.out.println("No connection");
-             //       }
-             //   }
-          //  });
-
-             // GET TEMP
+            // GET TEMP
             getTempBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     try {
@@ -787,214 +767,211 @@ public class Node extends AppCompatActivity {
                     }
                 }
             });
-
         }
 
+        /**                                         // DIMMER SWITCHES
+         if (nodetypen1.equals("Dimmer")) {
+         setContentView(R.layout.dimmer);
+         loadToolbarNavDrawer();
+         toolBar = (Toolbar) findViewById(R.id.toolbar);
 
+         TVin = (TextView) findViewById(R.id.TVin);
 
-                                                 // DIMMER SWITCHES
-        if (nodetypen1.equals("Dimmer")) {
-            setContentView(R.layout.dimmer);
-            loadToolbarNavDrawer();
-            toolBar = (Toolbar) findViewById(R.id.toolbar);
+         LDS1 = (LinearLayout) findViewById(R.id.LDS1);
+         LDS2 = (LinearLayout) findViewById(R.id.LDS2);
+         LDS3 = (LinearLayout) findViewById(R.id.LDS3);
+         LDS4 = (LinearLayout) findViewById(R.id.LDS4);
+         LDSB1 = (LinearLayout) findViewById(R.id.LDSB1);
+         LDSB2 = (LinearLayout) findViewById(R.id.LDSB2);
+         LDSB3 = (LinearLayout) findViewById(R.id.LDSB3);
+         LDSB4 = (LinearLayout) findViewById(R.id.LDSB4);
 
-            TVin = (TextView) findViewById(R.id.TVin);
+         titleTV = (TextView) findViewById(R.id.titleTV);
+         TVD1 = (TextView) findViewById(R.id.TVD1);
+         TVD2 = (TextView) findViewById(R.id.TVD2);
+         TVD3 = (TextView) findViewById(R.id.TVD3);
+         TVD4 = (TextView) findViewById(R.id.TVD4);
 
-            LDS1 = (LinearLayout) findViewById(R.id.LDS1);
-            LDS2 = (LinearLayout) findViewById(R.id.LDS2);
-            LDS3 = (LinearLayout) findViewById(R.id.LDS3);
-            LDS4 = (LinearLayout) findViewById(R.id.LDS4);
-            LDSB1 = (LinearLayout) findViewById(R.id.LDSB1);
-            LDSB2 = (LinearLayout) findViewById(R.id.LDSB2);
-            LDSB3 = (LinearLayout) findViewById(R.id.LDSB3);
-            LDSB4 = (LinearLayout) findViewById(R.id.LDSB4);
+         TVD1off = (TextView) findViewById(R.id.TVD1off);
+         TVD2off = (TextView) findViewById(R.id.TVD2off);
+         TVD3off = (TextView) findViewById(R.id.TVD3off);
+         TVD4off = (TextView) findViewById(R.id.TVD4off);
+         TVD1on = (TextView) findViewById(R.id.TVD1on);
+         TVD2on = (TextView) findViewById(R.id.TVD2on);
+         TVD3on = (TextView) findViewById(R.id.TVD3on);
+         TVD4on = (TextView) findViewById(R.id.TVD4on);
 
-            titleTV = (TextView) findViewById(R.id.titleTV);
-            TVD1 = (TextView) findViewById(R.id.TVD1);
-            TVD2 = (TextView) findViewById(R.id.TVD2);
-            TVD3 = (TextView) findViewById(R.id.TVD3);
-            TVD4 = (TextView) findViewById(R.id.TVD4);
+         seekBarSw1 = (SeekBar) findViewById(R.id.seekBarSw1);
+         seekBarSw2 = (SeekBar) findViewById(R.id.seekBarSw2);
+         seekBarSw3 = (SeekBar) findViewById(R.id.seekBarSw3);
+         seekBarSw4 = (SeekBar) findViewById(R.id.seekBarSw4);
 
-            TVD1off = (TextView) findViewById(R.id.TVD1off);
-            TVD2off = (TextView) findViewById(R.id.TVD2off);
-            TVD3off = (TextView) findViewById(R.id.TVD3off);
-            TVD4off = (TextView) findViewById(R.id.TVD4off);
-            TVD1on = (TextView) findViewById(R.id.TVD1on);
-            TVD2on = (TextView) findViewById(R.id.TVD2on);
-            TVD3on = (TextView) findViewById(R.id.TVD3on);
-            TVD4on = (TextView) findViewById(R.id.TVD4on);
+         titleTV.setText("" + nodenamen1);
 
-            seekBarSw1 = (SeekBar) findViewById(R.id.seekBarSw1);
-            seekBarSw2 = (SeekBar) findViewById(R.id.seekBarSw2);
-            seekBarSw3 = (SeekBar) findViewById(R.id.seekBarSw3);
-            seekBarSw4 = (SeekBar) findViewById(R.id.seekBarSw4);
+         LDS1.setVisibility(View.GONE);
+         LDS2.setVisibility(View.GONE);
+         LDS3.setVisibility(View.GONE);
+         LDS4.setVisibility(View.GONE);
+         LDSB1.setVisibility(View.GONE);
+         LDSB2.setVisibility(View.GONE);
+         LDSB3.setVisibility(View.GONE);
+         LDSB4.setVisibility(View.GONE);
 
-            titleTV.setText("" + nodenamen1);
+         // sets the number of switches shown
+         if (swnumn1.equals("1")) {
+         LDS1.setVisibility(View.VISIBLE);
+         LDSB1.setVisibility(View.VISIBLE);
 
-            LDS1.setVisibility(View.GONE);
-            LDS2.setVisibility(View.GONE);
-            LDS3.setVisibility(View.GONE);
-            LDS4.setVisibility(View.GONE);
-            LDSB1.setVisibility(View.GONE);
-            LDSB2.setVisibility(View.GONE);
-            LDSB3.setVisibility(View.GONE);
-            LDSB4.setVisibility(View.GONE);
+         }
+         if (swnumn1.equals("2")) {
+         LDS1.setVisibility(View.VISIBLE);
+         LDS2.setVisibility(View.VISIBLE);
+         LDSB1.setVisibility(View.VISIBLE);
+         LDSB2.setVisibility(View.VISIBLE);
+         }
+         if (swnumn1.equals("3")) {
+         LDS1.setVisibility(View.VISIBLE);
+         LDS2.setVisibility(View.VISIBLE);
+         LDS3.setVisibility(View.VISIBLE);
+         LDSB1.setVisibility(View.VISIBLE);
+         LDSB2.setVisibility(View.VISIBLE);
+         LDSB3.setVisibility(View.VISIBLE);
+         }
+         if (swnumn1.equals("4")) {
+         LDS1.setVisibility(View.VISIBLE);
+         LDS2.setVisibility(View.VISIBLE);
+         LDS3.setVisibility(View.VISIBLE);
+         LDS4.setVisibility(View.VISIBLE);
+         LDSB1.setVisibility(View.VISIBLE);
+         LDSB2.setVisibility(View.VISIBLE);
+         LDSB3.setVisibility(View.VISIBLE);
+         LDSB4.setVisibility(View.VISIBLE);
+         }
 
-            // sets the number of switches shown
-            if (swnumn1.equals("1")) {
-                LDS1.setVisibility(View.VISIBLE);
-                LDSB1.setVisibility(View.VISIBLE);
+         titleTV.setText(nodenamen1);
+         TVD1.setText(sw1namen1);
+         TVD2.setText(sw2namen1);
+         TVD3.setText(sw3namen1);
+         TVD4.setText(sw4namen1);
 
-            }
-            if (swnumn1.equals("2")) {
-                LDS1.setVisibility(View.VISIBLE);
-                LDS2.setVisibility(View.VISIBLE);
-                LDSB1.setVisibility(View.VISIBLE);
-                LDSB2.setVisibility(View.VISIBLE);
-            }
-            if (swnumn1.equals("3")) {
-                LDS1.setVisibility(View.VISIBLE);
-                LDS2.setVisibility(View.VISIBLE);
-                LDS3.setVisibility(View.VISIBLE);
-                LDSB1.setVisibility(View.VISIBLE);
-                LDSB2.setVisibility(View.VISIBLE);
-                LDSB3.setVisibility(View.VISIBLE);
-            }
-            if (swnumn1.equals("4")) {
-                LDS1.setVisibility(View.VISIBLE);
-                LDS2.setVisibility(View.VISIBLE);
-                LDS3.setVisibility(View.VISIBLE);
-                LDS4.setVisibility(View.VISIBLE);
-                LDSB1.setVisibility(View.VISIBLE);
-                LDSB2.setVisibility(View.VISIBLE);
-                LDSB3.setVisibility(View.VISIBLE);
-                LDSB4.setVisibility(View.VISIBLE);
-            }
+         // DIMMER 1
+         seekBarSw1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+         int sw1DimVal = 0;
+         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+         sw1DimVal = progress;
+         }
+         public void onStartTrackingTouch(SeekBar seekBar) {
+         // TODO Auto-generated method stub
+         }
+         public void onStopTrackingTouch(SeekBar seekBar) {
+         Toast.makeText(getApplicationContext(), "seek bar progress:" + sw1DimVal, Toast.LENGTH_SHORT).show();
+         if (sw1DimVal > 50 ) {
+         try {
+         dataOut(addressn1 + code1); // "on"
+         TVin.setTextColor(Color.parseColor("#0277BD"));
+         } catch (Exception e) {
+         System.out.println("No connection");
+         }
+         }
+         if (sw1DimVal < 50 ) {
+         try {
+         dataOut(addressn1 + code2);  // "off"
+         TVin.setTextColor(Color.parseColor("#e57373"));
+         } catch (Exception e) {
+         System.out.println("No connection");
+         }
+         }
+         }
+         });
+         // DIMMER 2
+         seekBarSw2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+         int sw2DimVal = 0;
+         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+         sw2DimVal = progress;
+         }
+         public void onStartTrackingTouch(SeekBar seekBar) {
+         // TODO Auto-generated method stub
+         }
+         public void onStopTrackingTouch(SeekBar seekBar) {
+         Toast.makeText(getApplicationContext(), "seek bar progress:" + sw2DimVal, Toast.LENGTH_SHORT).show();
+         if (sw2DimVal > 50 ) {
+         try {
+         dataOut(addressn1 + code3); // "on"
+         TVin.setTextColor(Color.parseColor("#0277BD"));
+         } catch (Exception e) {
+         System.out.println("No connection");
+         }
+         }
+         if (sw2DimVal < 50 ) {
+         try {
+         dataOut(addressn1 + code4);  // "off"
+         TVin.setTextColor(Color.parseColor("#e57373"));
+         } catch (Exception e) {
+         System.out.println("No connection");
+         }
+         }
+         }
+         });
+         // DIMMER 3
+         seekBarSw3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+         int sw3DimVal = 0;
+         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+         sw3DimVal = progress;
+         }
+         public void onStartTrackingTouch(SeekBar seekBar) {
+         // TODO Auto-generated method stub
+         }
+         public void onStopTrackingTouch(SeekBar seekBar) {
+         Toast.makeText(getApplicationContext(), "seek bar progress:" + sw3DimVal, Toast.LENGTH_SHORT).show();
+         if (sw3DimVal > 50 ) {
+         try {
+         dataOut(addressn1 + code5); // "on"
+         TVin.setTextColor(Color.parseColor("#0277BD"));
+         } catch (Exception e) {
+         System.out.println("No connection");
+         }
+         }
+         if (sw3DimVal < 50 ) {
+         try {
+         dataOut(addressn1 + code6);  // "off"
+         TVin.setTextColor(Color.parseColor("#e57373"));
+         } catch (Exception e) {
+         System.out.println("No connection");
+         }
+         }
+         }
+         });
+         // DIMMER 4
+         seekBarSw4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+         int sw4DimVal = 0;
+         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+         sw4DimVal = progress;
+         }
+         public void onStartTrackingTouch(SeekBar seekBar) {
+         // TODO Auto-generated method stub
+         }
+         public void onStopTrackingTouch(SeekBar seekBar) {
+         Toast.makeText(getApplicationContext(), "seek bar progress:" + sw4DimVal, Toast.LENGTH_SHORT).show();
+         if (sw4DimVal > 50 ) {
+         try {
+         dataOut(addressn1 + code7); // "on"
+         TVin.setTextColor(Color.parseColor("#0277BD"));
+         } catch (Exception e) {
+         System.out.println("No connection");
+         }
+         }
+         if (sw4DimVal < 50 ) {
+         try {
+         dataOut(addressn1 + code8);  // "off"
+         TVin.setTextColor(Color.parseColor("#e57373"));
+         } catch (Exception e) {
+         System.out.println("No connection");
+         }
+         }
+         }
+         });
 
-            titleTV.setText(nodenamen1);
-            TVD1.setText(sw1namen1);
-            TVD2.setText(sw2namen1);
-            TVD3.setText(sw3namen1);
-            TVD4.setText(sw4namen1);
-
-                                        // DIMMER 1
-            seekBarSw1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                int sw1DimVal = 0;
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
-                    sw1DimVal = progress;
-                }
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    // TODO Auto-generated method stub
-                }
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    Toast.makeText(getApplicationContext(), "seek bar progress:" + sw1DimVal, Toast.LENGTH_SHORT).show();
-                    if (sw1DimVal > 50 ) {
-                        try {
-                            dataOut(addressn1 + code1); // "on"
-                            TVin.setTextColor(Color.parseColor("#0277BD"));
-                        } catch (Exception e) {
-                            System.out.println("No connection");
-                        }
-                    }
-                    if (sw1DimVal < 50 ) {
-                        try {
-                            dataOut(addressn1 + code2);  // "off"
-                            TVin.setTextColor(Color.parseColor("#e57373"));
-                        } catch (Exception e) {
-                            System.out.println("No connection");
-                        }
-                    }
-                }
-            });
-                                       // DIMMER 2
-            seekBarSw2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                int sw2DimVal = 0;
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
-                    sw2DimVal = progress;
-                }
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    // TODO Auto-generated method stub
-                }
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    Toast.makeText(getApplicationContext(), "seek bar progress:" + sw2DimVal, Toast.LENGTH_SHORT).show();
-                    if (sw2DimVal > 50 ) {
-                        try {
-                            dataOut(addressn1 + code3); // "on"
-                            TVin.setTextColor(Color.parseColor("#0277BD"));
-                        } catch (Exception e) {
-                            System.out.println("No connection");
-                        }
-                    }
-                    if (sw2DimVal < 50 ) {
-                        try {
-                            dataOut(addressn1 + code4);  // "off"
-                            TVin.setTextColor(Color.parseColor("#e57373"));
-                        } catch (Exception e) {
-                            System.out.println("No connection");
-                        }
-                    }
-                }
-            });
-                                    // DIMMER 3
-            seekBarSw3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                int sw3DimVal = 0;
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
-                    sw3DimVal = progress;
-                }
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    // TODO Auto-generated method stub
-                }
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    Toast.makeText(getApplicationContext(), "seek bar progress:" + sw3DimVal, Toast.LENGTH_SHORT).show();
-                    if (sw3DimVal > 50 ) {
-                        try {
-                            dataOut(addressn1 + code5); // "on"
-                            TVin.setTextColor(Color.parseColor("#0277BD"));
-                        } catch (Exception e) {
-                            System.out.println("No connection");
-                        }
-                    }
-                    if (sw3DimVal < 50 ) {
-                        try {
-                            dataOut(addressn1 + code6);  // "off"
-                            TVin.setTextColor(Color.parseColor("#e57373"));
-                        } catch (Exception e) {
-                            System.out.println("No connection");
-                        }
-                    }
-                }
-            });
-                                // DIMMER 4
-            seekBarSw4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                int sw4DimVal = 0;
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
-                    sw4DimVal = progress;
-                }
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    // TODO Auto-generated method stub
-                }
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    Toast.makeText(getApplicationContext(), "seek bar progress:" + sw4DimVal, Toast.LENGTH_SHORT).show();
-                    if (sw4DimVal > 50 ) {
-                        try {
-                            dataOut(addressn1 + code7); // "on"
-                            TVin.setTextColor(Color.parseColor("#0277BD"));
-                        } catch (Exception e) {
-                            System.out.println("No connection");
-                        }
-                    }
-                    if (sw4DimVal < 50 ) {
-                        try {
-                            dataOut(addressn1 + code8);  // "off"
-                            TVin.setTextColor(Color.parseColor("#e57373"));
-                        } catch (Exception e) {
-                            System.out.println("No connection");
-                        }
-                    }
-                }
-            });
-
-        }
+         } */
     }
 
     private Boolean isOnline() {
@@ -1004,7 +981,6 @@ public class Node extends AppCompatActivity {
             return true;
         return false;
     }
-
 
 
     public void dataOut(String s) throws Exception {
@@ -1068,10 +1044,10 @@ public class Node extends AppCompatActivity {
                 tempTV.setText(modifiedSentence + " C");
 
 
-                Float f= Float.parseFloat(modifiedSentence);
+                Float f = Float.parseFloat(modifiedSentence);
                 int i = Math.round(f);
-                int progress = i*2;
-                if (progress <46) {
+                int progress = i * 2;
+                if (progress < 46) {
                     circularProgress.setProgressColor(Color.parseColor("#0277BD"));
 
                 } else {
@@ -1146,7 +1122,7 @@ public class Node extends AppCompatActivity {
                                 break;
 
                             case R.id.nav_timers:
-                                Intent timers = new Intent(Node.this, ReminderListActivity.class);
+                                Intent timers = new Intent(Node.this, TimerListActivity.class);
                                 startActivity(timers, bndlanimation);
                                 break;
                         }
@@ -1163,7 +1139,7 @@ public class Node extends AppCompatActivity {
 
         //methods that can be used for both progress views
 
-       // circularProgress.setProgressColor(Color.parseColor("#0277BD"));
+        // circularProgress.setProgressColor(Color.parseColor("#0277BD"));
         //circularProgress.setTypeface("Roboto-Regular.ttf");
         // lineProgress.setBackgroundColor(Color.LTGRAY);
         // lineProgress.setProgressColor(Color.GREEN);
@@ -1186,7 +1162,7 @@ public class Node extends AppCompatActivity {
     }
 
     private void createReminderOn() {
-        Intent i = new Intent(this, ReminderEditActivity.class);
+        Intent i = new Intent(this, TimerEditActivity.class);
 
         startActivityForResult(i, ACTIVITY_CREATE);
     }

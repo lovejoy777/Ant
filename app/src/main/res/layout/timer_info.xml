@@ -8,8 +8,8 @@
         android:id="@+id/RL1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/colorPrimaryBackground"
@@ -22,21 +22,22 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_margin="16dp"
-            android:src="@drawable/radar" />
+            android:src="@drawable/clock" />
 
         <TextView
-            android:id="@+id/baseName"
+            android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:text="menu title"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/img_thumbnail1"
+            android:text="timer set time"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerVertical="true" />
 
         <TextView
-            android:id="@+id/baseID"
+            android:id="@+id/timerID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="0sp"/>

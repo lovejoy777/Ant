@@ -1,6 +1,4 @@
-
 package com.ai.lovejoy777.ant;
-
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -21,21 +19,15 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
+public class TimerListActivity extends AppCompatActivity {
 
-public class ReminderListActivity extends AppCompatActivity {
+    private static final int ACTIVITY_CREATE = 0;
+    private static final int ACTIVITY_EDIT = 1;
 
-
-    private static final int ACTIVITY_CREATE=0;
-    private static final int ACTIVITY_EDIT=1;
-
-    private RemindersDbAdapter mDbHelper;
+    private TimerDbAdapter mDbHelper;
     private DrawerLayout mDrawerLayout;
-
-
     private ListView listView;
-
 
     RelativeLayout MRL1;
     Toolbar toolBar;
@@ -61,20 +53,23 @@ public class ReminderListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ReminderListActivity.this, R.style.MyAlertDialogStyle);
+                AlertDialog.Builder builder = new AlertDialog.Builder(TimerListActivity.this, R.style.MyAlertDialogStyle);
                 builder.setMessage(R.string.warning);
                 builder.setInverseBackgroundForced(true)
+
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 mDbHelper.deleteAll();
                                 populateListView();
                             }
                         })
+
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
                             }
                         });
+
                 AlertDialog d = builder.create();
                 d.setTitle("Delete All Timers");
                 d.show();
@@ -83,7 +78,7 @@ public class ReminderListActivity extends AppCompatActivity {
             }
         });
 
-        mDbHelper = new RemindersDbAdapter(this);
+        mDbHelper = new TimerDbAdapter(this);
         mDbHelper.open();
 
         populateListView();
@@ -92,16 +87,13 @@ public class ReminderListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> listView, View view,
                                     int position, long id) {
-                Cursor itemCursor = (Cursor) ReminderListActivity.this.listView.getItemAtPosition(position);
-                int rowID = itemCursor.getInt(itemCursor.getColumnIndex(RemindersDbAdapter.KEY_ROWID));
+                Cursor itemCursor = (Cursor) TimerListActivity.this.listView.getItemAtPosition(position);
+                //int rowID = itemCursor.getInt(itemCursor.getColumnIndex(TimerDbAdapter.KEY_ROWID));
 
-                Intent i = new Intent(getApplicationContext(), ReminderEditActivity.class);
-                i.putExtra(RemindersDbAdapter.KEY_ROWID, id);
+                Intent i = new Intent(getApplicationContext(), TimerEditActivity.class);
+                i.putExtra(TimerDbAdapter.KEY_ROWID, id);
                 startActivityForResult(i, ACTIVITY_EDIT);
-
-
-                Toast.makeText(getApplicationContext(), "Edit " + rowID, Toast.LENGTH_SHORT).show();
-
+                // Toast.makeText(getApplicationContext(), "Edit " + rowID, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,12 +102,13 @@ public class ReminderListActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> listView, View view,
                                            int position, long id) {
-                Cursor itemCursor = (Cursor) ReminderListActivity.this.listView.getItemAtPosition(position);
-                final int rowID = itemCursor.getInt(itemCursor.getColumnIndex(RemindersDbAdapter.KEY_ROWID));
+                Cursor itemCursor = (Cursor) TimerListActivity.this.listView.getItemAtPosition(position);
+                final int rowID = itemCursor.getInt(itemCursor.getColumnIndex(TimerDbAdapter.KEY_ROWID));
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(ReminderListActivity.this, R.style.MyAlertDialogStyle);
+                AlertDialog.Builder builder = new AlertDialog.Builder(TimerListActivity.this, R.style.MyAlertDialogStyle);
                 builder.setMessage(R.string.deleteTimer);
                 builder.setInverseBackgroundForced(true)
+
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
@@ -124,11 +117,13 @@ public class ReminderListActivity extends AppCompatActivity {
                                 populateListView();
                             }
                         })
+
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
                             }
                         });
+
                 AlertDialog d = builder.create();
                 d.setTitle("Delete Timer");
                 d.show();
@@ -138,26 +133,19 @@ public class ReminderListActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void amDeleteTimer(long rowID) {
 
-        new ReminderManager(this).deleteTimer(rowID);
-
+        new TimerManager(this).deleteTimer(rowID);
     }
-
-
-
 
     private void populateListView() {
         final Cursor cursor = mDbHelper.fetchAllTimers();
-        String[] from = new String[]{RemindersDbAdapter.KEY_DATE_TIME};
+        String[] from = new String[]{TimerDbAdapter.KEY_DATE_TIME};
         int[] to = new int[]{R.id.text1};
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.timer_info, cursor, from, to);
-        listView = (ListView)findViewById(R.id.list);
+        listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(cursorAdapter);
     }
-
 
     private void loadToolbarNavDrawer() {
         //set Toolbar
@@ -206,20 +194,23 @@ public class ReminderListActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.nav_clearall:
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ReminderListActivity.this, R.style.MyAlertDialogStyle);
+                                AlertDialog.Builder builder = new AlertDialog.Builder(TimerListActivity.this, R.style.MyAlertDialogStyle);
                                 builder.setMessage(R.string.warning);
                                 builder.setInverseBackgroundForced(true)
+
                                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
                                                 mDbHelper.deleteAll();
                                                 populateListView();
                                             }
                                         })
+
                                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int id) {
 
                                             }
                                         });
+
                                 AlertDialog d = builder.create();
                                 d.setTitle("Delete All Timers");
                                 d.show();
@@ -227,14 +218,10 @@ public class ReminderListActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.nav_settings:
-                                Intent settings = new Intent(ReminderListActivity.this, TaskPreferences.class);
+                                Intent settings = new Intent(TimerListActivity.this, TimerPreferences.class);
                                 startActivity(settings, bndlanimation);
                                 break;
-
-
                         }
-
-
                         return false;
                     }
                 });
@@ -244,6 +231,7 @@ public class ReminderListActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.back2, R.anim.back1);
+        mDbHelper.close();
     }
 
     @Override

@@ -25,24 +25,19 @@
 
     </group>
 
-    <item android:title="@string/General">
+    <item android:title="Timers">
 
         <menu>
-            <item
-                android:id="@+id/nav_tutorial"
-                android:icon="@drawable/ic_drawer_about"
-                android:title="@string/Tutorial"
-
-                />
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_drawer_help"
-                android:title="@string/About" />
 
             <item
-                android:id="@+id/nav_timers"
-                android:icon="@android:drawable/ic_lock_idle_alarm"
-                android:title="@string/Timers" />
+                android:id="@+id/nav_clearall"
+                android:icon="@drawable/ic_drawer_settings"
+                android:title="Delete all Timers" />
+
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_drawer_settings"
+                android:title="Timer Settings" />
 
         </menu>
     </item>

@@ -24,7 +24,6 @@
             android:layout_margin="16dp"
             android:src="@drawable/radar" />
 
-
         <TextView
             android:id="@+id/nodeName"
             android:layout_width="wrap_content"

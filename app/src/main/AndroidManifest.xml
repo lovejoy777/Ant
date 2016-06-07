@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ai.lovejoy777.ant">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -14,7 +14,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Base.Theme.Toolbar">
-
 
         <activity
             android:name=".MainActivity"
@@ -30,79 +29,72 @@
         <activity
             android:name=".MainActivityNodes"
             android:label=""
-            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"
-            android:parentActivityName=".MainActivity">
-
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar">
         </activity>
-
 
         <activity
             android:name=".Node"
             android:label=""
-            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"
-            android:parentActivityName=".MainActivityNodes">
-
+            android:parentActivityName=".MainActivityNodes"
+            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar">
         </activity>
 
         <activity
             android:name=".CreateOrEditBasesActivity"
             android:label="Edit/Add"
-            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar">
         </activity>
 
         <activity
             android:name=".CreateOrEditNodesActivity"
             android:label="Edit/Add"
-            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"
-            android:parentActivityName=".MainActivityNodes" >
-        </activity>
-
-
-        <activity
-            android:name=".activities.AboutActivity"
-            android:label=""
-            android:theme="@style/Toolbar2"
-            android:parentActivityName=".MainActivity">
-        </activity>
-
-        <activity
-            android:label=""
-            android:name=".Tutorial"
-            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"
-            android:parentActivityName=".MainActivity" >
-        </activity>
-
-        <activity
-            android:label="Ant Auto"
-            android:name=".TimerLaunch"
+            android:parentActivityName=".MainActivityNodes"
             android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar">
         </activity>
 
         <activity
-            android:name=".ReminderListActivity"
+            android:name=".activities.AboutActivity"
             android:label=""
-            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"/>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Toolbar2">
+        </activity>
+
         <activity
-            android:name=".ReminderEditActivity"
+            android:name=".Tutorial"
             android:label=""
-            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"/>
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar">
+        </activity>
+
         <activity
-            android:name=".TaskPreferences"
+            android:name=".TimerLaunch"
+            android:label="Ant Auto"
+            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar">
+        </activity>
+
+        <activity
+            android:name=".TimerListActivity"
+            android:label=""
+            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar" />
+        <activity
+            android:name=".TimerEditActivity"
+            android:label=""
+            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar" />
+        <activity
+            android:name=".TimerPreferences"
             android:label="Timer Prefs"
-            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar"/>
+            android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar" />
+
         <receiver android:name=".OnBootReceiver">
             <intent-filter>
-                <action
-                    android:name="android.intent.action.BOOT_COMPLETED" />
-
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver
-            android:name=".OnAlarmReceiver" />
-        <service
-            android:name=".ReminderService" />
+        <receiver android:name=".OnAlarmReceiver" />
+
+        <service android:name=".TimerService" />
 
     </application>
-
 </manifest>

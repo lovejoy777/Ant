@@ -93,8 +93,6 @@
 
         </LinearLayout>
 
-
-
         <LinearLayout
             android:id="@+id/LDS2"
             android:layout_width="wrap_content"
@@ -276,8 +274,6 @@
             android:text="..."
             android:textColor="@color/white"
             android:textSize="18sp" />
-
-
 
     </RelativeLayout>
 

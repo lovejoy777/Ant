@@ -8,7 +8,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="btngray">#E0E0E0</color>
 
-
     <!-- Primary & Accent colors -->
     <color name="primary">#ff3F51B5</color>
     <color name="primary_dark">#ff303F9F</color>
@@ -28,7 +27,6 @@
     <color name="tutorial_text_secondary_color">#ffffffff</color>
     <color name="card_text_color">#ff000000</color>
 
-
     <!-- Backgrounds -->
     <color name="transparent">#00000000</color>
     <color name="background">#263238</color>
@@ -43,13 +41,9 @@
     <!-- log colors -->
     <color name="list_item_bg">#ffffff</color>
     <color name="view_divider_color">#BABABA</color>
-
     <color name="c_accent">#325C80</color>
-
     <color name="c_primary">#2B4F6F</color>
-
     <color name="c_primary_dark">#24435D</color>
-
     <color name="floating_action_button_bg">@color/c_accent</color>
     <color name="floating_action_button_pressed_bg">#212121</color>
 </resources>

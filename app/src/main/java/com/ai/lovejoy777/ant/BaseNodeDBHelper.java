@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by obaro on 02/04/2015.
  */
-public class ExampleDBHelper extends SQLiteOpenHelper {
+public class BaseNodeDBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SQLiteExample.db";
     private static final int DATABASE_VERSION = 3;
@@ -34,7 +34,7 @@ public class ExampleDBHelper extends SQLiteOpenHelper {
     public static final String BASE_COLUMN_LOCALIP = "localip";
     public static final String BASE_COLUMN_PORT = "port";
 
-    public ExampleDBHelper(Context context) {
+    public BaseNodeDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -65,8 +65,6 @@ public class ExampleDBHelper extends SQLiteOpenHelper {
                         BASE_COLUMN_LOCALIP + " TEXT, " +
                         BASE_COLUMN_PORT + " TEXT)"
         );
-
-
     }
 
     @Override
@@ -133,7 +131,7 @@ public class ExampleDBHelper extends SQLiteOpenHelper {
         contentValues.put(NODE_COLUMN_SW3, sw3);
         contentValues.put(NODE_COLUMN_SW4, sw4);
         contentValues.put(NODE_COLUMN_BASE_ID, base_id);
-        db.update(NODE_TABLE_NAME, contentValues, NODE_COLUMN_ID + " = ? ", new String[] { Integer.toString(id) } );
+        db.update(NODE_TABLE_NAME, contentValues, NODE_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
         return true;
     }
 
@@ -143,7 +141,7 @@ public class ExampleDBHelper extends SQLiteOpenHelper {
         contentValues.put(BASE_COLUMN_NAME, name);
         contentValues.put(BASE_COLUMN_LOCALIP, localip);
         contentValues.put(BASE_COLUMN_PORT, port);
-        db.update(BASE_TABLE_NAME, contentValues, BASE_COLUMN_ID + " = ? ", new String[] { Integer.toString(id) } );
+        db.update(BASE_TABLE_NAME, contentValues, BASE_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
         return true;
     }
 
@@ -151,53 +149,53 @@ public class ExampleDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(NODE_TABLE_NAME,
                 NODE_COLUMN_ID + " = ? ",
-                new String[] { Integer.toString(id) });
+                new String[]{Integer.toString(id)});
     }
 
     public Integer deleteBase(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(BASE_TABLE_NAME,
                 BASE_COLUMN_ID + " = ? ",
-                new String[] { Integer.toString(id) });
+                new String[]{Integer.toString(id)});
     }
 
     public Integer deleteAllBaseEntries(Integer id) {
-      //  new String query = "Select * FROM " + ENTRY_TABLE_NAME + " WHERE " + ENTRY_COLUMN_TRIP_ID + " =  \"" + id + "\"";
+        //  new String query = "Select * FROM " + ENTRY_TABLE_NAME + " WHERE " + ENTRY_COLUMN_TRIP_ID + " =  \"" + id + "\"";
 
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(NODE_TABLE_NAME,
-                 NODE_COLUMN_BASE_ID + "=?", new String[] { Integer.toString(id) });
+                NODE_COLUMN_BASE_ID + "=?", new String[]{Integer.toString(id)});
     }
 
     public Cursor getNode(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery("SELECT * FROM " + NODE_TABLE_NAME + " WHERE " +
+        Cursor res = db.rawQuery("SELECT * FROM " + NODE_TABLE_NAME + " WHERE " +
                 NODE_COLUMN_ID + "=?", new String[]{Integer.toString(id)});
         return res;
     }
 
     public Cursor getBase(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery("SELECT * FROM " + BASE_TABLE_NAME + " WHERE " +
+        Cursor res = db.rawQuery("SELECT * FROM " + BASE_TABLE_NAME + " WHERE " +
                 BASE_COLUMN_ID + "=?", new String[]{Integer.toString(id)});
         return res;
     }
 
     public Cursor getAllNode() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "SELECT * FROM " + NODE_TABLE_NAME, null );
+        Cursor res = db.rawQuery("SELECT * FROM " + NODE_TABLE_NAME, null);
         return res;
     }
 
     public Cursor getAllBase() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "SELECT * FROM " + BASE_TABLE_NAME, null );
+        Cursor res = db.rawQuery("SELECT * FROM " + BASE_TABLE_NAME, null);
         return res;
     }
 
     public Cursor getBaseNode(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery("SELECT * FROM " + NODE_TABLE_NAME + " WHERE " +
+        Cursor res = db.rawQuery("SELECT * FROM " + NODE_TABLE_NAME + " WHERE " +
                 NODE_COLUMN_BASE_ID + "=?", new String[]{Integer.toString(id)});
         return res;
     }

@@ -1,23 +1,14 @@
 package com.ai.lovejoy777.ant;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -27,40 +18,29 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 /**
  * Created by lovejoy777 on 03/10/15.
  */
 public class CreateOrEditNodesActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-
-    private ExampleDBHelper dbHelper;
+    public final static String KEY_EXTRA_BASE_ID = "KEY_EXTRA_BASE_ID";
+    public final static String KEY_EXTRA_BASE_NAME = "KEY_EXTRA_BASE_NAME";
 
     ScrollView scrollView1;
     RelativeLayout MRL1;
     Toolbar toolBar;
-
     Spinner swType;
     Spinner swNum;
-
     TextView titleTextView, textViewName, textViewAddress, textViewRSAddress, textViewType, textViewSwnum, textViewSw1, textViewSw2, textViewSw3, textViewSw4;
     EditText nameEditText, addressEditText, RSaddressEditText, typeEditText, swnumEditText, sw1EditText, sw2EditText, sw3EditText, sw4EditText;
     TextView base_idText;
-
-
     LinearLayout buttonLayout;
     Button saveButton, editButton, deleteButton;
-
-    public final static String KEY_EXTRA_NODE_ID = "KEY_EXTRA_NODE_ID";
-    public final static String KEY_EXTRA_BASE_ID = "KEY_EXTRA_BASE_ID";
-    public final static String KEY_EXTRA_BASE_NAME = "KEY_EXTRA_BASE_NAME";
 
     int nodeID;
     int baseID;
     String baseName;
+    private BaseNodeDBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,10 +88,6 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
 
         titleTextView.setText("Create Node");
 
-        //typeEditText.setText("");
-        //swnumEditText.setText("");
-
-
         // Switch Type Item Selected Listener
         swType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -126,7 +102,7 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                 typeEditText.setText("");
+                typeEditText.setText("");
                 // TODO Auto-generated method stub
 
             }
@@ -146,16 +122,13 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                 //typeEditText.setText("");
+                //typeEditText.setText("");
                 // TODO Auto-generated method stub
 
             }
         });
 
-
-
         // pre fill text fields
-
         base_idText.setText("" + baseID);
         addressEditText.setText("");
         RSaddressEditText.setText("");
@@ -174,7 +147,7 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
         deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
-        dbHelper = new ExampleDBHelper(this);
+        dbHelper = new BaseNodeDBHelper(this);
 
         if (nodeID > 0) {
             saveButton.setVisibility(View.GONE);
@@ -185,16 +158,16 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
 
             Cursor rs = dbHelper.getNode(nodeID);
             rs.moveToFirst();
-            String nodeName = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_NAME));
-            String nodeAddress = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_ADDRESS));
-            String nodeRSAddress = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_RSADDRESS));
-            String nodeType1 = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_TYPE));
-            String nodeSwnum1 = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SWNUM));
-            String nodeSw1 = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SW1));
-            String nodeSw2 = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SW2));
-            String nodeSw3 = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SW3));
-            String nodeSw4 = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_SW4));
-            String nodeBase_ID = rs.getString(rs.getColumnIndex(ExampleDBHelper.NODE_COLUMN_BASE_ID));
+            String nodeName = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_NAME));
+            String nodeAddress = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ADDRESS));
+            String nodeRSAddress = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_RSADDRESS));
+            String nodeType1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_TYPE));
+            String nodeSwnum1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SWNUM));
+            String nodeSw1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW1));
+            String nodeSw2 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW2));
+            String nodeSw3 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW3));
+            String nodeSw4 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW4));
+            String nodeBase_ID = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_ID));
             if (!rs.isClosed()) {
                 rs.close();
             }
@@ -215,15 +188,9 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
             typeEditText.setFocusable(false);
             typeEditText.setClickable(false);
 
-            //swType.setFocusable(false);
-            //swType.setClickable(false);
-
             swnumEditText.setText((CharSequence) (nodeSwnum1 + ""));
             swnumEditText.setFocusable(false);
             swnumEditText.setClickable(false);
-
-            //swNum.setFocusable(false);
-            //swNum.setClickable(false);
 
             sw1EditText.setText((CharSequence) (nodeSw1 + ""));
             sw1EditText.setFocusable(false);
@@ -244,12 +211,7 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
             base_idText.setText((CharSequence) nodeBase_ID);
             base_idText.setFocusable(false);
             base_idText.setClickable(false);
-
-
-
         }
-
-
     }
 
     @Override
@@ -275,16 +237,10 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                 RSaddressEditText.setClickable(true);
 
                 typeEditText.setEnabled(true);
-                //typeEditText.setFocusableInTouchMode(true);
-               // typeEditText.setClickable(true);
-
                 swType.setEnabled(true);
                 swType.setClickable(true);
 
                 swnumEditText.setEnabled(true);
-               // swnumEditText.setFocusableInTouchMode(true);
-                //swnumEditText.setClickable(true);
-
                 swNum.setEnabled(true);
                 swNum.setClickable(true);
 
@@ -347,8 +303,7 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                     sw2EditText.getText().toString(),
                     sw3EditText.getText().toString(),
                     sw4EditText.getText().toString(),
-                    base_idText.getText().toString()))
-            {
+                    base_idText.getText().toString())) {
 
                 Toast.makeText(getApplicationContext(), "Node Update Successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -356,9 +311,11 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                 intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
                 intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
                 startActivity(intent);
+
             } else {
                 Toast.makeText(getApplicationContext(), "Node Update Failed", Toast.LENGTH_SHORT).show();
             }
+
         } else {
             if (dbHelper.insertNode(nameEditText.getText().toString(),
                     addressEditText.getText().toString(),
@@ -371,6 +328,7 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                     sw4EditText.getText().toString(),
                     base_idText.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Node Inserted", Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(getApplicationContext(), "Could not Insert Node", Toast.LENGTH_SHORT).show();
             }
@@ -381,8 +339,4 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
             startActivity(intent);
         }
     }
-
-
-
-
 }

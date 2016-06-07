@@ -11,52 +11,52 @@ import android.database.Cursor;
 import android.util.Log;
 
 public class OnBootReceiver extends BroadcastReceiver {
-	
-	private static final String TAG = ComponentInfo.class.getCanonicalName();  
-	
-	@Override
-	public void onReceive(Context context, Intent intent) {
 
-		ReminderManager reminderMgr = new ReminderManager(context);
-		
-		RemindersDbAdapter dbHelper = new RemindersDbAdapter(context);
-		dbHelper.open();
-			
-		Cursor cursor = dbHelper.fetchAllTimers();
-		
-		if(cursor != null) {
-			cursor.moveToFirst(); 
-			
-			int rowIdColumnIndex = cursor.getColumnIndex(RemindersDbAdapter.KEY_ROWID);
-			int dateTimeColumnIndex = cursor.getColumnIndex(RemindersDbAdapter.KEY_DATE_TIME); 
-			
-			while(cursor.isAfterLast() == false) {
+    private static final String TAG = ComponentInfo.class.getCanonicalName();
 
-				Log.d(TAG, "Adding alarm from boot.");
-				Log.d(TAG, "Row Id Column Index - " + rowIdColumnIndex);
-				Log.d(TAG, "Date Time Column Index - " + dateTimeColumnIndex);
-				
-				Long rowId = cursor.getLong(rowIdColumnIndex); 
-				String dateTime = cursor.getString(dateTimeColumnIndex); 
+    @Override
+    public void onReceive(Context context, Intent intent) {
 
-				Calendar cal = Calendar.getInstance();
-				SimpleDateFormat format = new SimpleDateFormat(ReminderEditActivity.DATE_TIME_FORMAT); 
-				
-				try {
-					java.util.Date date = format.parse(dateTime);
-					cal.setTime(date);
-					
-					reminderMgr.setTimer(rowId, cal);
-				} catch (java.text.ParseException e) {
-					Log.e("OnBootReceiver", e.getMessage(), e);
-				}
-				
-				cursor.moveToNext(); 
-			}
-			cursor.close() ;	
-		}
-		
-		dbHelper.close(); 
-	}
+        TimerManager reminderMgr = new TimerManager(context);
+
+        TimerDbAdapter dbHelper = new TimerDbAdapter(context);
+        dbHelper.open();
+
+        Cursor cursor = dbHelper.fetchAllTimers();
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            int rowIdColumnIndex = cursor.getColumnIndex(TimerDbAdapter.KEY_ROWID);
+            int dateTimeColumnIndex = cursor.getColumnIndex(TimerDbAdapter.KEY_DATE_TIME);
+            int repeatColumnIndex = cursor.getColumnIndex(TimerDbAdapter.KEY_REPEAT);
+
+            while (cursor.isAfterLast() == false) {
+
+                Log.d(TAG, "Adding alarm from boot.");
+                Log.d(TAG, "Row Id Column Index - " + rowIdColumnIndex);
+                Log.d(TAG, "Date Time Column Index - " + dateTimeColumnIndex);
+                Log.d(TAG, "Repeat Column Index - " + repeatColumnIndex);
+
+                Long rowId = cursor.getLong(rowIdColumnIndex);
+                String dateTime = cursor.getString(dateTimeColumnIndex);
+                String repeat = cursor.getString(repeatColumnIndex);
+
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat(TimerEditActivity.DATE_TIME_FORMAT);
+
+                try {
+                    java.util.Date date = format.parse(dateTime);
+                    cal.setTime(date);
+
+                    reminderMgr.setTimer(rowId, cal, repeat);
+                } catch (java.text.ParseException e) {
+                    Log.e("OnBootReceiver", e.getMessage(), e);
+                }
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        dbHelper.close();
+    }
 }
-

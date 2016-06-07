@@ -18,14 +18,13 @@
             android:id="@+id/toolbar4"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:background="?android:attr/colorPrimary"
+            android:background="@color/colorPrimary"
             android:elevation="5dp"
             android:gravity="bottom"
             android:minHeight="?android:attr/actionBarSize"
-            tools:context="com.ai.lovejoy777.eve.activities.AboutActivity">
+            tools:context="com.ai.lovejoy777.ant.activities.AboutActivity">
 
         </android.support.v7.widget.Toolbar>
-
 
         <ImageView
             android:id="@+id/imVie_AppLogo"

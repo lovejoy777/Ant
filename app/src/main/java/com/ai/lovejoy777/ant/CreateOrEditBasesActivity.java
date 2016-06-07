@@ -3,9 +3,7 @@ package com.ai.lovejoy777.ant;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,8 +19,7 @@ import android.widget.Toast;
 
 public class CreateOrEditBasesActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-    private ExampleDBHelper dbHelper ;
+    private BaseNodeDBHelper dbHelper;
 
     ScrollView scrollView1;
     RelativeLayout MRL1;
@@ -75,11 +72,9 @@ public class CreateOrEditBasesActivity extends AppCompatActivity implements View
         deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
-        dbHelper = new ExampleDBHelper(this);
+        dbHelper = new BaseNodeDBHelper(this);
 
-
-
-        if(baseID > 0) {
+        if (baseID > 0) {
             saveButton.setVisibility(View.GONE);
             buttonLayout.setVisibility(View.VISIBLE);
 
@@ -88,9 +83,9 @@ public class CreateOrEditBasesActivity extends AppCompatActivity implements View
 
             Cursor rs = dbHelper.getBase(baseID);
             rs.moveToFirst();
-            String baseName = rs.getString(rs.getColumnIndex(ExampleDBHelper.BASE_COLUMN_NAME));
-            String baseLocalip = rs.getString(rs.getColumnIndex(ExampleDBHelper.BASE_COLUMN_LOCALIP));
-            String basePort = rs.getString(rs.getColumnIndex(ExampleDBHelper.BASE_COLUMN_PORT));
+            String baseName = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_NAME));
+            String baseLocalip = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_LOCALIP));
+            String basePort = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_PORT));
             if (!rs.isClosed()) {
                 rs.close();
             }
@@ -158,26 +153,24 @@ public class CreateOrEditBasesActivity extends AppCompatActivity implements View
     }
 
     public void persistBase() {
-        if(baseID > 0) {
-            if(dbHelper.updateBase(baseID, nameEditText.getText().toString(),
+        if (baseID > 0) {
+            if (dbHelper.updateBase(baseID, nameEditText.getText().toString(),
                     localipEditText.getText().toString(),
                     portEditText.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Base Update Successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-            }
-            else {
+            } else {
                 Toast.makeText(getApplicationContext(), "Base Update Failed", Toast.LENGTH_SHORT).show();
             }
-        }
-        else {
-            if(dbHelper.insertBase(nameEditText.getText().toString(),
+        } else {
+
+            if (dbHelper.insertBase(nameEditText.getText().toString(),
                     localipEditText.getText().toString(),
-                    portEditText.getText().toString())){
+                    portEditText.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "Base Inserted", Toast.LENGTH_SHORT).show();
-            }
-            else{
+            } else {
                 Toast.makeText(getApplicationContext(), "Could not Insert Base", Toast.LENGTH_SHORT).show();
             }
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -185,6 +178,4 @@ public class CreateOrEditBasesActivity extends AppCompatActivity implements View
             startActivity(intent);
         }
     }
-
-
 }

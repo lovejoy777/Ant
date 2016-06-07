@@ -24,8 +24,6 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             android:theme="@style/Base.Theme.Test" />
 
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +52,6 @@
             android:id="@+id/sw1"
             android:layout_width="80dp"
             android:layout_height="60dp"
-
             android:layout_alignBottom="@+id/textView1"
             android:layout_marginEnd="16dp"
             android:layout_alignParentEnd="true"
@@ -176,8 +173,6 @@
             android:text="..."
             android:textColor="@color/white"
             android:textSize="18sp" />
-
-
 
     </RelativeLayout>
 

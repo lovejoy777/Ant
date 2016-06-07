@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String KEY_EXTRA_BASE_PORT = "KEY_EXTRA_BASE_PORT";
 
     private ListView listView;
-    ExampleDBHelper dbHelper;
+    BaseNodeDBHelper dbHelper;
 
     RelativeLayout MRL1;
     Toolbar toolBar;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        dbHelper = new ExampleDBHelper(this);
+        dbHelper = new BaseNodeDBHelper(this);
 
         populateListView();
 
@@ -75,20 +75,19 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> listView, View view,
                                     int position, long id) {
                 Cursor itemCursor = (Cursor) MainActivity.this.listView.getItemAtPosition(position);
-                int baseID = itemCursor.getInt(itemCursor.getColumnIndex(ExampleDBHelper.BASE_COLUMN_ID));
-                String baseName = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.BASE_COLUMN_NAME));
-                String baseLocalip = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.BASE_COLUMN_LOCALIP));
-                String basePort = "" + itemCursor.getString(itemCursor.getColumnIndex(ExampleDBHelper.BASE_COLUMN_PORT));
-
+                int baseID = itemCursor.getInt(itemCursor.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_ID));
+                String baseName = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_NAME));
+                String baseLocalip = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_LOCALIP));
+                String basePort = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_PORT));
 
                 Intent intent = new Intent(getApplicationContext(), MainActivityNodes.class);
                 intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
                 intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
                 intent.putExtra(KEY_EXTRA_BASE_LOCALIP, baseLocalip);
                 intent.putExtra(KEY_EXTRA_BASE_PORT, basePort);
-               // if (!itemCursor.isClosed()) {
-               //     itemCursor.close();
-               // }
+                // if (!itemCursor.isClosed()) {
+                //     itemCursor.close();
+                // }
                 Bundle bndlanim =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanim);
@@ -101,12 +100,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> listView, View view,
                                            int position, long id) {
                 Cursor itemCursor = (Cursor) MainActivity.this.listView.getItemAtPosition(position);
-                int baseID = itemCursor.getInt(itemCursor.getColumnIndex(ExampleDBHelper.BASE_COLUMN_ID));
+                int baseID = itemCursor.getInt(itemCursor.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_ID));
                 Intent intent = new Intent(getApplicationContext(), CreateOrEditBasesActivity.class);
                 intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
                 //if (!itemCursor.isClosed()) {
-                 //   itemCursor.close();
-               // }
+                //   itemCursor.close();
+                // }
                 Bundle bndlanim =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanim);
@@ -117,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void populateListView() {
         final Cursor cursor = dbHelper.getAllBase();
-        String[] columns = new String[] {ExampleDBHelper.BASE_COLUMN_ID, ExampleDBHelper.BASE_COLUMN_NAME};
-        int [] widgets = new int[] {R.id.baseID, R.id.baseName};
+        String[] columns = new String[]{BaseNodeDBHelper.BASE_COLUMN_ID, BaseNodeDBHelper.BASE_COLUMN_NAME};
+        int[] widgets = new int[]{R.id.baseID, R.id.baseName};
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.base_info, cursor, columns, widgets, 0);
-        listView = (ListView)findViewById(R.id.listViewBase);
+        listView = (ListView) findViewById(R.id.listViewBase);
         listView.setAdapter(cursorAdapter);
     }
 
@@ -181,12 +180,10 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                             case R.id.nav_timers:
-                                Intent timers = new Intent(MainActivity.this, ReminderListActivity.class);
+                                Intent timers = new Intent(MainActivity.this, TimerListActivity.class);
                                 startActivity(timers, bndlanimation);
                                 break;
                         }
-
-
                         return false;
                     }
                 });
@@ -194,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        dbHelper.close();
         super.onBackPressed();
         overridePendingTransition(R.anim.back2, R.anim.back1);
     }
