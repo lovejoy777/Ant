@@ -122,6 +122,7 @@ public class MainActivityNodes extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Node.class);
                 intent.putExtra(KEY_EXTRA_NODE_ID, nodeID);
                 intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
+                intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
                 intent.putExtra(KEY_EXTRA_BASE_LOCALIP, baseLocalip);
                 intent.putExtra(KEY_EXTRA_BASE_PORT, basePort);
                 intent.putExtra(KEY_EXTRA_NODE_NAME, nodeName);

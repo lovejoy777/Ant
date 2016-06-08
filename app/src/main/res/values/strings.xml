@@ -83,7 +83,6 @@
 
     <string-array name="sw_type_array">
         <item>Switch</item>
-        <item>Dimmer</item>
         <item>RoomStat</item>
     </string-array>
 
@@ -107,7 +106,7 @@
     <string name="time">Timer Time</string>
 
     <!-- Toasts -->
-    <string name="task_saved_message">Timer has been saved</string>
+    <string name="task_saved_message">Timer has been set</string>
 
     <!-- Notification Bar -->
     <string name="notify_new_task_message">A timer needs to be reviewed!</string>

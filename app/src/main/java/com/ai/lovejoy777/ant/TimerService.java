@@ -10,6 +10,8 @@ public class TimerService extends WakeTimerIntentService {
     Notification myNotication;
     private TimerDbAdapter mDbHelper;
     private Long mRowId;
+    private String name;
+    private String swname;
 
     public TimerService() {
         super("TimerService");
@@ -19,9 +21,10 @@ public class TimerService extends WakeTimerIntentService {
     void doReminderWork(Intent intent) {
 
         mDbHelper = new TimerDbAdapter(this);
-        // mDbHelper.open();
         Log.d("TimerService", "Doing work.");
         mRowId = intent.getExtras().getLong(TimerDbAdapter.KEY_ROWID);
+        name = intent.getExtras().getString(TimerDbAdapter.KEY_NAME);
+        swname = intent.getExtras().getString(TimerDbAdapter.KEY_SWNAME);
 
         NotificationManager mgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
@@ -38,8 +41,8 @@ public class TimerService extends WakeTimerIntentService {
 
         builder.setAutoCancel(true);
         builder.setTicker("Ant Timer Activated !!");
-        builder.setContentTitle("Timer Activated!!");
-        builder.setContentText("Timer id:" + mRowId);
+        builder.setContentTitle(name);
+        builder.setContentText(swname);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         //builder.setContentIntent(pi);
         builder.setOngoing(false);

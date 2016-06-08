@@ -140,8 +140,8 @@ public class TimerListActivity extends AppCompatActivity {
 
     private void populateListView() {
         final Cursor cursor = mDbHelper.fetchAllTimers();
-        String[] from = new String[]{TimerDbAdapter.KEY_DATE_TIME};
-        int[] to = new int[]{R.id.text1};
+        String[] from = new String[]{TimerDbAdapter.KEY_NAME, TimerDbAdapter.KEY_SWNAME, TimerDbAdapter.KEY_DATE_TIME};
+        int[] to = new int[]{R.id.text1, R.id.text2, R.id.text3};
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.timer_info, cursor, from, to);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(cursorAdapter);

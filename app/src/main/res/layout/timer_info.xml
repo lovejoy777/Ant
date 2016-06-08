@@ -21,20 +21,44 @@
             android:id="@+id/img_thumbnail1"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/clock" />
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/img_thumbnail1"
+            android:text="timer Name"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text1"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/img_thumbnail1"
+            android:text="timer sw name"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text2"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_toEndOf="@+id/img_thumbnail1"
             android:text="timer set time"
             android:textColor="@color/white"
-            android:textSize="25sp"
-            android:layout_centerVertical="true" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/timerID"

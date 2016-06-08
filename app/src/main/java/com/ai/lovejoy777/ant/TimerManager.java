@@ -17,10 +17,12 @@ public class TimerManager {
         mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
-    public void setTimer(Long taskId, Calendar when, String repeat) {
+    public void setTimer(Long taskId, String name, String swName, Calendar when, String repeat) {
 
         Intent i = new Intent(mContext, OnAlarmReceiver.class);
         i.putExtra(TimerDbAdapter.KEY_ROWID, (long) taskId);
+        i.putExtra(TimerDbAdapter.KEY_NAME, name);
+        i.putExtra(TimerDbAdapter.KEY_SWNAME, swName);
         long tid = taskId;
         int taskid = (int) tid;
 

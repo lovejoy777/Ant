@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.DatagramPacket;
@@ -30,6 +31,8 @@ public class TimerLaunch extends Activity {
     DatagramPacket send;
 
     private ImageView myimage;
+    TextView swName;
+    TextView Name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,12 +41,28 @@ public class TimerLaunch extends Activity {
         dbHelper = new TimerDbAdapter(this);
 
         myimage = (ImageView) findViewById(R.id.image);
+        Name = (TextView) findViewById(R.id.textName);
+        swName = (TextView) findViewById(R.id.textswName);
+
+
 
         mRowId = savedInstanceState != null ? savedInstanceState.getLong(TimerDbAdapter.KEY_ROWID)
                 : null;
 
         dbHelper.open();
         setRowIdFromIntent();
+
+        Cursor ft = dbHelper.fetchTimer(mRowId);
+        ft.moveToFirst();
+        String name = ft.getString(ft.getColumnIndex(TimerDbAdapter.KEY_NAME));
+        String swname = ft.getString(ft.getColumnIndex(TimerDbAdapter.KEY_SWNAME));
+        if (!ft.isClosed()) {
+            ft.close();
+        }
+
+        Name.setText(name);
+        swName.setText(swname);
+
         sendCom();
         dbHelper.close();
 
@@ -142,7 +161,7 @@ public class TimerLaunch extends Activity {
                 d1.send(send);
                 d1.setSoTimeout(3000);
 
-                Toast.makeText(getApplicationContext(), "Sw Code: " + code, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Sw Code: " + code, Toast.LENGTH_SHORT).show();
 
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "No Connection", Toast.LENGTH_SHORT).show();

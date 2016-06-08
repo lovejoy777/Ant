@@ -10,10 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Simple reminder database access helper class.
+ * Simple timer database access helper class.
  * Defines the basic CRUD operations (Create, Read, Update, Delete)
- * for the example, and gives the ability to list all reminders as well as
- * retrieve or modify a specific reminder.
+ * for the example, and gives the ability to list all timers as well as
+ * retrieve or modify a specific timer.
  */
 public class TimerDbAdapter {
 
@@ -22,8 +22,10 @@ public class TimerDbAdapter {
     //
     private static final String DATABASE_NAME = "TimerData";
     private static final String DATABASE_TABLE = "Timers";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
 
+    public static final String KEY_NAME = "name";
+    public static final String KEY_SWNAME = "swname";
     public static final String KEY_ADDRESS = "address";
     public static final String KEY_CODE = "code";
     public static final String KEY_LOCALIP = "localip";
@@ -33,7 +35,7 @@ public class TimerDbAdapter {
     public static final String KEY_ROWID = "_id";
 
 
-    private static final String TAG = "ReminderDbAdapter";
+    private static final String TAG = "TimerDbAdapter";
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
 
@@ -43,6 +45,8 @@ public class TimerDbAdapter {
     private static final String DATABASE_CREATE =
             "create table " + DATABASE_TABLE + " ("
                     + KEY_ROWID + " integer primary key autoincrement, "
+                    + KEY_NAME + " text not null, "
+                    + KEY_SWNAME + " text not null, "
                     + KEY_ADDRESS + " text not null, "
                     + KEY_CODE + " text not null, "
                     + KEY_LOCALIP + " text not null, "
@@ -105,19 +109,24 @@ public class TimerDbAdapter {
 
 
     /**
-     * Create a new timer using the address, code, localip, port and timer date time provided.
+     * Create a new timer using the name, swname, address, code, localip, port, timer date time provided and swname.
      * If the timer is  successfully created return the new rowId
      * for that timer, otherwise return a -1 to indicate failure.
      *
+     * @param name          the name of the timer
+     * @param swname          the name of the timer
      * @param address       the address of the timer
      * @param code          the switch code of the timer
      * @param localip       the local ip of the timer
      * @param port          the port of the timer
-     * @param timerDateTime the date and time the timer should remind the user
+     * @param timerDateTime date and time the timer should remind the user
+     * @param repeat        the repeat of the timer
      * @return rowId or -1 if failed
      */
-    public long createTimer(String address, String code, String localip, String port, String timerDateTime, String repeat) {
+    public long createTimer(String name, String swname, String address, String code, String localip, String port, String timerDateTime, String repeat) {
         ContentValues initialValues = new ContentValues();
+        initialValues.put(KEY_NAME, name);
+        initialValues.put(KEY_SWNAME, swname);
         initialValues.put(KEY_ADDRESS, address);
         initialValues.put(KEY_CODE, code);
         initialValues.put(KEY_LOCALIP, localip);
@@ -154,7 +163,7 @@ public class TimerDbAdapter {
      */
     public Cursor fetchAllTimers() {
 
-        return mDb.query(DATABASE_TABLE, new String[]{KEY_ROWID, KEY_ADDRESS,
+        return mDb.query(DATABASE_TABLE, new String[]{KEY_ROWID, KEY_NAME, KEY_SWNAME, KEY_ADDRESS,
                 KEY_CODE, KEY_LOCALIP, KEY_PORT, KEY_DATE_TIME, KEY_REPEAT}, null, null, null, null, null);
     }
 
@@ -170,7 +179,7 @@ public class TimerDbAdapter {
         Cursor mCursor =
 
                 mDb.query(true, DATABASE_TABLE, new String[]{KEY_ROWID,
-                                KEY_ADDRESS, KEY_CODE, KEY_LOCALIP, KEY_PORT, KEY_DATE_TIME, KEY_REPEAT}, KEY_ROWID + "=" + rowId, null,
+                                KEY_ADDRESS, KEY_NAME, KEY_SWNAME, KEY_CODE, KEY_LOCALIP, KEY_PORT, KEY_DATE_TIME, KEY_REPEAT}, KEY_ROWID + "=" + rowId, null,
                         null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
@@ -181,19 +190,24 @@ public class TimerDbAdapter {
 
     /**
      * Update the timer using the details provided. The timer to be updated is
-     * specified using the rowId, and it is altered to use the address, code, localip, port and timer date time
+     * specified using the rowId, and it is altered to use the name, address, code, localip, port, date time, and repeat
      * values passed in
      *
-     * @param rowId         id of reminder to update
-     * @param address       value to set reminder title to
-     * @param code          value to set reminder body to
-     * @param localip       value to set reminder title to
-     * @param port          value to set reminder body to
-     * @param timerDateTime value to set the reminder time.
+     * @param rowId         id of timer to update
+     * @param name          value to set timer name to
+     * @param swname          value to set timer swname to
+     * @param address       value to set timer address to
+     * @param code          value to set timer code to
+     * @param localip       value to set timer localip to
+     * @param port          value to set timer port to
+     * @param timerDateTime value to set the timer time
+     * @param repeat          value to set timer repeat to
      * @return true if the timer was successfully updated, false otherwise
      */
-    public boolean updateTimer(long rowId, String address, String code, String localip, String port, String timerDateTime, String repeat) {
+    public boolean updateTimer(long rowId, String name, String swname, String address, String code, String localip, String port, String timerDateTime, String repeat) {
         ContentValues args = new ContentValues();
+        args.put(KEY_NAME, name);
+        args.put(KEY_SWNAME, swname);
         args.put(KEY_ADDRESS, address);
         args.put(KEY_CODE, code);
         args.put(KEY_LOCALIP, localip);

@@ -29,16 +29,22 @@ public class OnBootReceiver extends BroadcastReceiver {
 
             int rowIdColumnIndex = cursor.getColumnIndex(TimerDbAdapter.KEY_ROWID);
             int dateTimeColumnIndex = cursor.getColumnIndex(TimerDbAdapter.KEY_DATE_TIME);
+            int nameColumnIndex = cursor.getColumnIndex(TimerDbAdapter.KEY_NAME);
+            int swnameColumnIndex = cursor.getColumnIndex(TimerDbAdapter.KEY_SWNAME);
             int repeatColumnIndex = cursor.getColumnIndex(TimerDbAdapter.KEY_REPEAT);
 
             while (cursor.isAfterLast() == false) {
 
                 Log.d(TAG, "Adding alarm from boot.");
                 Log.d(TAG, "Row Id Column Index - " + rowIdColumnIndex);
+                Log.d(TAG, "Name Column Index - " + nameColumnIndex);
+                Log.d(TAG, "Sw Name Column Index - " + swnameColumnIndex);
                 Log.d(TAG, "Date Time Column Index - " + dateTimeColumnIndex);
                 Log.d(TAG, "Repeat Column Index - " + repeatColumnIndex);
 
                 Long rowId = cursor.getLong(rowIdColumnIndex);
+                String name = cursor.getString(nameColumnIndex);
+                String swname = cursor.getString(swnameColumnIndex);
                 String dateTime = cursor.getString(dateTimeColumnIndex);
                 String repeat = cursor.getString(repeatColumnIndex);
 
@@ -49,7 +55,7 @@ public class OnBootReceiver extends BroadcastReceiver {
                     java.util.Date date = format.parse(dateTime);
                     cal.setTime(date);
 
-                    reminderMgr.setTimer(rowId, cal, repeat);
+                    reminderMgr.setTimer(rowId, name, swname,  cal, repeat);
                 } catch (java.text.ParseException e) {
                     Log.e("OnBootReceiver", e.getMessage(), e);
                 }

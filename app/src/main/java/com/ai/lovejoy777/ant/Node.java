@@ -130,22 +130,29 @@ public class Node extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
+        String baseName = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_NAME);
         String nodenamen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_NAME);
         String nodetypen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_TYPE);
         String swnumn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SWNUM);
-        String sw1namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW1);
-        String sw2namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW2);
-        String sw3namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW3);
-        String sw4namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW4);
+        final String sw1namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW1);
+        final String sw2namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW2);
+        final String sw3namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW3);
+        final String sw4namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW4);
 
         serverHostname1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_LOCALIP);
         port = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_PORT);
         addressn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_ADDRESS);
         rsaddressn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_RSADDRESS);
 
+        String baseNodeName = baseName + " " + nodenamen1;
+
+
+
+        savePrefs1("NAME", baseNodeName);
+        savePrefs1("ADDRESS", addressn1);
         savePrefs1("LOCALIP", serverHostname1);
         savePrefs1("PORT", port);
-        savePrefs1("ADDRESS", addressn1);
+
 
         // NODE SWITCHES
         if (nodetypen1.equals("Switch")) {
@@ -245,14 +252,16 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw1namen1 + " On");
                                     savePrefs1("SWCODE", code1);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw1namen1 + " Off");
                                     savePrefs1("SWCODE", code2);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             });
                     AlertDialog d = builder.create();
@@ -298,14 +307,16 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw2namen1 + " On");
                                     savePrefs1("SWCODE", code3);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw2namen1 + " Off");
                                     savePrefs1("SWCODE", code4);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             });
                     AlertDialog d = builder.create();
@@ -351,14 +362,16 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw3namen1 + " On");
                                     savePrefs1("SWCODE", code5);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw3namen1 + " Off");
                                     savePrefs1("SWCODE", code6);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             });
                     AlertDialog d = builder.create();
@@ -404,14 +417,16 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw4namen1 + " On");
                                     savePrefs1("SWCODE", code7);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw4namen1 + " Off");
                                     savePrefs1("SWCODE", code8);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             });
                     AlertDialog d = builder.create();
@@ -558,14 +573,16 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw1namen1 + " On");
                                     savePrefs1("SWCODE", code1);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw1namen1 + " Off");
                                     savePrefs1("SWCODE", code2);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             });
                     AlertDialog d = builder.create();
@@ -610,14 +627,16 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw2namen1 + " On");
                                     savePrefs1("SWCODE", code3);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw2namen1 + " Off");
                                     savePrefs1("SWCODE", code4);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             });
                     AlertDialog d = builder.create();
@@ -662,14 +681,16 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw3namen1 + " On");
                                     savePrefs1("SWCODE", code5);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw3namen1 + " Off");
                                     savePrefs1("SWCODE", code6);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             });
                     AlertDialog d = builder.create();
@@ -714,14 +735,16 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw4namen1 + " On");
                                     savePrefs1("SWCODE", code7);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
+                                    savePrefs1("SWNAME", sw4namen1 + " Off");
                                     savePrefs1("SWCODE", code8);
-                                    createReminderOn();
+                                    createTimer();
                                 }
                             });
                     AlertDialog d = builder.create();
@@ -1161,7 +1184,7 @@ public class Node extends AppCompatActivity {
         });
     }
 
-    private void createReminderOn() {
+    private void createTimer() {
         Intent i = new Intent(this, TimerEditActivity.class);
 
         startActivityForResult(i, ACTIVITY_CREATE);

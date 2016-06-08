@@ -39,6 +39,8 @@ public class TimerEditActivity extends AppCompatActivity {
     private static final String TIME_FORMAT = "kk:mm";
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm:ss";
 
+    private EditText mETName;
+    private EditText mETSWName;
     private EditText mETAddress;
     private EditText mETCode;
     private EditText mETLocalIP;
@@ -65,6 +67,8 @@ public class TimerEditActivity extends AppCompatActivity {
 
         toolBar = (Toolbar) findViewById(R.id.toolbar);
         mCalendar = Calendar.getInstance();
+        mETName = (EditText) findViewById(R.id.etname);
+        mETSWName = (EditText) findViewById(R.id.etswname);
         mETAddress = (EditText) findViewById(R.id.etaddress);
         mETCode = (EditText) findViewById(R.id.etcode);
         mETLocalIP = (EditText) findViewById(R.id.etlocalip);
@@ -203,6 +207,10 @@ public class TimerEditActivity extends AppCompatActivity {
         if (mRowId != null) {
             Cursor reminder = mDbHelper.fetchTimer(mRowId);
             startManagingCursor(reminder);
+            mETName.setText(reminder.getString(
+                    reminder.getColumnIndexOrThrow(TimerDbAdapter.KEY_NAME)));
+            mETSWName.setText(reminder.getString(
+                    reminder.getColumnIndexOrThrow(TimerDbAdapter.KEY_SWNAME)));
             mETAddress.setText(reminder.getString(
                     reminder.getColumnIndexOrThrow(TimerDbAdapter.KEY_ADDRESS)));
             mETCode.setText(reminder.getString(
@@ -245,16 +253,20 @@ public class TimerEditActivity extends AppCompatActivity {
             String defaultTime = prefs.getString(defaultTimeKey, null);
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String name = sp.getString("NAME", null);
+            String swname = sp.getString("SWNAME", null);
             String address = sp.getString("ADDRESS", null);
             String swCode = sp.getString("SWCODE", null);
             String localip = sp.getString("LOCALIP", null);
             String port = sp.getString("PORT", null);
 
             if (address != null)
+                mETName.setText(name);
+                mETSWName.setText(swname);
                 mETAddress.setText(address);
-            mETCode.setText(swCode);
-            mETLocalIP.setText(localip);
-            mETPort.setText(port);
+                mETCode.setText(swCode);
+                mETLocalIP.setText(localip);
+                mETPort.setText(port);
 
             if (defaultTime != null)
                 mCalendar.add(Calendar.MINUTE, Integer.parseInt(defaultTime));
@@ -284,6 +296,8 @@ public class TimerEditActivity extends AppCompatActivity {
     }
 
     private void saveState() {
+        String name = mETName.getText().toString();
+        String swname = mETSWName.getText().toString();
         String address = mETAddress.getText().toString();
         String code = mETCode.getText().toString();
         String localip = mETLocalIP.getText().toString();
@@ -295,14 +309,14 @@ public class TimerEditActivity extends AppCompatActivity {
 
         if (mRowId == null) {
 
-            long id = mDbHelper.createTimer(address, code, localip, port, timerDateTime, repeat);
+            long id = mDbHelper.createTimer(name, swname, address, code, localip, port, timerDateTime, repeat);
             if (id > 0) {
                 mRowId = id;
             }
         } else {
-            mDbHelper.updateTimer(mRowId, address, code, localip, port, timerDateTime, repeat);
+            mDbHelper.updateTimer(mRowId, name, swname, address, code, localip, port, timerDateTime, repeat);
         }
-        new TimerManager(this).setTimer(mRowId, mCalendar, repeat);
+        new TimerManager(this).setTimer(mRowId, name, swname, mCalendar, repeat);
     }
 
     @Override
