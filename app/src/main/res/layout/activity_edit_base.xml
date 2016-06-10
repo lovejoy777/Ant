@@ -139,7 +139,7 @@
                 android:background="@drawable/custom_btn"
                 android:padding="@dimen/activity_vertical_margin"
                 android:layout_margin="@dimen/activity_vertical_margin"
-                android:text="@string/deleteBase"
+                android:text="@string/delete"
                 android:textSize="16sp"/>
 
             <Button

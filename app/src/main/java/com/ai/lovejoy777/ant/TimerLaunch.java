@@ -64,7 +64,8 @@ public class TimerLaunch extends Activity {
         swName.setText(swname);
 
         sendCom();
-        dbHelper.close();
+
+
 
         Thread timer = new Thread() {
             public void run() {
@@ -75,6 +76,18 @@ public class TimerLaunch extends Activity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
+
+
+                    // delete timer if it was a one off (not repeating).
+                    Cursor ft1 = dbHelper.fetchTimer(mRowId);
+                    ft1.moveToFirst();
+                    String repeat = ft1.getString(ft1.getColumnIndex(TimerDbAdapter.KEY_REPEAT));
+                    if (!ft1.isClosed()) {
+                        ft1.close();
+                    }
+                    if (repeat.equals("Once")) {
+                        dbHelper.deleteTimer(mRowId); // deletes from the database
+                    }
                     dbHelper.close();
                     finish();
                 }

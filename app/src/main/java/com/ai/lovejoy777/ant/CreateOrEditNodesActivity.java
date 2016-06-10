@@ -184,11 +184,11 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
             RSaddressEditText.setFocusable(false);
             RSaddressEditText.setClickable(false);
 
-            typeEditText.setText((CharSequence) nodeType1);
+            typeEditText.setText(nodeType1);
             typeEditText.setFocusable(false);
             typeEditText.setClickable(false);
 
-            swnumEditText.setText((CharSequence) (nodeSwnum1 + ""));
+            swnumEditText.setText((nodeSwnum1 + ""));
             swnumEditText.setFocusable(false);
             swnumEditText.setClickable(false);
 
@@ -266,8 +266,8 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                 return;
 
             case R.id.deleteButton:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.deleteNode)
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+                builder.setMessage(R.string.sure)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dbHelper.deleteNode(nodeID);
@@ -285,7 +285,7 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                             }
                         });
                 AlertDialog d = builder.create();
-                d.setTitle("Delete Node?");
+                d.setTitle(R.string.deleteNode);
                 d.show();
                 return;
         }

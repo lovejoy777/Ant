@@ -126,8 +126,8 @@ public class CreateOrEditBasesActivity extends AppCompatActivity implements View
                 portEditText.setClickable(true);
                 return;
             case R.id.deleteButton:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.deleteBase);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+                builder.setMessage(R.string.sure);
                 builder.setInverseBackgroundForced(true)
 
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -146,7 +146,7 @@ public class CreateOrEditBasesActivity extends AppCompatActivity implements View
                             }
                         });
                 AlertDialog d = builder.create();
-                d.setTitle("Delete Base?");
+                d.setTitle(R.string.deleteBase);
                 d.show();
                 return;
         }

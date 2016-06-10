@@ -25,14 +25,15 @@
     <string name="Add_New_node">Add New Node</string>
     <string name="edit">Edit</string>
     <string name="editBase">Edit</string>
-    <string name="delete">Delete</string>
+    <string name="sure">Are you Sure?</string>
     <string name="save">Save</string>
     <string name="saveBase">Save</string>
 
     <string name="name">Name</string>
 
-    <string name="deleteNode">Delete</string>
-    <string name="deleteBase">Delete</string>
+    <string name="delete">Delete</string>
+    <string name="deleteNode">Delete Node</string>
+    <string name="deleteBase">Delete Base</string>
     <string name="deleteTimer">Are you Sure?</string>
     <string name="warning">Warning!!!</string>
     <string name="yes">Confirm</string>

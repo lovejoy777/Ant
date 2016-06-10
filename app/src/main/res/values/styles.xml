@@ -46,16 +46,8 @@
     </style>
 
     <style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">
-        <item name="android:bottomBright">@color/background</item>
-        <item name="android:bottomDark">@color/background</item>
-        <item name="android:bottomMedium">@color/background</item>
-        <item name="android:centerBright">@color/background</item>
-        <item name="android:centerDark">@color/background</item>
-        <item name="android:centerMedium">@color/background</item>
-        <item name="android:fullBright">@color/background</item>
+
         <item name="android:fullDark">@color/background</item>
-        <item name="android:topBright">@color/background</item>
-        <item name="android:topDark">@color/background</item>
     </style>
 
     <!-- Main theme -->

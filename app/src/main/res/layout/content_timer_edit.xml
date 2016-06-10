@@ -154,7 +154,7 @@
             android:layout_alignStart="@+id/ettime"
             android:layout_below="@+id/ettime"
             android:layout_marginEnd="16dp"
-            android:text="Not Set"
+            android:text="Once"
             android:textColor="@color/white"
             android:ems="10"
             android:inputType="text"

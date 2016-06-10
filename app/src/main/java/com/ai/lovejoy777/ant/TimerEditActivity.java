@@ -6,9 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -38,6 +40,8 @@ public class TimerEditActivity extends AppCompatActivity {
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String TIME_FORMAT = "kk:mm";
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm:ss";
+
+    public final static String KEY_TIMER_REPEAT = "KEY_TIMER_REPEAT";
 
     private EditText mETName;
     private EditText mETSWName;
@@ -140,8 +144,8 @@ public class TimerEditActivity extends AppCompatActivity {
 
     private void registerButtonListenersAndSetDefaultText() {
 
-        final String dayOn = "Day";
-        final String weekOn = "Week";
+        final String dayOn = "Daily";
+        final String weekOn = "Weekly";
 
         mDateButton.setOnClickListener(new View.OnClickListener() {
 
@@ -171,6 +175,7 @@ public class TimerEditActivity extends AppCompatActivity {
                 if (isChecked) {
                     mETRepeat.setText(dayOn);
                     mWeekSwitch.setChecked(false);
+
                 }
             }
         });
@@ -193,6 +198,9 @@ public class TimerEditActivity extends AppCompatActivity {
                 setResult(RESULT_OK);
                 Toast.makeText(TimerEditActivity.this, getString(R.string.task_saved_message), Toast.LENGTH_SHORT).show();
                 finish();
+
+
+
             }
 
         });
@@ -226,12 +234,12 @@ public class TimerEditActivity extends AppCompatActivity {
                     reminder.getColumnIndexOrThrow(TimerDbAdapter.KEY_REPEAT)));
 
             // set switches
-            if (repeatText.equals("Day")) {
+            if (repeatText.equals("Daily")) {
                 mDaySwitch.setChecked(true);
                 mWeekSwitch.setChecked(false);
 
             }
-            if (repeatText.equals("Week")) {
+            if (repeatText.equals("Weeklk")) {
                 mDaySwitch.setChecked(false);
                 mWeekSwitch.setChecked(true);
             }

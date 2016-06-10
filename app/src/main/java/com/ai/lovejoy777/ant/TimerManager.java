@@ -29,15 +29,15 @@ public class TimerManager {
         PendingIntent pi = PendingIntent.getBroadcast(mContext, taskid, i, 0);
 
         if (repeat != null) {
-            if (repeat.equals("Day")) {
+            if (repeat.equals("Daily")) {
                 mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, when.getTimeInMillis(), (AlarmManager.INTERVAL_DAY), pi);
                 //(24 * 1000 * 60 * 60) = daily
             }
-            if (repeat.equals("Week")) {
+            if (repeat.equals("Weekly")) {
                 mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, when.getTimeInMillis(), (AlarmManager.INTERVAL_DAY * 7), pi);
                 //(24 * 1000 * 60 * 60 * 7) = weekly
             }
-            if (repeat.equals("Not Set")) {
+            if (repeat.equals("Once")) {
                 mAlarmManager.set(AlarmManager.RTC_WAKEUP, when.getTimeInMillis(), pi);
                 // one off
             }

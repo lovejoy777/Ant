@@ -12,20 +12,34 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class TimerListActivity extends AppCompatActivity {
 
     private static final int ACTIVITY_CREATE = 0;
     private static final int ACTIVITY_EDIT = 1;
 
+    // Date Format
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
+    private static final String TIME_FORMAT = "kk:mm";
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm:ss";
+
     private TimerDbAdapter mDbHelper;
+    private Calendar mCalendar;
     private DrawerLayout mDrawerLayout;
     private ListView listView;
 
@@ -33,6 +47,7 @@ public class TimerListActivity extends AppCompatActivity {
     Toolbar toolBar;
     ListView list;
     TextView titleTextView;
+    TextView text4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +55,17 @@ public class TimerListActivity extends AppCompatActivity {
         setContentView(R.layout.main_timers);
 
         loadToolbarNavDrawer();
+        mCalendar = Calendar.getInstance();
         toolBar = (Toolbar) findViewById(R.id.toolbar);
         MRL1 = (RelativeLayout) findViewById(R.id.MRL1);
-
         titleTextView = (TextView) findViewById(R.id.titleTextView);
+        text4 = (TextView) findViewById(R.id.text4);
+
+
         list = (ListView) findViewById(R.id.list);
+
         titleTextView.setText("Timers");
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimary));
@@ -82,6 +102,11 @@ public class TimerListActivity extends AppCompatActivity {
         mDbHelper.open();
 
         populateListView();
+
+
+
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -139,12 +164,15 @@ public class TimerListActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
+
         final Cursor cursor = mDbHelper.fetchAllTimers();
-        String[] from = new String[]{TimerDbAdapter.KEY_NAME, TimerDbAdapter.KEY_SWNAME, TimerDbAdapter.KEY_DATE_TIME};
-        int[] to = new int[]{R.id.text1, R.id.text2, R.id.text3};
+
+        String[] from = new String[]{TimerDbAdapter.KEY_NAME, TimerDbAdapter.KEY_SWNAME, TimerDbAdapter.KEY_DATE_TIME, TimerDbAdapter.KEY_REPEAT};
+        int[] to = new int[]{R.id.text1, R.id.text2, R.id.text3, R.id.text4 };
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.timer_info, cursor, from, to);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(cursorAdapter);
+
     }
 
     private void loadToolbarNavDrawer() {
