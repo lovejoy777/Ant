@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,16 +17,14 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.ai.lovejoy777.ant.activities.AboutActivity;
 
@@ -44,19 +43,21 @@ public class Node extends AppCompatActivity {
     private static final int ACTIVITY_CREATE = 0;
     private static final int ACTIVITY_EDIT = 1;
 
+    BaseNodeDBHelper dbHelper;
+
 
     private CircularProgress circularProgress;
     private DrawerLayout mDrawerLayout;
     Toolbar toolBar;
 
     // for switches & heating layouts
-    ToggleButton sw1;
+    SwitchCompat sw1;
     ImageButton clockBtnsw1;
-    ToggleButton sw2;
+    SwitchCompat sw2;
     ImageButton clockBtnsw2;
-    ToggleButton sw3;
+    SwitchCompat sw3;
     ImageButton clockBtnsw3;
-    ToggleButton sw4;
+    SwitchCompat sw4;
     ImageButton clockBtnsw4;
     Button getTempBtn;
     TextView titleTV;
@@ -65,6 +66,7 @@ public class Node extends AppCompatActivity {
     TextView textView3;
     TextView textView4;
 
+    /**
     // for dimmer layout
     TextView TVD1;
     TextView TVD2;
@@ -92,6 +94,7 @@ public class Node extends AppCompatActivity {
     LinearLayout LDSB2;
     LinearLayout LDSB3;
     LinearLayout LDSB4;
+     */
 
     // temperature return data
     TextView TVin;
@@ -116,11 +119,22 @@ public class Node extends AppCompatActivity {
     String code7 = ".473";
     String code8 = ".483";
 
-    String serverHostname1;
-    String port;
-    String addressn1;
-    String rsaddressn1;
+    int nodeID;
+    String nodeName;
+    String nodeAddress;
+    String nodeRSAddress;
+    String nodeType;
+    String nodeSwnum;
+    String nodeSw1;
+    String nodeSw2;
+    String nodeSw3;
+    String nodeSw4;
+    String nodeBase_ID;
+    String nodeBase_Name;
+    String nodeBase_Localip;
+    String nodeBase_Port;
 
+    String baseNodeName;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -130,44 +144,50 @@ public class Node extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        String baseName = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_NAME);
-        String nodenamen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_NAME);
-        String nodetypen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_TYPE);
-        String swnumn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SWNUM);
-        final String sw1namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW1);
-        final String sw2namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW2);
-        final String sw3namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW3);
-        final String sw4namen1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_SW4);
+        dbHelper = new BaseNodeDBHelper(this);
 
-        serverHostname1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_LOCALIP);
-        port = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_PORT);
-        addressn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_ADDRESS);
-        rsaddressn1 = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_NODE_RSADDRESS);
+        // get node id from MainActivityNodes
+        nodeID = getIntent().getIntExtra(MainActivityNodes.KEY_EXTRA_NODE_ID, 0);
+        nodeID = getIntent().getIntExtra(WidgetConfig.KEY_EXTRA_NODE_ID, 0);
+       // Toast.makeText(getApplicationContext(), "node id = " + nodeID, Toast.LENGTH_LONG).show();
 
-        String baseNodeName = baseName + " " + nodenamen1;
+        // get all node data
+        Cursor rs = dbHelper.getNode(nodeID);
+        rs.moveToFirst();
+        nodeName = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_NAME));
+        nodeAddress = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ADDRESS));
+        nodeRSAddress = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_RSADDRESS));
+        nodeType = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_TYPE));
+        nodeSwnum = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SWNUM));
+        nodeSw1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW1));
+        nodeSw2 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW2));
+        nodeSw3 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW3));
+        nodeSw4 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW4));
+        nodeBase_ID = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_ID));
+        nodeBase_Name = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_NAME));
+        nodeBase_Localip = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_LOCALIP));
+        nodeBase_Port = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_PORT));
+        if (!rs.isClosed()) {
+            rs.close();
+        }
 
-
-
-        savePrefs1("NAME", baseNodeName);
-        savePrefs1("ADDRESS", addressn1);
-        savePrefs1("LOCALIP", serverHostname1);
-        savePrefs1("PORT", port);
-
+        // name for timers
+        baseNodeName = nodeBase_Name + " " + nodeName;
 
         // NODE SWITCHES
-        if (nodetypen1.equals("Switch")) {
+        if (nodeType.equals("Switch")) {
             setContentView(R.layout.node);
             loadToolbarNavDrawer();
 
             toolBar = (Toolbar) findViewById(R.id.toolbar);
 
-            sw1 = (ToggleButton) findViewById(R.id.sw1);
+            sw1 = (SwitchCompat) findViewById(R.id.sw1);
             clockBtnsw1 = (ImageButton) findViewById(R.id.clockBtnsw1);
-            sw2 = (ToggleButton) findViewById(R.id.sw2);
+            sw2 = (SwitchCompat) findViewById(R.id.sw2);
             clockBtnsw2 = (ImageButton) findViewById(R.id.clockBtnsw2);
-            sw3 = (ToggleButton) findViewById(R.id.sw3);
+            sw3 = (SwitchCompat) findViewById(R.id.sw3);
             clockBtnsw3 = (ImageButton) findViewById(R.id.clockBtnsw3);
-            sw4 = (ToggleButton) findViewById(R.id.sw4);
+            sw4 = (SwitchCompat) findViewById(R.id.sw4);
             clockBtnsw4 = (ImageButton) findViewById(R.id.clockBtnsw4);
             TVin = (TextView) findViewById(R.id.TVin);
 
@@ -176,7 +196,7 @@ public class Node extends AppCompatActivity {
             textView2 = (TextView) findViewById(R.id.textView2);
             textView3 = (TextView) findViewById(R.id.textView3);
             textView4 = (TextView) findViewById(R.id.textView4);
-            titleTV.setText("" + nodenamen1);
+            titleTV.setText(baseNodeName);
 
             sw1.setVisibility(View.GONE);
             clockBtnsw1.setVisibility(View.GONE);
@@ -192,12 +212,12 @@ public class Node extends AppCompatActivity {
             textView4.setVisibility(View.GONE);
 
             // sets the number of switches shown
-            if (swnumn1.equals("1")) {
+            if (nodeSwnum.equals("1")) {
                 sw1.setVisibility(View.VISIBLE);
                 clockBtnsw1.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
             }
-            if (swnumn1.equals("2")) {
+            if (nodeSwnum.equals("2")) {
                 sw1.setVisibility(View.VISIBLE);
                 clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
@@ -205,7 +225,7 @@ public class Node extends AppCompatActivity {
                 textView1.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.VISIBLE);
             }
-            if (swnumn1.equals("3")) {
+            if (nodeSwnum.equals("3")) {
                 sw1.setVisibility(View.VISIBLE);
                 clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
@@ -216,7 +236,7 @@ public class Node extends AppCompatActivity {
                 textView2.setVisibility(View.VISIBLE);
                 textView3.setVisibility(View.VISIBLE);
             }
-            if (swnumn1.equals("4")) {
+            if (nodeSwnum.equals("4")) {
                 sw1.setVisibility(View.VISIBLE);
                 clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
@@ -231,16 +251,11 @@ public class Node extends AppCompatActivity {
                 textView4.setVisibility(View.VISIBLE);
             }
 
-            titleTV.setText(nodenamen1);
-            textView1.setText(sw1namen1);
-            textView2.setText(sw2namen1);
-            textView3.setText(sw3namen1);
-            textView4.setText(sw4namen1);
-
-            sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
-            sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
-            sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
-            sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
+            titleTV.setText(baseNodeName);
+            textView1.setText(nodeSw1);
+            textView2.setText(nodeSw2);
+            textView3.setText(nodeSw3);
+            textView4.setText(nodeSw4);
 
             // NODE SWITCH 1
 
@@ -252,14 +267,14 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw1namen1 + " On");
+                                    savePrefs1("SWNAME", nodeSw1 + " On");
                                     savePrefs1("SWCODE", code1);
                                     createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw1namen1 + " Off");
+                                    savePrefs1("SWNAME", nodeSw1 + " Off");
                                     savePrefs1("SWCODE", code2);
                                     createTimer();
                                 }
@@ -279,8 +294,8 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw1.isChecked()) {
                         try {
-                            dataOut(addressn1 + code1); // "0001"
-                            sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            dataOut(nodeAddress + code1); // "0001"
+
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -288,9 +303,9 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw1.isChecked()) {
                         try {
-                            dataOut(addressn1 + code2);  // "0002"
-                            sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-                            TVin.setTextColor(Color.parseColor("#e57373"));
+                            dataOut(nodeAddress + code2);  // "0002"
+
+                            TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
                         }
@@ -307,14 +322,14 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw2namen1 + " On");
+                                    savePrefs1("SWNAME", nodeSw2 + " On");
                                     savePrefs1("SWCODE", code3);
                                     createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw2namen1 + " Off");
+                                    savePrefs1("SWNAME", nodeSw2 + " Off");
                                     savePrefs1("SWCODE", code4);
                                     createTimer();
                                 }
@@ -334,8 +349,8 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw2.isChecked()) {
                         try {
-                            dataOut(addressn1 + code3); // "0003"
-                            sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            dataOut(nodeAddress + code3); // "0003"
+                            //sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -343,9 +358,9 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw2.isChecked()) {
                         try {
-                            dataOut(addressn1 + code4);  // "0004"
-                            sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-                            TVin.setTextColor(Color.parseColor("#e57373"));
+                            dataOut(nodeAddress + code4);  // "0004"
+                           // sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
                         }
@@ -362,14 +377,14 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw3namen1 + " On");
+                                    savePrefs1("SWNAME", nodeSw3 + " On");
                                     savePrefs1("SWCODE", code5);
                                     createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw3namen1 + " Off");
+                                    savePrefs1("SWNAME", nodeSw3 + " Off");
                                     savePrefs1("SWCODE", code6);
                                     createTimer();
                                 }
@@ -389,8 +404,8 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw3.isChecked()) {
                         try {
-                            dataOut(addressn1 + code5); // "0005"
-                            sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            dataOut(nodeAddress + code5); // "0005"
+                           // sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -398,9 +413,9 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw3.isChecked()) {
                         try {
-                            dataOut(addressn1 + code6);  // "0006"
-                            sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-                            TVin.setTextColor(Color.parseColor("#e57373"));
+                            dataOut(nodeAddress + code6);  // "0006"
+                          //  sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
                         }
@@ -417,14 +432,14 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw4namen1 + " On");
+                                    savePrefs1("SWNAME", nodeSw4 + " On");
                                     savePrefs1("SWCODE", code7);
                                     createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw4namen1 + " Off");
+                                    savePrefs1("SWNAME", nodeSw4 + " Off");
                                     savePrefs1("SWCODE", code8);
                                     createTimer();
                                 }
@@ -444,8 +459,8 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw4.isChecked()) {
                         try {
-                            dataOut(addressn1 + code7); // "0007"
-                            sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            dataOut(nodeAddress + code7); // "0007"
+                          //  sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -453,9 +468,9 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw4.isChecked()) {
                         try {
-                            dataOut(addressn1 + code8);  // "0008"
-                            sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-                            TVin.setTextColor(Color.parseColor("#e57373"));
+                            dataOut(nodeAddress + code8);  // "0008"
+                          //  sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
                         }
@@ -464,7 +479,7 @@ public class Node extends AppCompatActivity {
             });
         }
         // ROOM STAT
-        if (nodetypen1.equals("RoomStat")) {
+        if (nodeType.equals("RoomStat")) {
             setContentView(R.layout.heating);
 
             loadToolbarNavDrawer();
@@ -472,13 +487,13 @@ public class Node extends AppCompatActivity {
 
             toolBar = (Toolbar) findViewById(R.id.toolbar);
 
-            sw1 = (ToggleButton) findViewById(R.id.sw1);
+            sw1 = (SwitchCompat) findViewById(R.id.sw1);
             clockBtnsw1 = (ImageButton) findViewById(R.id.clockBtnsw1);
-            sw2 = (ToggleButton) findViewById(R.id.sw2);
+            sw2 = (SwitchCompat) findViewById(R.id.sw2);
             clockBtnsw2 = (ImageButton) findViewById(R.id.clockBtnsw2);
-            sw3 = (ToggleButton) findViewById(R.id.sw3);
+            sw3 = (SwitchCompat) findViewById(R.id.sw3);
             clockBtnsw3 = (ImageButton) findViewById(R.id.clockBtnsw3);
-            sw4 = (ToggleButton) findViewById(R.id.sw4);
+            sw4 = (SwitchCompat) findViewById(R.id.sw4);
             clockBtnsw4 = (ImageButton) findViewById(R.id.clockBtnsw4);
             TVin = (TextView) findViewById(R.id.TVin);
 
@@ -490,11 +505,11 @@ public class Node extends AppCompatActivity {
 
             getTempBtn = (Button) findViewById(R.id.getTempBtn);
             tempTV = (TextView) findViewById(R.id.tempTV);
-            titleTV.setText("" + nodenamen1);
+            titleTV.setText(baseNodeName);
 
             // auto get temp
             try {
-                dataIn(rsaddressn1 + getTemp); // "9999"
+                dataIn(nodeRSAddress + getTemp); // "9999"
             } catch (Exception e) {
                 System.out.println("No connection");
             }
@@ -513,12 +528,12 @@ public class Node extends AppCompatActivity {
             textView4.setVisibility(View.GONE);
 
             // sets the number of switches shown
-            if (swnumn1.equals("1")) {
+            if (nodeSwnum.equals("1")) {
                 sw1.setVisibility(View.VISIBLE);
                 clockBtnsw1.setVisibility(View.VISIBLE);
                 textView1.setVisibility(View.VISIBLE);
             }
-            if (swnumn1.equals("2")) {
+            if (nodeSwnum.equals("2")) {
                 sw1.setVisibility(View.VISIBLE);
                 clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
@@ -526,7 +541,7 @@ public class Node extends AppCompatActivity {
                 textView1.setVisibility(View.VISIBLE);
                 textView2.setVisibility(View.VISIBLE);
             }
-            if (swnumn1.equals("3")) {
+            if (nodeSwnum.equals("3")) {
                 sw1.setVisibility(View.VISIBLE);
                 clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
@@ -537,7 +552,7 @@ public class Node extends AppCompatActivity {
                 textView2.setVisibility(View.VISIBLE);
                 textView3.setVisibility(View.VISIBLE);
             }
-            if (swnumn1.equals("4")) {
+            if (nodeSwnum.equals("4")) {
                 sw1.setVisibility(View.VISIBLE);
                 clockBtnsw1.setVisibility(View.VISIBLE);
                 sw2.setVisibility(View.VISIBLE);
@@ -552,16 +567,11 @@ public class Node extends AppCompatActivity {
                 textView4.setVisibility(View.VISIBLE);
             }
 
-            titleTV.setText(nodenamen1);
-            textView1.setText(sw1namen1);
-            textView2.setText(sw2namen1);
-            textView3.setText(sw3namen1);
-            textView4.setText(sw4namen1);
-
-            sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
-            sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
-            sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
-            sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_gray));
+            titleTV.setText(baseNodeName);
+            textView1.setText(nodeSw1);
+            textView2.setText(nodeSw2);
+            textView3.setText(nodeSw3);
+            textView4.setText(nodeSw4);
 
             // RS SWITCH 1
 
@@ -573,14 +583,14 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw1namen1 + " On");
+                                    savePrefs1("SWNAME", nodeSw1 + " On");
                                     savePrefs1("SWCODE", code1);
                                     createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw1namen1 + " Off");
+                                    savePrefs1("SWNAME", nodeSw1 + " Off");
                                     savePrefs1("SWCODE", code2);
                                     createTimer();
                                 }
@@ -599,8 +609,8 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw1.isChecked()) {
                         try {
-                            dataOut(addressn1 + code1); // "0001"
-                            sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            dataOut(nodeAddress + code1); // "0001"
+                           // sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -608,9 +618,9 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw1.isChecked()) {
                         try {
-                            dataOut(addressn1 + code2);  // "0002"
-                            sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-                            TVin.setTextColor(Color.parseColor("#e57373"));
+                            dataOut(nodeAddress + code2);  // "0002"
+                           // sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
                         }
@@ -627,14 +637,14 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw2namen1 + " On");
+                                    savePrefs1("SWNAME", nodeSw2 + " On");
                                     savePrefs1("SWCODE", code3);
                                     createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw2namen1 + " Off");
+                                    savePrefs1("SWNAME", nodeSw2 + " Off");
                                     savePrefs1("SWCODE", code4);
                                     createTimer();
                                 }
@@ -653,8 +663,8 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw2.isChecked()) {
                         try {
-                            dataOut(addressn1 + code3); // "0003"
-                            sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            dataOut(nodeAddress + code3); // "0003"
+                           // sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -662,9 +672,9 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw2.isChecked()) {
                         try {
-                            dataOut(addressn1 + code4);  // "0004"
-                            sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-                            TVin.setTextColor(Color.parseColor("#e57373"));
+                            dataOut(nodeAddress + code4);  // "0004"
+                           // sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
                         }
@@ -681,14 +691,14 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw3namen1 + " On");
+                                    savePrefs1("SWNAME", nodeSw3 + " On");
                                     savePrefs1("SWCODE", code5);
                                     createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw3namen1 + " Off");
+                                    savePrefs1("SWNAME", nodeSw3 + " Off");
                                     savePrefs1("SWCODE", code6);
                                     createTimer();
                                 }
@@ -707,8 +717,8 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw3.isChecked()) {
                         try {
-                            dataOut(addressn1 + code5); // "0005"
-                            sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            dataOut(nodeAddress + code5); // "0005"
+                          //  sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -716,9 +726,9 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw3.isChecked()) {
                         try {
-                            dataOut(addressn1 + code6);  // "0006"
-                            sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-                            TVin.setTextColor(Color.parseColor("#e57373"));
+                            dataOut(nodeAddress + code6);  // "0006"
+                          //  sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
                         }
@@ -735,14 +745,14 @@ public class Node extends AppCompatActivity {
                     builder.setInverseBackgroundForced(true)
                             .setPositiveButton("ON", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw4namen1 + " On");
+                                    savePrefs1("SWNAME", nodeSw4 + " On");
                                     savePrefs1("SWCODE", code7);
                                     createTimer();
                                 }
                             })
                             .setNegativeButton("OFF", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    savePrefs1("SWNAME", sw4namen1 + " Off");
+                                    savePrefs1("SWNAME", nodeSw4 + " Off");
                                     savePrefs1("SWCODE", code8);
                                     createTimer();
                                 }
@@ -761,8 +771,8 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw4.isChecked()) {
                         try {
-                            dataOut(addressn1 + code7); // "0007"
-                            sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            dataOut(nodeAddress + code7); // "0007"
+                          //  sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -770,9 +780,9 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw4.isChecked()) {
                         try {
-                            dataOut(addressn1 + code8);  // "0008"
-                            sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-                            TVin.setTextColor(Color.parseColor("#e57373"));
+                            dataOut(nodeAddress + code8);  // "0008"
+                           // sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
                         }
@@ -784,7 +794,7 @@ public class Node extends AppCompatActivity {
             getTempBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     try {
-                        dataIn(rsaddressn1 + getTemp); // "9999"
+                        dataIn(nodeRSAddress + getTemp); // "9999"
                     } catch (Exception e) {
                         System.out.println("No connection");
                     }
@@ -1007,20 +1017,17 @@ public class Node extends AppCompatActivity {
 
 
     public void dataOut(String s) throws Exception {
-        SharedPreferences spb = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String serverHostname1 = spb.getString("LOCALIP", "192,168,0,1");
-        String port = spb.getString("PORT", "8030");
-        int port1 = Integer.valueOf(port);
+        int port = Integer.valueOf(nodeBase_Port);
 
 
         byte[] b = (s.getBytes());
         byte[] receiveData = new byte[1024];
         if (isOnline()) {
 
-            ip = InetAddress.getByName(serverHostname1);
+            ip = InetAddress.getByName(nodeBase_Localip);
             d1 = new DatagramSocket();
             try {
-                send = new DatagramPacket(b, b.length, ip, port1);
+                send = new DatagramPacket(b, b.length, ip, port);
                 d1.send(send);
                 d1.setSoTimeout(3000);
 
@@ -1028,6 +1035,14 @@ public class Node extends AppCompatActivity {
                 d1.receive(rec);
                 d1.setSoTimeout(3000);
                 modifiedSentence = new String(rec.getData());
+
+                //if (modifiedSentence.equals("On")) {
+                  //  sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                //}
+                //if (modifiedSentence.equals("Off")) {
+                  //  sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+               // }
+
                 TVin.setText(modifiedSentence);
                 d1.close();
 
@@ -1041,21 +1056,18 @@ public class Node extends AppCompatActivity {
     } // end of dataOut
 
     public void dataIn(String s) throws Exception {
-        SharedPreferences spb = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String serverHostname1 = spb.getString("LOCALIP", "192,168,0,1");
-        String port = spb.getString("PORT", "8030");
-        int port1 = Integer.valueOf(port);
+        int port = Integer.valueOf(nodeBase_Port);
 
         byte[] b = (s.getBytes());
         byte[] receiveData = new byte[1024];
 
         if (isOnline()) {
 
-            ip = InetAddress.getByName(serverHostname1);
+            ip = InetAddress.getByName(nodeBase_Localip);
             d2 = new DatagramSocket();
             try {
                 // Send Data
-                send = new DatagramPacket(b, b.length, ip, port1);
+                send = new DatagramPacket(b, b.length, ip, port);
                 d2.send(send);
                 d2.setSoTimeout(3000); // time to send data
 
@@ -1070,7 +1082,7 @@ public class Node extends AppCompatActivity {
                 Float f = Float.parseFloat(modifiedSentence);
                 int i = Math.round(f);
                 int progress = i * 2;
-                if (progress < 46) {
+                if (progress < 50) {
                     circularProgress.setProgressColor(Color.parseColor("#0277BD"));
 
                 } else {

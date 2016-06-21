@@ -67,46 +67,12 @@ public class TimerListActivity extends AppCompatActivity {
         titleTextView.setText("Timers");
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setBackgroundTintList(getResources().getColorStateList(R.color.colorPrimary));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(TimerListActivity.this, R.style.MyAlertDialogStyle);
-                builder.setMessage(R.string.warning);
-                builder.setInverseBackgroundForced(true)
-
-                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                mDbHelper.deleteAll();
-                                populateListView();
-                            }
-                        })
-
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        });
-
-                AlertDialog d = builder.create();
-                d.setTitle("Delete All Timers");
-                d.show();
-                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //       .setAction("Action", null).show();
-            }
-        });
 
         mDbHelper = new TimerDbAdapter(this);
         mDbHelper.open();
 
         populateListView();
-
-
-
-
-
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -219,30 +185,6 @@ public class TimerListActivity extends AppCompatActivity {
                             case R.id.nav_home:
                                 mDrawerLayout.closeDrawers();
                                 getSupportActionBar().setElevation(2);
-                                break;
-
-                            case R.id.nav_clearall:
-                                AlertDialog.Builder builder = new AlertDialog.Builder(TimerListActivity.this, R.style.MyAlertDialogStyle);
-                                builder.setMessage(R.string.warning);
-                                builder.setInverseBackgroundForced(true)
-
-                                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                mDbHelper.deleteAll();
-                                                populateListView();
-                                            }
-                                        })
-
-                                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-
-                                            }
-                                        });
-
-                                AlertDialog d = builder.create();
-                                d.setTitle("Delete All Timers");
-                                d.show();
-
                                 break;
 
                             case R.id.nav_settings:

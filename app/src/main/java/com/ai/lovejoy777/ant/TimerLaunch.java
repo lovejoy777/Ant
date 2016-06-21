@@ -44,8 +44,6 @@ public class TimerLaunch extends Activity {
         Name = (TextView) findViewById(R.id.textName);
         swName = (TextView) findViewById(R.id.textswName);
 
-
-
         mRowId = savedInstanceState != null ? savedInstanceState.getLong(TimerDbAdapter.KEY_ROWID)
                 : null;
 
@@ -156,7 +154,6 @@ public class TimerLaunch extends Activity {
         rs.moveToFirst();
         String localip = rs.getString(rs.getColumnIndex(TimerDbAdapter.KEY_LOCALIP));
         String port = rs.getString(rs.getColumnIndex(TimerDbAdapter.KEY_PORT));
-        String code = rs.getString(rs.getColumnIndex(TimerDbAdapter.KEY_CODE));
         if (!rs.isClosed()) {
             rs.close();
         }

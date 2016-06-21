@@ -38,8 +38,19 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
     Button saveButton, editButton, deleteButton;
 
     int nodeID;
-    int baseID;
-    String baseName;
+    String nodeName;
+    String nodeAddress;
+    String nodeRSAddress;
+    String nodeType1;
+    String nodeSwnum1;
+    String nodeSw1;
+    String nodeSw2;
+    String nodeSw3;
+    String nodeSw4;
+    int nodeBase_ID;
+    String nodeBase_Name;
+    String nodeBase_Localip;
+    String nodeBase_Port;
     private BaseNodeDBHelper dbHelper;
 
     @Override
@@ -47,10 +58,38 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_node);
 
-        // Toast.makeText(getApplicationContext(), "Trip used " + tripID, Toast.LENGTH_SHORT).show();
+        dbHelper = new BaseNodeDBHelper(this);
+
         nodeID = getIntent().getIntExtra(MainActivityNodes.KEY_EXTRA_NODE_ID, 0);
-        baseID = getIntent().getIntExtra(MainActivityNodes.KEY_EXTRA_BASE_ID, 0);
-        baseName = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_NAME);
+
+        if (nodeID > 0) {
+            Cursor rs = dbHelper.getNode(nodeID);
+            rs.moveToFirst();
+            nodeName = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_NAME));
+            nodeAddress = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ADDRESS));
+            nodeRSAddress = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_RSADDRESS));
+            nodeType1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_TYPE));
+            nodeSwnum1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SWNUM));
+            nodeSw1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW1));
+            nodeSw2 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW2));
+            nodeSw3 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW3));
+            nodeSw4 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW4));
+            nodeBase_ID = rs.getInt(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_ID));
+            nodeBase_Name = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_NAME));
+            nodeBase_Localip = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_LOCALIP));
+            nodeBase_Port = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_PORT));
+            if (!rs.isClosed()) {
+                rs.close();
+            }
+        } else {
+            nodeBase_ID = getIntent().getIntExtra(MainActivityNodes.KEY_EXTRA_BASE_ID, 0);
+            nodeBase_Name = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_NAME);
+            nodeBase_Localip = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_LOCALIP);
+            nodeBase_Port = getIntent().getStringExtra(MainActivityNodes.KEY_EXTRA_BASE_PORT);
+
+        }
+
+        // Toast.makeText(getApplicationContext(), "Trip used " + tripID, Toast.LENGTH_SHORT).show();
 
         scrollView1 = (ScrollView) findViewById(R.id.scrollView1);
         MRL1 = (RelativeLayout) findViewById(R.id.MRL1);
@@ -129,7 +168,7 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
         });
 
         // pre fill text fields
-        base_idText.setText("" + baseID);
+        base_idText.setText("" + nodeBase_ID);
         addressEditText.setText("");
         RSaddressEditText.setText("");
         typeEditText.setText("");
@@ -156,21 +195,9 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
             titleTextView = (TextView) findViewById(R.id.titleTextView);
             titleTextView.setText("Edit Node");
 
-            Cursor rs = dbHelper.getNode(nodeID);
-            rs.moveToFirst();
-            String nodeName = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_NAME));
-            String nodeAddress = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ADDRESS));
-            String nodeRSAddress = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_RSADDRESS));
-            String nodeType1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_TYPE));
-            String nodeSwnum1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SWNUM));
-            String nodeSw1 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW1));
-            String nodeSw2 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW2));
-            String nodeSw3 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW3));
-            String nodeSw4 = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW4));
-            String nodeBase_ID = rs.getString(rs.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_BASE_ID));
-            if (!rs.isClosed()) {
-                rs.close();
-            }
+
+
+
 
             nameEditText.setText(nodeName);
             nameEditText.setFocusable(false);
@@ -208,9 +235,9 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
             sw4EditText.setFocusable(false);
             sw4EditText.setClickable(false);
 
-            base_idText.setText((CharSequence) nodeBase_ID);
-            base_idText.setFocusable(false);
-            base_idText.setClickable(false);
+           // base_idText.setText(nodeBase_ID);
+           // base_idText.setFocusable(false);
+           // base_idText.setClickable(false);
         }
     }
 
@@ -260,9 +287,9 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                 sw4EditText.setFocusableInTouchMode(true);
                 sw4EditText.setClickable(true);
 
-                base_idText.setEnabled(true);
-                base_idText.setFocusableInTouchMode(true);
-                base_idText.setClickable(true);
+               // base_idText.setEnabled(true);
+               // base_idText.setFocusableInTouchMode(true);
+               // base_idText.setClickable(true);
                 return;
 
             case R.id.deleteButton:
@@ -274,8 +301,8 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                                 Toast.makeText(getApplicationContext(), "Deleted Node Successfully", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
-                                intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
+                                intent.putExtra(KEY_EXTRA_BASE_ID, nodeBase_ID);
+                                intent.putExtra(KEY_EXTRA_BASE_NAME, nodeBase_Name);
                                 startActivity(intent);
                             }
                         })
@@ -303,13 +330,16 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                     sw2EditText.getText().toString(),
                     sw3EditText.getText().toString(),
                     sw4EditText.getText().toString(),
-                    base_idText.getText().toString())) {
+                    base_idText.getText().toString(),
+                    nodeBase_Name,
+                    nodeBase_Localip,
+                    nodeBase_Port)) {
 
                 Toast.makeText(getApplicationContext(), "Node Update Successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
-                intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
+                intent.putExtra(KEY_EXTRA_BASE_NAME, nodeBase_Name);
+                intent.putExtra(KEY_EXTRA_BASE_ID, nodeBase_ID);
                 startActivity(intent);
 
             } else {
@@ -326,7 +356,10 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
                     sw2EditText.getText().toString(),
                     sw3EditText.getText().toString(),
                     sw4EditText.getText().toString(),
-                    base_idText.getText().toString())) {
+                    base_idText.getText().toString(),
+                    nodeBase_Name,
+                    nodeBase_Localip,
+                    nodeBase_Port)) {
                 Toast.makeText(getApplicationContext(), "Node Inserted", Toast.LENGTH_SHORT).show();
 
             } else {
@@ -334,8 +367,8 @@ public class CreateOrEditNodesActivity extends AppCompatActivity implements View
             }
             Intent intent = new Intent(getApplicationContext(), MainActivityNodes.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
-            intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
+            intent.putExtra(KEY_EXTRA_BASE_NAME, nodeBase_Name);
+            intent.putExtra(KEY_EXTRA_BASE_ID, nodeBase_ID);
             startActivity(intent);
         }
     }

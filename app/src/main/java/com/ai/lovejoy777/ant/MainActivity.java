@@ -183,6 +183,11 @@ public class MainActivity extends AppCompatActivity {
                                 Intent timers = new Intent(MainActivity.this, TimerListActivity.class);
                                 startActivity(timers, bndlanimation);
                                 break;
+
+                            case R.id.nav_test:
+                                Intent test = new Intent(MainActivity.this, WidgetConfig.class);
+                                startActivity(test, bndlanimation);
+                                break;
                         }
                         return false;
                     }

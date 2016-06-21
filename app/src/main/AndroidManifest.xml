@@ -74,6 +74,8 @@
             android:theme="@style/Base.Theme.Toolbar.TransparentStatusBar">
         </activity>
 
+
+
         <activity
             android:name=".TimerListActivity"
             android:label=""
@@ -95,6 +97,25 @@
         <receiver android:name=".OnAlarmReceiver" />
 
         <service android:name=".TimerService" />
+
+
+
+        <receiver android:name=".WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget"/>
+        </receiver>
+
+        <activity
+            android:name=".WidgetConfig">
+        <intent-filter>
+            <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+        </intent-filter>
+
+        </activity>
+
 
     </application>
 </manifest>

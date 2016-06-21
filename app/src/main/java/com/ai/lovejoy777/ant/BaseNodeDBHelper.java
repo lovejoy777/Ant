@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class BaseNodeDBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "SQLiteExample.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public static final String NODE_TABLE_NAME = "Nodes";
     public static final String NODE_COLUMN_ID = "_id";
@@ -27,6 +27,9 @@ public class BaseNodeDBHelper extends SQLiteOpenHelper {
     public static final String NODE_COLUMN_SW3 = "sw3";
     public static final String NODE_COLUMN_SW4 = "sw4";
     public static final String NODE_COLUMN_BASE_ID = "base_id";
+    public static final String NODE_COLUMN_BASE_NAME = "base_name";
+    public static final String NODE_COLUMN_BASE_LOCALIP = "base_localip";
+    public static final String NODE_COLUMN_BASE_PORT = "base_port";
 
     public static final String BASE_TABLE_NAME = "Bases";
     public static final String BASE_COLUMN_ID = "_id";
@@ -54,7 +57,10 @@ public class BaseNodeDBHelper extends SQLiteOpenHelper {
                         NODE_COLUMN_SW2 + " TEXT, " +
                         NODE_COLUMN_SW3 + " TEXT, " +
                         NODE_COLUMN_SW4 + " TEXT, " +
-                        NODE_COLUMN_BASE_ID + " INTEGER)"
+                        NODE_COLUMN_BASE_ID + " INTEGER, " +
+                        NODE_COLUMN_BASE_NAME + " TEXT, " +
+                        NODE_COLUMN_BASE_LOCALIP + " TEXT, " +
+                        NODE_COLUMN_BASE_PORT + " TEXT)"
         );
 
         // Create Base Table
@@ -74,7 +80,19 @@ public class BaseNodeDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertNode(String name, String address, String rsaddress, String type, String swnum, String sw1, String sw2, String sw3, String sw4, String base_id) {
+    public boolean insertNode(String name,
+                              String address,
+                              String rsaddress,
+                              String type,
+                              String swnum,
+                              String sw1,
+                              String sw2,
+                              String sw3,
+                              String sw4,
+                              String base_id,
+                              String base_name,
+                              String base_localip,
+                              String base_port) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -88,6 +106,9 @@ public class BaseNodeDBHelper extends SQLiteOpenHelper {
         contentValues.put(NODE_COLUMN_SW3, sw3);
         contentValues.put(NODE_COLUMN_SW4, sw4);
         contentValues.put(NODE_COLUMN_BASE_ID, base_id);
+        contentValues.put(NODE_COLUMN_BASE_NAME, base_name);
+        contentValues.put(NODE_COLUMN_BASE_LOCALIP, base_localip);
+        contentValues.put(NODE_COLUMN_BASE_PORT, base_port);
 
         db.insert(NODE_TABLE_NAME, null, contentValues);
         return true;
@@ -118,7 +139,20 @@ public class BaseNodeDBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-    public boolean updateNode(Integer id, String name, String address, String rsaddress, String type, String swnum, String sw1, String sw2, String sw3, String sw4, String base_id) {
+    public boolean updateNode(Integer id,
+                              String name,
+                              String address,
+                              String rsaddress,
+                              String type,
+                              String swnum,
+                              String sw1,
+                              String sw2,
+                              String sw3,
+                              String sw4,
+                              String base_id,
+                              String base_name,
+                              String base_localip,
+                              String base_port) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(NODE_COLUMN_NAME, name);
@@ -131,6 +165,9 @@ public class BaseNodeDBHelper extends SQLiteOpenHelper {
         contentValues.put(NODE_COLUMN_SW3, sw3);
         contentValues.put(NODE_COLUMN_SW4, sw4);
         contentValues.put(NODE_COLUMN_BASE_ID, base_id);
+        contentValues.put(NODE_COLUMN_BASE_NAME, base_name);
+        contentValues.put(NODE_COLUMN_BASE_LOCALIP, base_localip);
+        contentValues.put(NODE_COLUMN_BASE_PORT, base_port);
         db.update(NODE_TABLE_NAME, contentValues, NODE_COLUMN_ID + " = ? ", new String[]{Integer.toString(id)});
         return true;
     }
@@ -197,6 +234,13 @@ public class BaseNodeDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + NODE_TABLE_NAME + " WHERE " +
                 NODE_COLUMN_BASE_ID + "=?", new String[]{Integer.toString(id)});
+        return res;
+    }
+
+    public Cursor getAllSwitches() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + NODE_TABLE_NAME+ " WHERE " +
+                 NODE_COLUMN_SW1 + "IS NOT NULL", null);
         return res;
     }
 }

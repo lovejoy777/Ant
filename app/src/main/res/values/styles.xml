@@ -62,7 +62,7 @@
     </style>
 
     <!-- Navigation Drawer Text Sytle -->
-    <style name="NavigationViewTheme" parent="AppTheme">
+    <style name="NavigationViewTheme" parent="Theme.AppCompat">
         <item name="textAppearanceListItem">@style/TextAppearance.AppCompat.Body2</item>
         <item name="colorPrimary">@color/white</item>
         <item name="android:windowBackground">@color/background</item>

@@ -28,15 +28,6 @@ public class MainActivityNodes extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
 
     public final static String KEY_EXTRA_NODE_ID = "KEY_EXTRA_NODE_ID";
-    public final static String KEY_EXTRA_NODE_ADDRESS = "KEY_EXTRA_NODE_ADDRESS";
-    public final static String KEY_EXTRA_NODE_RSADDRESS = "KEY_EXTRA_NODE_RSADDRESS";
-    public final static String KEY_EXTRA_NODE_TYPE = "KEY_EXTRA_NODE_TYPE";
-    public final static String KEY_EXTRA_NODE_SWNUM = "KEY_EXTRA_NODE_SWNUM";
-    public final static String KEY_EXTRA_NODE_SW1 = "KEY_EXTRA_NODE_SW1";
-    public final static String KEY_EXTRA_NODE_SW2 = "KEY_EXTRA_NODE_SW2";
-    public final static String KEY_EXTRA_NODE_SW3 = "KEY_EXTRA_NODE_SW3";
-    public final static String KEY_EXTRA_NODE_SW4 = "KEY_EXTRA_NODE_SW4";
-    public final static String KEY_EXTRA_NODE_NAME = "KEY_EXTRA_NODE_NAME";
     public final static String KEY_EXTRA_BASE_ID = "KEY_EXTRA_BASE_ID";
     public final static String KEY_EXTRA_BASE_NAME = "KEY_EXTRA_BASE_NAME";
     public final static String KEY_EXTRA_BASE_LOCALIP = "KEY_EXTRA_BASE_LOCALIP";
@@ -87,9 +78,11 @@ public class MainActivityNodes extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivityNodes.this, CreateOrEditNodesActivity.class);
 
-                intent.putExtra(KEY_EXTRA_NODE_ID, 0);
+              //  intent.putExtra(KEY_EXTRA_NODE_ID, 0);
                 intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
                 intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
+                intent.putExtra(KEY_EXTRA_BASE_LOCALIP, baseLocalip);
+                intent.putExtra(KEY_EXTRA_BASE_PORT, basePort);
                 Bundle bndlanimation =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanimation);
@@ -108,32 +101,9 @@ public class MainActivityNodes extends AppCompatActivity {
                                     int position, long id) {
                 Cursor itemCursor = (Cursor) MainActivityNodes.this.listView.getItemAtPosition(position);
                 int nodeID = itemCursor.getInt(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ID));
-                String nodeType = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_TYPE));
-                String nodeAddress = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ADDRESS));
-                String nodeRSAddress = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_RSADDRESS));
-                String nodeName = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_NAME));
-                String nodeSwnum = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SWNUM));
-                String nodeSw1 = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW1));
-                String nodeSw2 = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW2));
-                String nodeSw3 = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW3));
-                String nodeSw4 = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_SW4));
-
-
+                //String nodeID = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ID));
                 Intent intent = new Intent(getApplicationContext(), Node.class);
                 intent.putExtra(KEY_EXTRA_NODE_ID, nodeID);
-                intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
-                intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
-                intent.putExtra(KEY_EXTRA_BASE_LOCALIP, baseLocalip);
-                intent.putExtra(KEY_EXTRA_BASE_PORT, basePort);
-                intent.putExtra(KEY_EXTRA_NODE_NAME, nodeName);
-                intent.putExtra(KEY_EXTRA_NODE_ADDRESS, nodeAddress);
-                intent.putExtra(KEY_EXTRA_NODE_RSADDRESS, nodeRSAddress);
-                intent.putExtra(KEY_EXTRA_NODE_TYPE, nodeType);
-                intent.putExtra(KEY_EXTRA_NODE_SWNUM, nodeSwnum);
-                intent.putExtra(KEY_EXTRA_NODE_SW1, nodeSw1);
-                intent.putExtra(KEY_EXTRA_NODE_SW2, nodeSw2);
-                intent.putExtra(KEY_EXTRA_NODE_SW3, nodeSw3);
-                intent.putExtra(KEY_EXTRA_NODE_SW4, nodeSw4);
                 Bundle bndlanim =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanim);
@@ -149,6 +119,7 @@ public class MainActivityNodes extends AppCompatActivity {
                 int nodeID = itemCursor.getInt(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ID));
                 Intent intent = new Intent(getApplicationContext(), CreateOrEditNodesActivity.class);
                 intent.putExtra(KEY_EXTRA_NODE_ID, nodeID);
+
                 Bundle bndlanim =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanim);
@@ -161,10 +132,7 @@ public class MainActivityNodes extends AppCompatActivity {
         final Cursor cursor = dbHelper.getBaseNode(baseID);
         String[] columns = new String[]{
                 BaseNodeDBHelper.NODE_COLUMN_ID,
-                BaseNodeDBHelper.NODE_COLUMN_NAME,
-                BaseNodeDBHelper.NODE_COLUMN_ADDRESS,
-                BaseNodeDBHelper.NODE_COLUMN_RSADDRESS,
-                BaseNodeDBHelper.NODE_COLUMN_BASE_ID
+                BaseNodeDBHelper.NODE_COLUMN_NAME
 
         };
         int[] widgets = new int[]{

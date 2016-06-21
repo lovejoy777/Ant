@@ -64,139 +64,228 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/circular"
+            android:layout_marginBottom="8dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/custom_btn"
             android:text="Refresh"
             android:textColor="@color/colorPrimaryText" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_marginBottom="20dp"
             android:layout_below="@+id/getTempBtn"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="45dp"
-            android:text="Switch 1"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
+            >
 
-        <ToggleButton
-            android:id="@+id/sw1"
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:layout_alignBottom="@+id/textView1"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="14dp"
-            android:layout_alignParentEnd="true"
-            android:text="On/Off"
-            android:textColor="@color/colorPrimaryText" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/clockBtnsw1"
-            android:layout_alignBottom="@+id/textView1"
-            android:layout_toStartOf="@+id/sw1"
-            android:layout_marginEnd="16dp"
-            android:background="@color/colorPrimaryBackground"
-            android:src="@drawable/clock" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/svll1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/sw2"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
-            android:text="Switch 2"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
+            android:orientation="vertical"
+            >
 
-        <ToggleButton
-            android:id="@+id/sw2"
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/sw1"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="14dp"
-            android:text="On/off"
-            android:textColor="@color/colorPrimaryText" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/clockBtnsw2"
-            android:layout_alignBottom="@+id/textView2"
-            android:layout_toStartOf="@+id/sw2"
-            android:layout_marginEnd="16dp"
-            android:background="@color/colorPrimaryBackground"
-            android:src="@drawable/clock" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/LL1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/sw3"
-            android:layout_alignParentStart="true"
+            android:orientation="horizontal"
             android:layout_marginStart="16dp"
-            android:text="Switch 3"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
-
-        <ToggleButton
-            android:id="@+id/sw3"
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/sw2"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="14dp"
-            android:text="On/Off"
-            android:textColor="@color/colorPrimaryText" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/clockBtnsw3"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_toStartOf="@+id/sw3"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:elevation="4dp"
             android:background="@color/colorPrimaryBackground"
-            android:src="@drawable/clock" />
+            android:baselineAligned="false"
+            >
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:text="Switch 1"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:id="@+id/clockBtnsw1"
+                android:background="@color/colorPrimaryBackground"
+                android:src="@drawable/clock"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center_vertical"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/sw1"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical"
+                android:text="Off/On   "
+                android:textColor="@color/colorPrimaryText" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/LL2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/sw4"
-            android:layout_alignParentStart="true"
+            android:orientation="horizontal"
+            android:layout_below="@+id/LL1"
             android:layout_marginStart="16dp"
-            android:text="Switch 4"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
-
-        <ToggleButton
-            android:id="@+id/sw4"
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/sw3"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="14dp"
-            android:text="On/Off"
-            android:textColor="@color/colorPrimaryText" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/clockBtnsw4"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_toStartOf="@+id/sw4"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:elevation="4dp"
             android:background="@color/colorPrimaryBackground"
-            android:src="@drawable/clock" />
+            android:baselineAligned="false"
+            >
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:text="Switch 1"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:id="@+id/clockBtnsw2"
+                android:background="@color/colorPrimaryBackground"
+                android:src="@drawable/clock"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center_vertical"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/sw2"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical"
+                android:text="Off/On   "
+                android:textColor="@color/colorPrimaryText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/LL2"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:elevation="4dp"
+            android:background="@color/colorPrimaryBackground"
+            android:baselineAligned="false"
+            >
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:text="Switch 1"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:id="@+id/clockBtnsw3"
+                android:background="@color/colorPrimaryBackground"
+                android:src="@drawable/clock"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center_vertical"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/sw3"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical"
+                android:text="Off/On   "
+                android:textColor="@color/colorPrimaryText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/LL3"
+            android:elevation="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/colorPrimaryBackground"
+            android:baselineAligned="false"
+            >
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_gravity="center_vertical"
+                android:text="Switch 4"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <ImageButton
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:id="@+id/clockBtnsw4"
+                android:background="@color/colorPrimaryBackground"
+                android:src="@drawable/clock"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center_vertical"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/sw4"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_vertical"
+                android:text="Off/On   "
+                android:textColor="@color/colorPrimaryText" />
+
+        </LinearLayout>
+
+        </LinearLayout>
+        </ScrollView>
+
 
             <TextView
                 android:id="@+id/TVin"
@@ -205,7 +294,7 @@
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/clockBtnsw4"
+                android:layout_alignParentBottom="true"
                 android:layout_marginTop="8dp"
                 android:text="..."
                 android:textColor="@color/white"
