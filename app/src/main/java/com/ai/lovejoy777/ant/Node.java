@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -294,8 +295,7 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw1.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code1); // "0001"
-
+                            new SendData().execute(nodeAddress + code1);
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -303,8 +303,7 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw1.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code2);  // "0002"
-
+                            new SendData().execute(nodeAddress + code2);
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -349,8 +348,7 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw2.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code3); // "0003"
-                            //sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            new SendData().execute(nodeAddress + code3);
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -358,8 +356,7 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw2.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code4);  // "0004"
-                           // sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            new SendData().execute(nodeAddress + code4);
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -404,8 +401,7 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw3.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code5); // "0005"
-                           // sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            new SendData().execute(nodeAddress + code5);
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -413,8 +409,7 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw3.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code6);  // "0006"
-                          //  sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            new SendData().execute(nodeAddress + code6);
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -459,8 +454,7 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw4.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code7); // "0007"
-                          //  sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            new SendData().execute(nodeAddress + code7);
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -468,8 +462,7 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw4.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code8);  // "0008"
-                          //  sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            new SendData().execute(nodeAddress + code8);
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -509,7 +502,8 @@ public class Node extends AppCompatActivity {
 
             // auto get temp
             try {
-                dataIn(nodeRSAddress + getTemp); // "9999"
+                new GetData().execute(nodeRSAddress + getTemp);
+                //dataIn(nodeRSAddress + getTemp); // "9999"
             } catch (Exception e) {
                 System.out.println("No connection");
             }
@@ -609,8 +603,7 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw1.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code1); // "0001"
-                           // sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            new SendData().execute(nodeAddress + code1);
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -618,8 +611,7 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw1.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code2);  // "0002"
-                           // sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            new SendData().execute(nodeAddress + code2);
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -663,8 +655,7 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw2.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code3); // "0003"
-                           // sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            new SendData().execute(nodeAddress + code3);
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -672,8 +663,7 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw2.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code4);  // "0004"
-                           // sw2.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            new SendData().execute(nodeAddress + code4);
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -717,8 +707,7 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw3.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code5); // "0005"
-                          //  sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            new SendData().execute(nodeAddress + code5);
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -726,8 +715,7 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw3.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code6);  // "0006"
-                          //  sw3.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            new SendData().execute(nodeAddress + code6);
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -771,8 +759,7 @@ public class Node extends AppCompatActivity {
                     }
                     if (sw4.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code7); // "0007"
-                          //  sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
+                            new SendData().execute(nodeAddress + code7);
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -780,8 +767,7 @@ public class Node extends AppCompatActivity {
 
                     } else if (!sw4.isChecked()) {
                         try {
-                            dataOut(nodeAddress + code8);  // "0008"
-                           // sw4.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
+                            new SendData().execute(nodeAddress + code8);
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -794,7 +780,8 @@ public class Node extends AppCompatActivity {
             getTempBtn.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     try {
-                        dataIn(nodeRSAddress + getTemp); // "9999"
+                        new GetData().execute(nodeRSAddress + getTemp);
+                        //dataIn(nodeRSAddress + getTemp); // "9999"
                     } catch (Exception e) {
                         System.out.println("No connection");
                     }
@@ -1015,91 +1002,6 @@ public class Node extends AppCompatActivity {
         return false;
     }
 
-
-    public void dataOut(String s) throws Exception {
-        int port = Integer.valueOf(nodeBase_Port);
-
-
-        byte[] b = (s.getBytes());
-        byte[] receiveData = new byte[1024];
-        if (isOnline()) {
-
-            ip = InetAddress.getByName(nodeBase_Localip);
-            d1 = new DatagramSocket();
-            try {
-                send = new DatagramPacket(b, b.length, ip, port);
-                d1.send(send);
-                d1.setSoTimeout(3000);
-
-                rec = new DatagramPacket(receiveData, receiveData.length);
-                d1.receive(rec);
-                d1.setSoTimeout(3000);
-                modifiedSentence = new String(rec.getData());
-
-                //if (modifiedSentence.equals("On")) {
-                  //  sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_on));
-                //}
-                //if (modifiedSentence.equals("Off")) {
-                  //  sw1.setBackground(getResources().getDrawable(R.drawable.custom_btn_off));
-               // }
-
-                TVin.setText(modifiedSentence);
-                d1.close();
-
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            Toast.makeText(getApplicationContext(), "No network", Toast.LENGTH_SHORT).show();
-        }
-    } // end of dataOut
-
-    public void dataIn(String s) throws Exception {
-        int port = Integer.valueOf(nodeBase_Port);
-
-        byte[] b = (s.getBytes());
-        byte[] receiveData = new byte[1024];
-
-        if (isOnline()) {
-
-            ip = InetAddress.getByName(nodeBase_Localip);
-            d2 = new DatagramSocket();
-            try {
-                // Send Data
-                send = new DatagramPacket(b, b.length, ip, port);
-                d2.send(send);
-                d2.setSoTimeout(3000); // time to send data
-
-                // Receive Data
-                rec = new DatagramPacket(receiveData, receiveData.length);
-                d2.receive(rec);
-                d2.setSoTimeout(3000); // time to receive data
-                modifiedSentence = new String(rec.getData());
-                tempTV.setText(modifiedSentence + " C");
-
-
-                Float f = Float.parseFloat(modifiedSentence);
-                int i = Math.round(f);
-                int progress = i * 2;
-                if (progress < 50) {
-                    circularProgress.setProgressColor(Color.parseColor("#0277BD"));
-
-                } else {
-                    circularProgress.setProgressColor(Color.parseColor("#FF4081"));
-                }
-                circularProgress.setProgress(progress);
-                d2.close();
-
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            Toast.makeText(getApplicationContext(), "No network", Toast.LENGTH_SHORT).show();
-        }
-    } // end of dataIn
-
     private void loadToolbarNavDrawer() {
         //set Toolbar
         final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
@@ -1196,6 +1098,114 @@ public class Node extends AppCompatActivity {
         });
     }
 
+    private class SendData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String s = params[0];
+
+            int port = Integer.valueOf(nodeBase_Port);
+            byte[] b = (s.getBytes());
+            byte[] receiveData = new byte[1024];
+            if (isOnline()) {
+
+                try {
+                ip = InetAddress.getByName(nodeBase_Localip);
+                d1 = new DatagramSocket();
+
+                    send = new DatagramPacket(b, b.length, ip, port);
+                    d1.send(send);
+                    d1.setSoTimeout(5000);
+
+                    rec = new DatagramPacket(receiveData, receiveData.length);
+                    d1.receive(rec);
+                    d1.setSoTimeout(5000);
+                    modifiedSentence = new String(rec.getData());
+
+
+                    d1.close();
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No network", Toast.LENGTH_SHORT).show();
+            }
+
+            return modifiedSentence;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            TVin.setText(result);
+        }
+
+    }
+
+    private class GetData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String s = params[0];
+
+            int port = Integer.valueOf(nodeBase_Port);
+            byte[] b = (s.getBytes());
+            byte[] receiveData = new byte[1024];
+
+            if (isOnline()) {
+
+                try {
+                ip = InetAddress.getByName(nodeBase_Localip);
+                d2 = new DatagramSocket();
+
+                    // Send Data
+                    send = new DatagramPacket(b, b.length, ip, port);
+                    d2.send(send);
+                    d2.setSoTimeout(5000); // time to send data
+
+                    // Receive Data
+                    rec = new DatagramPacket(receiveData, receiveData.length);
+                    d2.receive(rec);
+                    d2.setSoTimeout(5000); // time to receive data
+                    modifiedSentence = new String(rec.getData());
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No network", Toast.LENGTH_SHORT).show();
+            }
+
+            return modifiedSentence;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            String finaltemp = result + " C";
+            tempTV.setText(finaltemp);
+
+            Float f = Float.parseFloat(result);
+            int i = Math.round(f);
+            int progress = i * 2;
+            if (progress < 50) {
+                circularProgress.setProgressColor(Color.parseColor("#0277BD"));
+
+            } else {
+                circularProgress.setProgressColor(Color.parseColor("#FF4081"));
+            }
+            circularProgress.setProgress(progress);
+            d2.close();
+        }
+
+    }
+
     private void createTimer() {
         Intent i = new Intent(this, TimerEditActivity.class);
 
@@ -1212,7 +1222,10 @@ public class Node extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        dbHelper.close();
         super.onBackPressed();
         overridePendingTransition(R.anim.back2, R.anim.back1);
     }
+
+
 }

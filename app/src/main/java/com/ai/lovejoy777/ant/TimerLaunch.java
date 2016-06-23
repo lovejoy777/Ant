@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -64,7 +65,6 @@ public class TimerLaunch extends Activity {
         sendCom();
 
 
-
         Thread timer = new Thread() {
             public void run() {
                 try {
@@ -93,6 +93,7 @@ public class TimerLaunch extends Activity {
         };
 
         timer.start();
+        dbHelper.close();
     }
 
     private void setRowIdFromIntent() {
@@ -132,7 +133,8 @@ public class TimerLaunch extends Activity {
             rs.close();
         }
         try {
-            dataOut(address + code); // "on"
+
+            new SendData().execute(address + code);
 
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "No Connection", Toast.LENGTH_SHORT).show();
@@ -148,37 +150,56 @@ public class TimerLaunch extends Activity {
         return false;
     }
 
-    public void dataOut(String s) throws Exception {
 
-        Cursor rs = dbHelper.fetchTimer(mRowId);
-        rs.moveToFirst();
-        String localip = rs.getString(rs.getColumnIndex(TimerDbAdapter.KEY_LOCALIP));
-        String port = rs.getString(rs.getColumnIndex(TimerDbAdapter.KEY_PORT));
-        if (!rs.isClosed()) {
-            rs.close();
-        }
+    private class SendData extends AsyncTask<String, Void, Void> {
 
-        int port1 = Integer.valueOf(port);
+        @Override
+        protected Void doInBackground(String... params) {
 
-        byte[] b = (s.getBytes());
+            String s = params[0];
 
-        if (isOnline()) {
-
-            ip = InetAddress.getByName(localip);
-            d1 = new DatagramSocket();
-            try {
-                send = new DatagramPacket(b, b.length, ip, port1);
-                d1.send(send);
-                d1.setSoTimeout(3000);
-
-                //Toast.makeText(getApplicationContext(), "Sw Code: " + code, Toast.LENGTH_SHORT).show();
-
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "No Connection", Toast.LENGTH_SHORT).show();
+            Cursor rs = dbHelper.fetchTimer(mRowId);
+            rs.moveToFirst();
+            String localip = rs.getString(rs.getColumnIndex(TimerDbAdapter.KEY_LOCALIP));
+            String port = rs.getString(rs.getColumnIndex(TimerDbAdapter.KEY_PORT));
+            if (!rs.isClosed()) {
+                rs.close();
             }
 
-        } else {
-            Toast.makeText(getApplicationContext(), "No network", Toast.LENGTH_SHORT).show();
+            int port1 = Integer.valueOf(port);
+
+            byte[] b = (s.getBytes());
+
+            if (isOnline()) {
+
+                try {
+                ip = InetAddress.getByName(localip);
+                d1 = new DatagramSocket();
+
+                    send = new DatagramPacket(b, b.length, ip, port1);
+                    d1.send(send);
+                    d1.setSoTimeout(3000);
+
+                    //Toast.makeText(getApplicationContext(), "Sw Code: " + code, Toast.LENGTH_SHORT).show();
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "No Connection", Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No network", Toast.LENGTH_SHORT).show();
+            }
+
+            return null;
         }
-    } // end of dataOut
+
+    }
+
+    @Override
+    public void onDestroy() {
+        dbHelper.close();
+        super.onDestroy();
+        overridePendingTransition(R.anim.back2, R.anim.back1);
+    }
+
 }

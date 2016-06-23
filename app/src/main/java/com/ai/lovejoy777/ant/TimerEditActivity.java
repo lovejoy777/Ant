@@ -233,6 +233,10 @@ public class TimerEditActivity extends AppCompatActivity {
             String repeatText = (reminder.getString(
                     reminder.getColumnIndexOrThrow(TimerDbAdapter.KEY_REPEAT)));
 
+            if (!reminder.isClosed()) {
+                reminder.close();
+            }
+
             // set switches
             if (repeatText.equals("Daily")) {
                 mDaySwitch.setChecked(true);

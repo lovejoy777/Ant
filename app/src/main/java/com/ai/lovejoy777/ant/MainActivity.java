@@ -85,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(KEY_EXTRA_BASE_NAME, baseName);
                 intent.putExtra(KEY_EXTRA_BASE_LOCALIP, baseLocalip);
                 intent.putExtra(KEY_EXTRA_BASE_PORT, basePort);
-                // if (!itemCursor.isClosed()) {
-                //     itemCursor.close();
-                // }
+              //   if (!itemCursor.isClosed()) {
+              //       itemCursor.close();
+              //   }
                 Bundle bndlanim =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanim);
@@ -103,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 int baseID = itemCursor.getInt(itemCursor.getColumnIndex(BaseNodeDBHelper.BASE_COLUMN_ID));
                 Intent intent = new Intent(getApplicationContext(), CreateOrEditBasesActivity.class);
                 intent.putExtra(KEY_EXTRA_BASE_ID, baseID);
-                //if (!itemCursor.isClosed()) {
-                //   itemCursor.close();
-                // }
+               // if (!itemCursor.isClosed()) {
+               //    itemCursor.close();
+               //  }
                 Bundle bndlanim =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanim);
@@ -184,10 +184,6 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(timers, bndlanimation);
                                 break;
 
-                            case R.id.nav_test:
-                                Intent test = new Intent(MainActivity.this, WidgetConfig.class);
-                                startActivity(test, bndlanimation);
-                                break;
                         }
                         return false;
                     }

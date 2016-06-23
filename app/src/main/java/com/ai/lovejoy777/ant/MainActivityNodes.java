@@ -104,6 +104,9 @@ public class MainActivityNodes extends AppCompatActivity {
                 //String nodeID = "" + itemCursor.getString(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ID));
                 Intent intent = new Intent(getApplicationContext(), Node.class);
                 intent.putExtra(KEY_EXTRA_NODE_ID, nodeID);
+               // if (!itemCursor.isClosed()) {
+               //     itemCursor.close();
+               // }
                 Bundle bndlanim =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanim);
@@ -119,7 +122,9 @@ public class MainActivityNodes extends AppCompatActivity {
                 int nodeID = itemCursor.getInt(itemCursor.getColumnIndex(BaseNodeDBHelper.NODE_COLUMN_ID));
                 Intent intent = new Intent(getApplicationContext(), CreateOrEditNodesActivity.class);
                 intent.putExtra(KEY_EXTRA_NODE_ID, nodeID);
-
+                //if (!itemCursor.isClosed()) {
+                //    itemCursor.close();
+               // }
                 Bundle bndlanim =
                         ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.anni1, R.anim.anni2).toBundle();
                 startActivity(intent, bndlanim);
@@ -144,6 +149,7 @@ public class MainActivityNodes extends AppCompatActivity {
                 cursor, columns, widgets, 0);
         listView = (ListView) findViewById(R.id.listViewNode);
         listView.setAdapter(cursorAdapter);
+
     }
 
     private void loadToolbarNavDrawer() {
@@ -214,6 +220,7 @@ public class MainActivityNodes extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        dbHelper.close();
         super.onBackPressed();
         overridePendingTransition(R.anim.back2, R.anim.back1);
     }
