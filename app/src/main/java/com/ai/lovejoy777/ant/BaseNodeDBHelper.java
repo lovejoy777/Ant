@@ -12,8 +12,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class BaseNodeDBHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "SQLiteExample.db";
-    private static final int DATABASE_VERSION = 4;
+    public static final String DATABASE_NAME = "SQLiteBaseNode.db";
+    private static final int DATABASE_VERSION = 5;
 
     public static final String NODE_TABLE_NAME = "Nodes";
     public static final String NODE_COLUMN_ID = "_id";

@@ -174,6 +174,10 @@ public class Node extends AppCompatActivity {
 
         // name for timers
         baseNodeName = nodeBase_Name + " " + nodeName;
+        savePrefs1("NAME", baseNodeName);
+        savePrefs1("ADDRESS", nodeAddress);
+        savePrefs1("LOCALIP", nodeBase_Localip);
+        savePrefs1("PORT", nodeBase_Port);
 
         // NODE SWITCHES
         if (nodeType.equals("Switch")) {
@@ -1127,7 +1131,7 @@ public class Node extends AppCompatActivity {
                     d1.close();
 
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
 
             } else {
@@ -1146,11 +1150,12 @@ public class Node extends AppCompatActivity {
 
     }
 
-    private class GetData extends AsyncTask<String, Void, String> {
+    private class GetData extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
 
+            publishProgress("loading"); // Calls onProgressUpdate()
             String s = params[0];
 
             int port = Integer.valueOf(nodeBase_Port);
@@ -1175,7 +1180,7 @@ public class Node extends AppCompatActivity {
                     modifiedSentence = new String(rec.getData());
 
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
 
             } else {
@@ -1186,8 +1191,16 @@ public class Node extends AppCompatActivity {
         }
 
         @Override
+        protected void onProgressUpdate(String... text) {
+
+            tempTV.setText(text[0]); // display loading text while doInBackground method is ran.
+
+        }
+
+        @Override
         protected void onPostExecute(String result) {
 
+            try {
             String finaltemp = result + " C";
             tempTV.setText(finaltemp);
 
@@ -1202,6 +1215,10 @@ public class Node extends AppCompatActivity {
             }
             circularProgress.setProgress(progress);
             d2.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
