@@ -68,33 +68,33 @@ public class Node extends AppCompatActivity {
     TextView textView4;
 
     /**
-    // for dimmer layout
-    TextView TVD1;
-    TextView TVD2;
-    TextView TVD3;
-    TextView TVD4;
-    TextView TVD1off;
-    TextView TVD1on;
-    TextView TVD2off;
-    TextView TVD2on;
-    TextView TVD3off;
-    TextView TVD3on;
-    TextView TVD4off;
-    TextView TVD4on;
-    SeekBar seekBarSw1 = null;
-    SeekBar seekBarSw2 = null;
-    SeekBar seekBarSw3 = null;
-    SeekBar seekBarSw4 = null;
-
-    // layouts for removing dimmers
-    LinearLayout LDS1;
-    LinearLayout LDS2;
-    LinearLayout LDS3;
-    LinearLayout LDS4;
-    LinearLayout LDSB1;
-    LinearLayout LDSB2;
-    LinearLayout LDSB3;
-    LinearLayout LDSB4;
+     * // for dimmer layout
+     * TextView TVD1;
+     * TextView TVD2;
+     * TextView TVD3;
+     * TextView TVD4;
+     * TextView TVD1off;
+     * TextView TVD1on;
+     * TextView TVD2off;
+     * TextView TVD2on;
+     * TextView TVD3off;
+     * TextView TVD3on;
+     * TextView TVD4off;
+     * TextView TVD4on;
+     * SeekBar seekBarSw1 = null;
+     * SeekBar seekBarSw2 = null;
+     * SeekBar seekBarSw3 = null;
+     * SeekBar seekBarSw4 = null;
+     * <p/>
+     * // layouts for removing dimmers
+     * LinearLayout LDS1;
+     * LinearLayout LDS2;
+     * LinearLayout LDS3;
+     * LinearLayout LDS4;
+     * LinearLayout LDSB1;
+     * LinearLayout LDSB2;
+     * LinearLayout LDSB3;
+     * LinearLayout LDSB4;
      */
 
     // temperature return data
@@ -150,7 +150,7 @@ public class Node extends AppCompatActivity {
         // get node id from MainActivityNodes
         nodeID = getIntent().getIntExtra(MainActivityNodes.KEY_EXTRA_NODE_ID, 0);
         nodeID = getIntent().getIntExtra(WidgetConfig.KEY_EXTRA_NODE_ID, 0);
-       // Toast.makeText(getApplicationContext(), "node id = " + nodeID, Toast.LENGTH_LONG).show();
+        // Toast.makeText(getApplicationContext(), "node id = " + nodeID, Toast.LENGTH_LONG).show();
 
         // get all node data
         Cursor rs = dbHelper.getNode(nodeID);
@@ -608,6 +608,7 @@ public class Node extends AppCompatActivity {
                     if (sw1.isChecked()) {
                         try {
                             new SendData().execute(nodeAddress + code1);
+                            sw1.setText("On ");
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -616,6 +617,7 @@ public class Node extends AppCompatActivity {
                     } else if (!sw1.isChecked()) {
                         try {
                             new SendData().execute(nodeAddress + code2);
+                            sw1.setText("Off ");
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -764,6 +766,7 @@ public class Node extends AppCompatActivity {
                     if (sw4.isChecked()) {
                         try {
                             new SendData().execute(nodeAddress + code7);
+                            sw4.setText("On   ");
                             TVin.setTextColor(Color.parseColor("#0277BD"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -772,6 +775,7 @@ public class Node extends AppCompatActivity {
                     } else if (!sw4.isChecked()) {
                         try {
                             new SendData().execute(nodeAddress + code8);
+                            sw4.setText("Off   ");
                             TVin.setTextColor(Color.parseColor("#FFFFFF"));
                         } catch (Exception e) {
                             System.out.println("No connection");
@@ -1115,8 +1119,8 @@ public class Node extends AppCompatActivity {
             if (isOnline()) {
 
                 try {
-                ip = InetAddress.getByName(nodeBase_Localip);
-                d1 = new DatagramSocket();
+                    ip = InetAddress.getByName(nodeBase_Localip);
+                    d1 = new DatagramSocket();
 
                     send = new DatagramPacket(b, b.length, ip, port);
                     d1.send(send);
@@ -1165,8 +1169,8 @@ public class Node extends AppCompatActivity {
             if (isOnline()) {
 
                 try {
-                ip = InetAddress.getByName(nodeBase_Localip);
-                d2 = new DatagramSocket();
+                    ip = InetAddress.getByName(nodeBase_Localip);
+                    d2 = new DatagramSocket();
 
                     // Send Data
                     send = new DatagramPacket(b, b.length, ip, port);
@@ -1200,24 +1204,30 @@ public class Node extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            try {
-            String finaltemp = result + " C";
-            tempTV.setText(finaltemp);
+            if (result != null) {
+                try {
+                    String finaltemp = result + " C";
+                    tempTV.setText(finaltemp);
 
-            Float f = Float.parseFloat(result);
-            int i = Math.round(f);
-            int progress = i * 2;
-            if (progress < 50) {
-                circularProgress.setProgressColor(Color.parseColor("#0277BD"));
+                    Float f = Float.parseFloat(result);
+                    int i = Math.round(f);
+                    int progress = i * 2;
+                    if (progress < 50) {
+                        circularProgress.setProgressColor(Color.parseColor("#0277BD"));
+
+                    } else {
+                        circularProgress.setProgressColor(Color.parseColor("#FF4081"));
+                    }
+                    circularProgress.setProgress(progress);
+                    d2.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             } else {
-                circularProgress.setProgressColor(Color.parseColor("#FF4081"));
-            }
-            circularProgress.setProgress(progress);
-            d2.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                String noData = "no data";
+                tempTV.setText(noData);
             }
         }
 
